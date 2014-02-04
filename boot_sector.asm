@@ -2,30 +2,29 @@
 ; A simple boot sector program that demonstrates addressing.
 ;
 
-[org 0x7c00]
+[org 0x7c00] ; Tell the assembler where this code will be loaded.
 
-  mov ah, 0x0e    ; int 10/ah = 0eh -> scrolling teletype BIOS routine
-  
-  mov bp, 0x8000  ; Set the base of the stack a little above where BIOS
-  mov sp, bp      ; loads our boot sector - so it won’t overwrite us.
-  
-  push 'A'
-  push 'B'
-  push 'C'
-  
-  pop bx
-  mov al, bl
-  int 0x10
-  
-  pop bx
-  mov al, bl
-  int 0x10
-  
-  mov al, [0x7ffe]
-  int 0x10
-  
-  jmp $
+  mov bx, HELLO_MSG ; Use BX as a parameter to our function, so
+  call print_string ; we can specify the address of a string.
 
+;  mov dx, 0x1fb6
+;  call print_hex
+
+  mov bx, GOODBYE_MSG
+  call print_string
+
+  jmp $ ; Infinite loop.
+
+%include "print_string.asm"
+%include "print_hex.asm"
+
+; Data
+
+HELLO_MSG:
+  db 'Hello, World!', 0
+GOODBYE_MSG:
+  db 'Goodbye!', 0
+  
 ; Padding and magic BIOS number.
 
   times 510 - ( $ - $$ ) db 0
