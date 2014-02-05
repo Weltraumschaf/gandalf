@@ -9,6 +9,11 @@ loop_start:
   int 0x10
   add bx, 0x01
   jmp loop_start
+
 leave_function:
+  mov al, 0x0a ; Print LF
+  int 0x10
+  mov al, 0x0d ; Print CR
+  int 0x10
   popa
   ret
