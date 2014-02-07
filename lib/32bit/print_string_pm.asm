@@ -1,13 +1,9 @@
 [bits 32]
 
-; Define some constants
-VIDEO_MEMORY equ 0xb8000
-WHITE_ON_BLACK equ 0x0f
-
 ; prints a null-terminated string pointed to by EDX
 print_string_pm:
   pusha
-  mov edx, VIDEO_MEMORY ; Set edx to the start of vid mem.
+  mov edx, VIDEO_MEMORY   ; Set edx to the start of vid mem.
 
 print_string_pm_loop:
   mov al, [ebx]           ; Store the char at EBX in AL
@@ -19,7 +15,7 @@ print_string_pm_loop:
   mov [edx], ax           ; Store char and attributes at current character cell.
 
   add ebx, 1              ; Increment EBX to the next char in string.
-  add ebx, 2              ; Move to next character cell in vid mem.
+  add edx, 2              ; Move to next character cell in vid mem.
 
   jmp print_string_pm_loop
 

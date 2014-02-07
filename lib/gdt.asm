@@ -1,4 +1,4 @@
-; GDT
+; Global Descriptor Table
 gdt_start:
 
 gdt_null: ; the mandatory null descriptor

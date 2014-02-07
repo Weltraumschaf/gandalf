@@ -17,7 +17,7 @@ RAM="32"
 # unimp         log unimplemented functionality
 # guest_errors  log when the guest OS does something invalid (eg accessing a
 #               non-existent register)
-DEBUG="guest_errors,int,pcall,unimp,ioport"
+DEBUG="guest_errors,int,pcall,unimp,ioport,in_asm"
 
 echo "Booting ${CPU} system with ${RAM} MB RAM from image ${IMAGE} ..."
 
