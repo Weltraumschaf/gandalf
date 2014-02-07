@@ -1,5 +1,6 @@
 #!/bin/bash
 
+IMAGE="./boot_sector.bin"
 CPU="486"
 RAM="32"
 # out_asm       show generated host assembly code for each compiled TB
@@ -18,7 +19,7 @@ RAM="32"
 #               non-existent register)
 DEBUG="guest_errors,int,pcall,unimp,ioport"
 
-echo "Booting ${CPU} system with ${RAM} MB RAM..."
+echo "Booting ${CPU} system with ${RAM} MB RAM from image ${IMAGE} ..."
 
 qemu-system-i386 \
   -cpu ${CPU} \
@@ -28,4 +29,4 @@ qemu-system-i386 \
   -no-acpi \
   -no-hpet \
   -d ${DEBUG} \
-  ./boot_sector.bin
+  "${IMAGE}"
