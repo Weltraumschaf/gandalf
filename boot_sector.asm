@@ -29,9 +29,9 @@
 
   jmp $ ; Infinite loop.
 
-%include "print_string.asm"
-%include "print_hex.asm"
-%include "disk_load.asm"
+%include "lib/16bit/print_string.asm"
+%include "lib/16bit/print_hex.asm"
+%include "lib/16bit/disk_load.asm"
 
 ; Data
 
