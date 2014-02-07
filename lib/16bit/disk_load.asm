@@ -1,3 +1,5 @@
+[bits 16]
+
 ; Load DH sectors to ES:BX from drive DL.
 disk_load:
   push dx         ; Store DX on stack so later we can recall

@@ -1,3 +1,5 @@
+[bits 16]
+
 print_string:
   pusha
   mov ah, 0x0e
@@ -7,7 +9,7 @@ loop_start:
   cmp al, 0
   je leave_function
   int 0x10
-  add bx, 0x01
+  add bx, 1
   jmp loop_start
 
 leave_function:

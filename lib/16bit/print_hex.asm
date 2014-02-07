@@ -1,3 +1,5 @@
+[bits 16]
+
 print_hex:
     ; manipulate chars at HEX_OUT to reflect DX
     mov cx, dx
