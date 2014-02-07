@@ -1,6 +1,24 @@
 #!/bin/bash
 
-IMAGE="./boot_sector.bin"
+set -e
+
+PROGRAM="${0}"
+
+while [ -h "${PROGRAM}" ]; do
+  LS=`ls -ld "${PROGRAM}"`
+  LINK=`expr "${LS}" : '.*-> \(.*\)$'`
+
+  if expr "${LINK}" : '.*/.*' > /dev/null; then
+    PROGRAM="${LINK}"
+  else
+    PROGRAM=`dirname "${PROGRAM}"`/"${LINK}"
+  fi
+done
+
+PROGRAM_DIRECTORY=`dirname "${PROGRAM}"`
+
+source "${PROGRAM_DIRECTORY}/vars.sh"
+
 CPU="486"
 RAM="32"
 # out_asm       show generated host assembly code for each compiled TB
@@ -22,11 +40,11 @@ DEBUG="guest_errors,int,pcall,unimp,ioport,in_asm"
 echo "Booting ${CPU} system with ${RAM} MB RAM from image ${IMAGE} ..."
 
 qemu-system-i386 \
-  -cpu ${CPU} \
-  -m ${RAM} \
+  -cpu "${CPU}" \
+  -m "${RAM}" \
   -k en \
   -vga std \
   -no-acpi \
   -no-hpet \
-  -d ${DEBUG} \
+  -d "${DEBUG}" \
   "${IMAGE}"
