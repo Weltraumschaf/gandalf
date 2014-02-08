@@ -15,11 +15,11 @@
   call switch_to_pm         ; Note that we never return from here.
   jmp $                     ; Infinite loop.
 
-%include "16bit/print_string.asm"
-%include "16bit/disk_load.asm"
-%include "gdt.asm"
-%include "switch_to_pm.asm"
-%include "32bit/print_string_pm.asm"
+%include "src/asm/16bit/print_string.asm"
+%include "src/asm/16bit/disk_load.asm"
+%include "src/asm/gdt.asm"
+%include "src/asm/switch_to_pm.asm"
+%include "src/asm/32bit/print_string_pm.asm"
 
 [bits 16]
 load_kernel:

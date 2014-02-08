@@ -30,12 +30,10 @@ export LD=/usr/local/bin/gcc-4.8
 export CFLAGS="-Wno-deprecated-declarations"
 
 export PREFIX="${PROGRAM_DIRECTORY}/cross"
-#export PATH="${PREFIX}/bin:${PATH}"
 export TARGET="i586-elf"
 
 BUILD_DIR="${PROGRAM_DIRECTORY}/target"
 ARCHIVE="${PROGRAM_DIRECTORY}/archive"
-DIST="${BUILD_DIR}/dist"
 
 LIB_GCC="gcc-4.8.2"
 LIB_BINUTILS="binutils-2.24"
@@ -65,13 +63,8 @@ for file in $(ls -1 "${ARCHIVE}") ; do
   tar xjvf "${ARCHIVE}/${file}" -C "${BUILD_DIR}" --use-compress-prog=pbunzip2
 done
 
-#cp -rv "${BUILD_DIR}/${LIB_ICONV}" "${BUILD_DIR}/${LIB_GCC}/libiconv"
-#cp -rv "${BUILD_DIR}/${LIB_GMP}"   "${BUILD_DIR}/${LIB_GCC}/gmp"
-#cp -rv "${BUILD_DIR}/${LIB_MPFR}"  "${BUILD_DIR}/${LIB_GCC}/mpfr"
-#cp -rv "${BUILD_DIR}/${LIB_MPC}"   "${BUILD_DIR}/${LIB_GCC}/mpc"
-
-if [ ! -d "${DIST}" ] ; then 
-  mkdir -p "${DIST}" 
+if [ ! -d "${PREFIX}" ] ; then 
+  mkdir -p "${PREFIX}" 
 fi
 
 echo "#"
@@ -79,7 +72,7 @@ echo "# Building GMP ..."
 echo "#"
 
 cd "${BUILD_DIR}/${LIB_GMP}"
-./configure --prefix="${DIST}"
+./configure --prefix="${PREFIX}"
 make
 make install
 
@@ -88,7 +81,7 @@ echo "# Building MPFR ..."
 echo "#"
 
 cd "${BUILD_DIR}/${LIB_MPFR}"
-./configure --prefix="${DIST}"
+./configure --prefix="${PREFIX}"
 make
 make install
 
@@ -97,8 +90,8 @@ echo "# Building MPC ..."
 echo "#"
 
 cd "${BUILD_DIR}/${LIB_MPC}"
-./configure --prefix="${DIST}" \
-  --with-mpfr="${DIST}"
+./configure --prefix="${PREFIX}" \
+  --with-mpfr="${PREFIX}"
 make
 make install
 
@@ -124,9 +117,9 @@ echo "# Configuring bin-utils ..."
 echo "#"
 ../${LIB_BINUTILS}/configure --prefix="${PREFIX}" \
   --target="${TARGET}" \
-  --with-gmp="${DIST}" \
-  --with-mpfr="${DIST}" \
-  --with-mpc="${DIST}" \
+  --with-gmp="${PREFIX}" \
+  --with-mpfr="${PREFIX}" \
+  --with-mpc="${PREFIX}" \
   --disable-nls
 echo "#"
 echo "# Making bin-utils ..."
@@ -153,9 +146,9 @@ echo "# Configuring GCC ..."
 echo "#"
 ../${LIB_GCC}/configure --prefix="${PREFIX}" \
   --target="${TARGET}" \
-  --with-gmp="${DIST}" \
-  --with-mpfr="${DIST}" \
-  --with-mpc="${DIST}" \
+  --with-gmp="${PREFIX}" \
+  --with-mpfr="${PREFIX}" \
+  --with-mpc="${PREFIX}" \
   --disable-nls \
   --enable-languages=c,c++ \
   --without-headers

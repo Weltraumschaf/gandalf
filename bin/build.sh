@@ -19,7 +19,9 @@ DIR=`dirname "${PROGRAM}"`
 PROGRAM_DIRECTORY=$(cd "${DIR}" ; pwd)
 
 source "${PROGRAM_DIRECTORY}/vars.sh"
-PREFIX="${PROGRAM_DIRECTORY}/../build-tools/cross/bin/i586-elf"
+
+PREFIX="${PROGRAM_DIRECTORY}/../build-tools/cross/bin"
+export PATH="${PREFIX}/bin:${PATH}"
 
 # Cleaning:
 if [ -d "${TARGET}" ] ; then
@@ -31,7 +33,7 @@ mkdir -p ${TARGET}
 
 # Assembling boot sector:
 echo "Assembling ${BOOT_SRC} ..."
-cd "${SRC_ASM}"
+cd "${PROGRAM_DIRECTORY}/.."
 nasm "${BOOT_SRC}" \
   -f bin \
   -o "${BOOT_BIN}"
@@ -39,13 +41,15 @@ nasm "${SRC_ASM}/kernel_entry.asm" \
   -f elf \
   -o "${TARGET}/kernel_entry.o"
 
+cd "${PROGRAM_DIRECTORY}"
+
 echo "Compiling ${KERNEL_SRC} ..."
-${PREFIX}-gcc -ffreestanding \
+${PREFIX}/i586-elf-gcc -ffreestanding \
   -c "${KERNEL_SRC}" \
   -o "${KERNEL_OBJ}"
 
 echo "Linking ${KERNEL_BIN} ..."
-${PREFIX}-ld "${KERNEL_OBJ}" "${TARGET}/kernel_entry.o" \
+${PREFIX}/i586-elf-ld "${KERNEL_OBJ}" "${TARGET}/kernel_entry.o" \
   -o "${KERNEL_BIN}" \
   -Ttext "${KERNEL_OFFSET}" \
   --oformat binary
