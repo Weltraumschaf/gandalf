@@ -64,7 +64,8 @@ boot_sector.bin : src/asm/boot_sector.asm
 
 clean :
 	$(RM) *.o *.bin *.img *.map *.dis
-
+	$(RM) src/c/kernel/*.o src/c/drivers/*.o
+	
 # Disassemble our kernel - might be useful for debugging.
 kernel.dis : kernel.bin 
 	ndisasm -b 32 $< > $@
