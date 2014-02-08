@@ -16,12 +16,10 @@
   jmp $                     ; Infinite loop.
 
 %include "16bit/print_string.asm"
-%include "16bit/print_hex.asm"
 %include "16bit/disk_load.asm"
 %include "gdt.asm"
 %include "switch_to_pm.asm"
 %include "32bit/print_string_pm.asm"
-%include "32bit/clear_screen.asm"
 
 [bits 16]
 load_kernel:
@@ -38,7 +36,6 @@ load_kernel:
 [bits 32]
 ; This is where we arrive after switching to and initialising protected mode.
 BEGIN_PM:
-  call clear_screen
   mov ebx, MSG_PROT_MODE
   call print_string_pm
   

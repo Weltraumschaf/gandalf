@@ -48,6 +48,7 @@ ${PREFIX}-ld "${KERNEL_OBJ}" \
 
 # Assembling boot sector:
 echo "Assembling ${BOOT_SRC} ..."
+cd "${SRC_ASM}"
 nasm "${BOOT_SRC}" \
   -f bin \
   -o "${BOOT_BIN}"
@@ -55,4 +56,5 @@ nasm "${BOOT_SRC}" \
 echo "Generate image ${IMAGE} ..."
 cat "${BOOT_BIN}" "${KERNEL_BIN}" > "${IMAGE}"
 
+cd "${PROGRAM_DIRECTORY}"
 echo "Done :)"

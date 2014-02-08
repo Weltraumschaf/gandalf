@@ -176,4 +176,5 @@ echo "# Installing Lib GCC ..."
 echo "#"
 make install-target-libgcc
 
+cd "${PROGRAM_DIRECTORY}"
 echo "Done :)"
