@@ -1,4 +1,3 @@
 *.bin
 *.o
 target/
-build-tools/src/
