@@ -1,7 +1,7 @@
-*.o 
-*.bin 
-*.img 
-*.map 
+*.o
+*.bin
+*.img
+*.map
 *.dis
 target/
 build-tools/cross/
