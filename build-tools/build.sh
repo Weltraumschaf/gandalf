@@ -37,7 +37,6 @@ ARCHIVE="${PROGRAM_DIRECTORY}/archive"
 
 LIB_GCC="gcc-4.8.2"
 LIB_BINUTILS="binutils-2.24"
-LIB_ICONV="libiconv-1.9.2"
 LIB_GMP="gmp-5.1.3"
 LIB_MPFR="mpfr-3.1.2"
 LIB_MPC="mpc-1.0.2"
