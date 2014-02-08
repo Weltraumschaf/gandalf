@@ -15,9 +15,11 @@ while [ -h "${PROGRAM}" ]; do
   fi
 done
 
-PROGRAM_DIRECTORY=`dirname "${PROGRAM}"`
+DIR=`dirname "${PROGRAM}"`
+PROGRAM_DIRECTORY=$(cd "${DIR}" ; pwd)
 
 source "${PROGRAM_DIRECTORY}/vars.sh"
+PREFIX="${PROGRAM_DIRECTORY}/../build-tools/cross/bin/i586-elf"
 
 # Cleaning:
 if [ -d "${TARGET}" ] ; then
@@ -34,14 +36,14 @@ if [ -f "${KERNEL_OBJ}" ] ; then
 fi
 
 echo "Compiling ${KERNEL_SRC} ..."
-gcc -ffreestanding \
+${PREFIX}-gcc -ffreestanding \
   -c "${KERNEL_SRC}" \
   -o "${KERNEL_OBJ}"
 
 echo "Linking ${KERNEL_BIN} ..."
-ld "${KERNEL_OBJ}" \
+${PREFIX}-ld "${KERNEL_OBJ}" \
   -o "${KERNEL_BIN}" \
-  -T text "${KERNEL_OFFSET}" \
+  -Ttext "${KERNEL_OFFSET}" \
   --oformat binary
 
 # Assembling boot sector:

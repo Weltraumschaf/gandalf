@@ -15,7 +15,8 @@ while [ -h "${PROGRAM}" ]; do
   fi
 done
 
-PROGRAM_DIRECTORY=`dirname "${PROGRAM}"`
+DIR=`dirname "${PROGRAM}"`
+PROGRAM_DIRECTORY=$(cd "${DIR}" ; pwd)
 
 source "${PROGRAM_DIRECTORY}/vars.sh"
 
@@ -47,4 +48,4 @@ qemu-system-i386 \
   -no-acpi \
   -no-hpet \
   -d "${DEBUG}" \
-  "${IMAGE}"
+  -fda "${IMAGE}"
