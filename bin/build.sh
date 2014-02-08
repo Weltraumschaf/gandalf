@@ -29,11 +29,15 @@ fi
 
 mkdir -p ${TARGET}
 
-# Compile kernel:
-if [ -f "${KERNEL_OBJ}" ] ; then
-  echo "Deleteing ${KERNEL_OBJ} ..."
-  rm "${KERNEL_OBJ}"
-fi
+# Assembling boot sector:
+echo "Assembling ${BOOT_SRC} ..."
+cd "${SRC_ASM}"
+nasm "${BOOT_SRC}" \
+  -f bin \
+  -o "${BOOT_BIN}"
+nasm "${SRC_ASM}/kernel_entry.asm" \
+  -f elf \
+  -o "${TARGET}/kernel_entry.o"
 
 echo "Compiling ${KERNEL_SRC} ..."
 ${PREFIX}-gcc -ffreestanding \
@@ -41,17 +45,10 @@ ${PREFIX}-gcc -ffreestanding \
   -o "${KERNEL_OBJ}"
 
 echo "Linking ${KERNEL_BIN} ..."
-${PREFIX}-ld "${KERNEL_OBJ}" \
+${PREFIX}-ld "${KERNEL_OBJ}" "${TARGET}/kernel_entry.o" \
   -o "${KERNEL_BIN}" \
   -Ttext "${KERNEL_OFFSET}" \
   --oformat binary
-
-# Assembling boot sector:
-echo "Assembling ${BOOT_SRC} ..."
-cd "${SRC_ASM}"
-nasm "${BOOT_SRC}" \
-  -f bin \
-  -o "${BOOT_BIN}"
 
 echo "Generate image ${IMAGE} ..."
 cat "${BOOT_BIN}" "${KERNEL_BIN}" > "${IMAGE}"
