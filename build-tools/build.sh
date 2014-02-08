@@ -4,25 +4,38 @@
 
 set -e
 
-if [ "${BASE_DIR}" == "" ] ; then
-  echo "No BASE_DIR given!"
-  echo
-fi
+PROGRAM="${0}"
 
-echo "Setting environment ..."
+while [ -h "${PROGRAM}" ]; do
+  LS=`ls -ld "${PROGRAM}"`
+  LINK=`expr "${LS}" : '.*-> \(.*\)$'`
+
+  if expr "${LINK}" : '.*/.*' > /dev/null; then
+    PROGRAM="${LINK}"
+  else
+    PROGRAM=`dirname "${PROGRAM}"`/"${LINK}"
+  fi
+done
+
+DIR=`dirname "${PROGRAM}"`
+PROGRAM_DIRECTORY=$(cd "${DIR}" ; pwd)
+
+echo "#"
+echo "# Setting environment ..."
+echo "#"
 export CC=/usr/local/bin/gcc-4.8
 export CXX=/usr/local/bin/g++-4.8
 export CPP=/usr/local/bin/cpp-4.8
 export LD=/usr/local/bin/gcc-4.8
 export CFLAGS="-Wno-deprecated-declarations"
 
-export PREFIX="${BASE_DIR}/cross"
-export TARGET=i586-elf
-export PATH="$PREFIX/bin:$PATH"
+export PREFIX="${PROGRAM_DIRECTORY}/cross"
+#export PATH="${PREFIX}/bin:${PATH}"
+export TARGET="i586-elf"
 
-SRC="${BASE_DIR}/src"
-ARCHIVE="${BASE_DIR}/archive"
-DIST="${SRC}/dist"
+BUILD_DIR="${PROGRAM_DIRECTORY}/target"
+ARCHIVE="${PROGRAM_DIRECTORY}/archive"
+DIST="${BUILD_DIR}/dist"
 
 LIB_GCC="gcc-4.8.2"
 LIB_BINUTILS="binutils-2.24"
@@ -35,13 +48,13 @@ echo "#"
 echo "# Cleaning"
 echo "#"
 
-if [ -d "${SRC}" ] ; then
-  echo "Deleting ${SRC} ..."
-  rm -rf "${SRC}"
+if [ -d "${BUILD_DIR}" ] ; then
+  echo "Deleting ${BUILD_DIR} ..."
+  rm -rf "${BUILD_DIR}"
 fi
 
-if [ ! -d "${SRC}" ] ; then 
-  mkdir -p "${SRC}" 
+if [ ! -d "${BUILD_DIR}" ] ; then 
+  mkdir -p "${BUILD_DIR}" 
 fi
 
 echo "#"
@@ -49,8 +62,13 @@ echo "# Extracting sources ... "
 echo "#"
 
 for file in $(ls -1 "${ARCHIVE}") ; do
-  tar xjvf "${ARCHIVE}/${file}" -C "${SRC}" --use-compress-prog=pbunzip2
+  tar xjvf "${ARCHIVE}/${file}" -C "${BUILD_DIR}" --use-compress-prog=pbunzip2
 done
+
+#cp -rv "${BUILD_DIR}/${LIB_ICONV}" "${BUILD_DIR}/${LIB_GCC}/libiconv"
+#cp -rv "${BUILD_DIR}/${LIB_GMP}"   "${BUILD_DIR}/${LIB_GCC}/gmp"
+#cp -rv "${BUILD_DIR}/${LIB_MPFR}"  "${BUILD_DIR}/${LIB_GCC}/mpfr"
+#cp -rv "${BUILD_DIR}/${LIB_MPC}"   "${BUILD_DIR}/${LIB_GCC}/mpc"
 
 if [ ! -d "${DIST}" ] ; then 
   mkdir -p "${DIST}" 
@@ -60,7 +78,7 @@ echo "#"
 echo "# Building GMP ..."
 echo "#"
 
-cd "${SRC}/${LIB_GMP}"
+cd "${BUILD_DIR}/${LIB_GMP}"
 ./configure --prefix="${DIST}"
 make
 make install
@@ -69,7 +87,7 @@ echo "#"
 echo "# Building MPFR ..."
 echo "#"
 
-cd "${SRC}/${LIB_MPFR}"
+cd "${BUILD_DIR}/${LIB_MPFR}"
 ./configure --prefix="${DIST}"
 make
 make install
@@ -78,59 +96,84 @@ echo "#"
 echo "# Building MPC ..."
 echo "#"
 
-cd "${SRC}/${LIB_MPC}"
+cd "${BUILD_DIR}/${LIB_MPC}"
 ./configure --prefix="${DIST}" \
   --with-mpfr="${DIST}"
 make
 make install
 
-cd "${SRC}"
+cd "${BUILD_DIR}"
 
 if [ ! -d "${PREFIX}" ] ; then 
   mkdir -p "${PREFIX}" 
 fi
 
-echo "#"
-echo "# Building bin-utils ..."
-echo "#"
+cd "${BUILD_DIR}"
 
-cd "${SRC}"
+echo "#############"
+echo "# bin-utils #"
+echo "#############"
 
-if [ ! -d build-binutils ] ; then 
-  mkdir build-binutils
+if [ ! -d "${BUILD_DIR}/build-binutils" ] ; then 
+  mkdir -p "${BUILD_DIR}/build-binutils"
 fi
 
-cd build-binutils
-../${LIB_BINUTILS}/configure --target="${TARGET}" \
-  --prefix="${PREFIX}" \
+cd "${BUILD_DIR}/build-binutils"
+echo "#"
+echo "# Configuring bin-utils ..."
+echo "#"
+../${LIB_BINUTILS}/configure --prefix="${PREFIX}" \
+  --target="${TARGET}" \
   --with-gmp="${DIST}" \
   --with-mpfr="${DIST}" \
   --with-mpc="${DIST}" \
   --disable-nls
+echo "#"
+echo "# Making bin-utils ..."
+echo "#"
 make
+echo "#"
+echo "# Intsalling bin-utils ..."
+echo "#"
 make install
 
-echo "#"
-echo "# Building GCC ..."
-echo "#"
+cd "${BUILD_DIR}"
 
-cd "${SRC}"
-cp -r "${LIB_ICONV}" "${LIB_GCC}/libiconv"
-cp -r "${LIB_GMP}"   "${LIB_GCC}/gmp"
-cp -r "${LIB_MPFR}"  "${LIB_GCC}/mpfr"
-cp -r "${LIB_MPC}"   "${LIB_GCC}/mpc"
+echo "#######"
+echo "# GCC #"
+echo "#######"
  
-if [ ! -d build-gcc ] ; then 
-  mkdir build-gcc
+if [ ! -d "${BUILD_DIR}/build-gcc" ] ; then 
+  mkdir -p "${BUILD_DIR}/build-gcc"
 fi
 
-cd build-gcc
-../${LIB_GCC}/configure --target="${TARGET}" \
-  --prefix="${PREFIX}" \
+cd "${BUILD_DIR}/build-gcc"
+echo "#"
+echo "# Configuring GCC ..."
+echo "#"
+../${LIB_GCC}/configure --prefix="${PREFIX}" \
+  --target="${TARGET}" \
+  --with-gmp="${DIST}" \
+  --with-mpfr="${DIST}" \
+  --with-mpc="${DIST}" \
   --disable-nls \
   --enable-languages=c,c++ \
   --without-headers
+echo "#"
+echo "# Making GCC ..."
+echo "#"
 make all-gcc
+echo "#"
+echo "# Making Lib GCC ..."
+echo "#"
 make all-target-libgcc
+echo "#"
+echo "# Installing GCC ..."
+echo "#"
 make install-gcc
+echo "#"
+echo "# Installing Lib GCC ..."
+echo "#"
 make install-target-libgcc
+
+echo "Done :)"
