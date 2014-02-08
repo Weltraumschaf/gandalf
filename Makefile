@@ -1,6 +1,4 @@
-# Automatically generate lists of sources using wildcards. 
-C_SOURCES = $(wildcard src/c/*.c src/c/kernel/*.c src/c/drivers/*.c)
-HEADERS = $(wildcard src/c/*.h src/c/kernel/*.h src/c/drivers/*.h)
+all : os.img
 
 CPU = 486
 RAM = 32
@@ -19,8 +17,6 @@ RAM = 32
 # guest_errors  log when the guest OS does something invalid (eg accessing a
 #               non-existent register)
 DEBUG = guest_errors,int,pcall,unimp,ioport,in_asm
-		
-all : os.img
 
 run : all
 	qemu-system-i386 \
@@ -33,6 +29,14 @@ run : all
 	  -d $(DEBUG) \
 	  -fda os.img
 
+
+# Automatically generate lists of sources using wildcards. 
+C_SOURCES = $(wildcard src/c/kernel/*.c src/c/drivers/*.c)
+HEADERS = $(wildcard src/c/kernel/*.h src/c/drivers/*.h)
+# Create a list of object files to build, simple by replacing 
+# the '.c' extension of filenames in C_SOURCES with '.o'
+OBJ = ${C_SOURCES:.c=.o}
+
 # This is the actual disk image that the computer loads,
 # which is the combination of our compiled bootsector and kernel
 os.img : boot_sector.bin kernel.bin
@@ -41,13 +45,13 @@ os.img : boot_sector.bin kernel.bin
 # This links the binary of our kernel from two object files: 
 # - the kernel_entry, which jumps to main() in our kernel
 # - the compiled C kernel
-kernel.bin: kernel_entry.o kernel.o
+kernel.bin: kernel_entry.o ${OBJ}
 	$(LD) $^ -o $@ -Ttext 0x1000 --oformat binary
 
-# Build the kernel object file
-kernel.o : src/c/kernel.c
+# Generic rule for building 'somefile.o' from 'somefile.c'
+%.o : %.c ${HEADERS}
 	$(CC) -ffreestanding -c $< -o $@
-	
+
 # Build the kernel entry object file.
 kernel_entry.o : src/asm/kernel_entry.asm
 	nasm $< -f elf -o $@
