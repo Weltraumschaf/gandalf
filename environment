@@ -1,0 +1,5 @@
+export CC="./build-tools/cross/bin/i586-elf-gcc"
+export CXX="./build-tools/cross/bin/i586-elf-g++"
+export CPP="./build-tools/cross/bin/i586-elf-cpp"
+export LD="./build-tools/cross/bin/i586-elf-ld"
+export PATH="./build-tools/cross/bin:${PATH}"
