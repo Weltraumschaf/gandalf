@@ -1,3 +1,4 @@
 *.bin
 *.o
 target/
+build-tools/cross/
