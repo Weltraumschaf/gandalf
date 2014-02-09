@@ -23,10 +23,8 @@ PROGRAM_DIRECTORY=$(cd "${DIR}" ; pwd)
 echo "#"
 echo "# Setting environment ..."
 echo "#"
-export CC=/usr/local/bin/gcc-4.8
-export CXX=/usr/local/bin/g++-4.8
-export CPP=/usr/local/bin/cpp-4.8
-export LD=/usr/local/bin/gcc-4.8
+
+source environment
 export CFLAGS="-Wno-deprecated-declarations"
 
 export PREFIX="${PROGRAM_DIRECTORY}/cross"

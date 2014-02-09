@@ -1,0 +1,5 @@
+# Change the paths to your host machines GCC binaries
+export CC=/usr/local/bin/gcc-4.8
+export CXX=/usr/local/bin/g++-4.8
+export CPP=/usr/local/bin/cpp-4.8
+export LD=/usr/local/bin/gcc-4.8
