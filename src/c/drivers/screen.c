@@ -123,7 +123,7 @@ void print(char* message) {
   print_at(message , -1, -1);
 }
 
-void clear_screen () { 
+void clear_screen() { 
   int row = 0;
   int col = 0;
   /* Loop through video memory and write blank characters. */ 
