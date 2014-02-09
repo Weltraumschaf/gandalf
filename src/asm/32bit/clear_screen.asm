@@ -1,14 +1,15 @@
 [bits 32]
 
-clear_screen:
-  pusha
-  cld
+section .text
+  clear_screen:
+    pusha
+    cld
 
-  mov edi, VIDEO_MEMORY
-  mov cx, 2000
-  mov ah, WHITE_ON_BLACK
-  mov al, " "
-  rep stosw
+    mov edi, VIDEO_MEMORY
+    mov cx, 2000
+    mov ah, WHITE_ON_BLACK
+    mov al, ' '
+    rep stosw
   
-  popa
-  ret
+    popa
+    ret
