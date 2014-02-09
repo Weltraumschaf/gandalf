@@ -48,9 +48,9 @@
 
 void print_char(char character, int col, int row, char attribute_byte);
 void clear_screen();
-int get_screen_offset(int col, int row);
-void update_cursor(int row, int col);
-int get_cursor();
-void set_cursor(int offset);
+unsigned short get_screen_offset(int col, int row);
+void update_cursor(int col, int row);
+unsigned short get_cursor();
+void set_cursor(unsigned short offset);
 
 #endif

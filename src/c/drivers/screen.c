@@ -1,73 +1,57 @@
 #include "screen.h"
 
-/*
- * offset = ( col + row * MAX_COLS) * 2
- */
-int get_screen_offset(int col, int row) {
-  return VIDEO_ADDRESS + ( col + row * MAX_COLS ) * 2;
+unsigned short get_screen_offset(int col, int row) {
+  return (row * MAX_COLS) + col;
 }
 
-void update_cursor(int row, int col) {
-  unsigned short position = (row * 80) + col;
+void update_cursor(int col, int row) {
+  unsigned short offset = get_screen_offset(col, row);
+  set_cursor(offset);
+}
+
+unsigned short get_cursor() {
+  unsigned short offset;
   // cursor LOW port to vga INDEX register
   port_byte_out(REG_SCREEN_CTRL, CURSOR_OFFSET_LOW);
-  port_byte_out(REG_SCREEN_DATA, (unsigned char) (position & 0xff));
+  offset = (unsigned char) port_byte_in(REG_SCREEN_DATA) & 0xff;
   // cursor HIGH port to vga INDEX register
   port_byte_out(REG_SCREEN_CTRL, CURSOR_OFFSET_HIGH);
-  port_byte_out(REG_SCREEN_DATA, (unsigned char) ((position >> 8) & 0xff));
+  offset += (unsigned char) (port_byte_in(REG_SCREEN_DATA)  >> 8) & 0xff;
+  return offset;
 }
 
-int get_cursor() {
-  // The device uses its control register as an index
-  // to select its internal registers, of which we are
-  // interested in:
-  // reg 14: which is the high byte of the cursor's offset
-  // reg 15: which is the low byte of the cursor's offset
-  port_byte_out(REG_SCREEN_CTRL , CURSOR_OFFSET_HIGH);
-  int offset = port_byte_in(REG_SCREEN_DATA) << 8;
-  port_byte_out(REG_SCREEN_CTRL , CURSOR_OFFSET_LOW);
-  offset += port_byte_in(REG_SCREEN_DATA);
-  // Since the cursor offset reported by the VGA hardware is the 
-  // number of characters, we multiply by two to convert it to
-  // a character cell offset.
-  return offset * 2;
-}
-
-void set_cursor(int offset) {
-  // Convert from cell offset to char offset.
-  offset /= 2;
-  // This is similar to get_cursor, only now we write
-  // bytes to those internal device registers. 
-  port_byte_out(REG_SCREEN_CTRL , CURSOR_OFFSET_HIGH);
-  port_byte_out(REG_SCREEN_DATA , (unsigned char)(offset >> 8));
-  port_byte_out(REG_SCREEN_CTRL , CURSOR_OFFSET_LOW);
+void set_cursor(unsigned short offset) {
+  // cursor LOW port to vga INDEX register
+  port_byte_out(REG_SCREEN_CTRL, CURSOR_OFFSET_LOW);
+  port_byte_out(REG_SCREEN_DATA, (unsigned char) (offset & 0xff));
+  // cursor HIGH port to vga INDEX register
+  port_byte_out(REG_SCREEN_CTRL, CURSOR_OFFSET_HIGH);
+  port_byte_out(REG_SCREEN_DATA, (unsigned char) ((offset >> 8) & 0xff));
 }
 
 /* Advance the text cursor, scrolling the video buffer if necessary. */ 
-int handle_scrolling(int cursor_offset) {
+int handle_scrolling(unsigned short cursor_offset) {
   // If the cursor is within the screen, return it unmodified. 
-  if (cursor_offset < MAX_ROWS * MAX_COLS * 2) {
+  if (cursor_offset < MAX_ROWS * MAX_COLS) {
     return cursor_offset; 
   }
 
   /* Shuffle the rows back one. */ 
   int i;
   for (i = 1; i < MAX_ROWS; i++) {
-    memory_copy(
-      get_screen_offset(0, i) + get_screen_offset(0, i - 1) + VIDEO_ADDRESS, 
-      MAX_COLS * 2); 
+    memory_copy(get_screen_offset(0, i) + get_screen_offset(0, i - 1) + VIDEO_ADDRESS, MAX_COLS); 
   }
 
   /* Blank the last line by setting all bytes to 0 */
   char* last_line = (char*) get_screen_offset(0, MAX_ROWS -1) + VIDEO_ADDRESS; 
   
-  for (i = 0; i < MAX_COLS * 2; i++) {
+  for (i = 0; i < MAX_COLS; i++) {
     last_line[i] = 0; 
   }
   
   // Move the offset back one row, such that it is now on the last 
   // row, rather than off the edge of the screen.
-  cursor_offset -= 2*MAX_COLS;
+  cursor_offset -= MAX_COLS;
   // Return the updated cursor position.
   return cursor_offset; 
 }
@@ -110,20 +94,20 @@ void print_char(char character, int col, int row, char attribute_byte) {
   // current row, so it will be advanced to the first col
   // of the next row.
   if (character == '\n') {
-    int rows = offset / (2* MAX_COLS );
+    int rows = offset / MAX_COLS;
     offset = get_screen_offset(79, rows);
     // Otherwise, write the character and its attribute byte to 
     // video memory at our calculated offset.
   } else {
-    vidmem[offset] = character;
-    vidmem[offset+1] = attribute_byte; 
+    vidmem[offset * 2] = character;
+    vidmem[offset * 2 + 1] = attribute_byte; 
   }
   
   // Update the offset to the next character cell, which is 
   // two bytes ahead of the current cell.
-  offset += 2;
+  offset += 1;
   // Make scrolling adjustment, for when we reach the bottom // of the screen.
-  offset = handle_scrolling(offset);
+//  offset = handle_scrolling(offset);
   // Update the cursor position on the screen device.
   set_cursor(offset); 
 }
@@ -144,5 +128,5 @@ void clear_screen() {
   }
 
   // Move the cursor back to the top left.
-//  set_cursor(get_screen_offset(0, 0)); 
+  update_cursor(0, 0);
 }
