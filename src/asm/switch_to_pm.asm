@@ -1,4 +1,5 @@
 [bits 16]
+
 ; Switch to protected mode
 switch_to_pm:
   mov bx, MSG_SW_OFF_INT
@@ -25,9 +26,9 @@ switch_to_pm:
                         ; pre-fetched and real-mode decoded instructions, which 
                         ; can cause problems.
 
-MSG_SW_OFF_INT: db 'Switching off interrupts ...', 13, 10, 0
-MSG_LOAD_GDT:   db 'Loading global descriptor table ...', 13, 10, 0
-MSG_SW_PM:      db 'Switching into protected mode ...', 13, 10, 0
+MSG_SW_OFF_INT: db "Switching off interrupts ...", 0
+MSG_LOAD_GDT:   db "Loading global descriptor table ...", 0
+MSG_SW_PM:      db "Switching into protected mode ...", 0
 
 [bits 32]
 ; Initialise registers and the stack once in PM.
