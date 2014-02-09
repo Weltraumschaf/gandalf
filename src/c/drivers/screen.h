@@ -52,5 +52,7 @@ unsigned short get_screen_offset(int col, int row);
 void update_cursor(int col, int row);
 unsigned short get_cursor();
 void set_cursor(unsigned short offset);
-
+void print(char* message);
+void println(char* message);
+  
 #endif

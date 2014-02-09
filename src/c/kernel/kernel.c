@@ -3,9 +3,7 @@
 #include "../drivers/screen.h"
 
 void welcome() {
-//  print_char('G', 0, 0, WHITE_ON_BLACK);
-//  	char* video_memory = (char *) get_screen_offset(0, 15);
-//    *video_memory = 'X';
+  print("Gandalf 1.0\n");
 }
 
 void run() {

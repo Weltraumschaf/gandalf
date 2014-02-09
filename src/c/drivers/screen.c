@@ -16,7 +16,7 @@ unsigned short get_cursor() {
   offset = (unsigned char) port_byte_in(REG_SCREEN_DATA) & 0xff;
   // cursor HIGH port to vga INDEX register
   port_byte_out(REG_SCREEN_CTRL, CURSOR_OFFSET_HIGH);
-  offset += (unsigned char) (port_byte_in(REG_SCREEN_DATA)  >> 8) & 0xff;
+  offset += (unsigned char) (port_byte_in(REG_SCREEN_DATA)  << 8) & 0xff;
   return offset;
 }
 
@@ -81,13 +81,13 @@ void print_char(char character, int col, int row, char attribute_byte) {
 
   /* Get the video memory offset for the screen location */ 
   int offset;
-  
-  /* If col and row are non-negative, use them for offset. */ 
-  if (col >= 0 && row >= 0) {
-    offset = get_screen_offset(col, row);
-  /* Otherwise, use the current cursor position. */
+
+  if (col < 0 && row < 0) {
+    /* Use the current cursor position. */
+      offset = get_cursor(); 
   } else {
-    offset = get_cursor(); 
+      /* If col and row are non-negative, use them for offset. */ 
+      offset = get_screen_offset(col, row);
   }
   
   // If we see a newline character, set offset to the end of 
