@@ -7,15 +7,25 @@ int get_screen_offset(int col, int row) {
   return VIDEO_ADDRESS + ( col + row * MAX_COLS ) * 2;
 }
 
-int get_cursor () {
+void update_cursor(int row, int col) {
+  unsigned short position = (row * 80) + col;
+  // cursor LOW port to vga INDEX register
+  port_byte_out(REG_SCREEN_CTRL, CURSOR_OFFSET_LOW);
+  port_byte_out(REG_SCREEN_DATA, (unsigned char) (position & 0xff));
+  // cursor HIGH port to vga INDEX register
+  port_byte_out(REG_SCREEN_CTRL, CURSOR_OFFSET_HIGH);
+  port_byte_out(REG_SCREEN_DATA, (unsigned char) ((position >> 8) & 0xff));
+}
+
+int get_cursor() {
   // The device uses its control register as an index
   // to select its internal registers, of which we are
   // interested in:
   // reg 14: which is the high byte of the cursor's offset
   // reg 15: which is the low byte of the cursor's offset
-  port_byte_out(REG_SCREEN_CTRL , 14);
+  port_byte_out(REG_SCREEN_CTRL , CURSOR_OFFSET_HIGH);
   int offset = port_byte_in(REG_SCREEN_DATA) << 8;
-  port_byte_out(REG_SCREEN_CTRL , 15);
+  port_byte_out(REG_SCREEN_CTRL , CURSOR_OFFSET_LOW);
   offset += port_byte_in(REG_SCREEN_DATA);
   // Since the cursor offset reported by the VGA hardware is the 
   // number of characters, we multiply by two to convert it to
@@ -24,13 +34,13 @@ int get_cursor () {
 }
 
 void set_cursor(int offset) {
-    // Convert from cell offset to char offset.
+  // Convert from cell offset to char offset.
   offset /= 2;
   // This is similar to get_cursor, only now we write
   // bytes to those internal device registers. 
-  port_byte_out(REG_SCREEN_CTRL , 14);
+  port_byte_out(REG_SCREEN_CTRL , CURSOR_OFFSET_HIGH);
   port_byte_out(REG_SCREEN_DATA , (unsigned char)(offset >> 8));
-  port_byte_out(REG_SCREEN_CTRL , 15);
+  port_byte_out(REG_SCREEN_CTRL , CURSOR_OFFSET_LOW);
 }
 
 /* Advance the text cursor, scrolling the video buffer if necessary. */ 
@@ -93,7 +103,7 @@ void print_char(char character, int col, int row, char attribute_byte) {
     offset = get_screen_offset(col, row);
   /* Otherwise, use the current cursor position. */
   } else {
-    offset = get_cursor (); 
+    offset = get_cursor(); 
   }
   
   // If we see a newline character, set offset to the end of 
@@ -125,6 +135,7 @@ void print(char* message) {
 void clear_screen() { 
   int row = 0;
   int col = 0;
+  
   /* Loop through video memory and write blank characters. */ 
   for (row = 0; row < MAX_ROWS; row++) {
     for (col = 0; col < MAX_COLS; col++) { 
@@ -133,5 +144,5 @@ void clear_screen() {
   }
 
   // Move the cursor back to the top left.
-  set_cursor(get_screen_offset(0, 0)); 
+//  set_cursor(get_screen_offset(0, 0)); 
 }

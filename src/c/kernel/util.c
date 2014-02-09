@@ -6,3 +6,11 @@ void memory_copy(char* source, char* dest, int no_bytes) {
     *(dest + i) = *(source + i); 
   }
 }
+
+void sleep(int count) {
+  int i = count * 1000;
+  
+  while (i > 0) {
+    --i;
+  }
+}

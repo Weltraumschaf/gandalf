@@ -10,5 +10,5 @@ global _start
 _start:
   call main     ; invoke main() in our C kernel
 
-.hang
+.hang:
   jmp .hang     ; Hang forever when we return from the kernel.

@@ -41,11 +41,16 @@
 #define WHITE_ON_BLACK 0x0f
 
 // Screen device I/O ports
-#define REG_SCREEN_CTRL 0x3D4
-#define REG_SCREEN_DATA 0x3D5
+#define REG_SCREEN_CTRL 0x3d4
+#define REG_SCREEN_DATA 0x3d5
+#define CURSOR_OFFSET_HIGH 0x0e
+#define CURSOR_OFFSET_LOW 0x0f
 
 void print_char(char character, int col, int row, char attribute_byte);
 void clear_screen();
 int get_screen_offset(int col, int row);
+void update_cursor(int row, int col);
+int get_cursor();
+void set_cursor(int offset);
 
 #endif
