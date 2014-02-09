@@ -1,12 +1,11 @@
 #include "screen.h"
 
+/*
+ * offset = ( col + row * MAX_COLS) * 2
+ */
 int get_screen_offset(int col, int row) {
-  int cursor_offset = (row * MAX_COLS + col) * 2;
-  cursor_offset -= 2 * MAX_COLS;
-  // Return the updated cursor position.
-  return cursor_offset;
+  return VIDEO_ADDRESS + ( col + row * MAX_COLS ) * 2;
 }
-
 
 int get_cursor () {
   // The device uses its control register as an index
