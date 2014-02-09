@@ -50,7 +50,7 @@ int handle_scrolling(int cursor_offset) {
   }
 
   /* Blank the last line by setting all bytes to 0 */
-  char* last_line = get_screen_offset(0, MAX_ROWS -1) + VIDEO_ADDRESS; 
+  char* last_line = (char*) get_screen_offset(0, MAX_ROWS -1) + VIDEO_ADDRESS; 
   
   for (i = 0; i < MAX_COLS * 2; i++) {
     last_line[i] = 0; 
