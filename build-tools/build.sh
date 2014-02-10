@@ -56,8 +56,22 @@ echo "#"
 echo "# Extracting sources ... "
 echo "#"
 
+PLATFORM=`uname`
+COMPRESSOR=""
+
+if [ "${PLATFORM}" == "Darwin" ] ; then
+  COMPRESSOR="pbunzip2"
+elif [ "${PLATFORM}" == "Linux" ] ; then
+  COMPRESSOR="pbzip2"
+else
+  echo "Unsupported platform: ${PLATFORM}"
+  exit 1
+fi
+
+command -v ${COMPRESSOR} >/dev/null 2>&1 || { echo >&2 "I require ${COMPRESSOR} but it's not installed.  Aborting."; exit 1; }
+
 for file in $(ls -1 "${ARCHIVE}") ; do
-  tar -xvf "${ARCHIVE}/${file}" -C "${BUILD_DIR}" --use-compress-prog=pbzip2
+  tar -xvf "${ARCHIVE}/${file}" -C "${BUILD_DIR}" --use-compress-prog=${COMPRESSOR}
 done
 
 if [ ! -d "${PREFIX}" ] ; then
