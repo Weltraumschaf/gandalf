@@ -48,8 +48,8 @@ if [ -d "${BUILD_DIR}" ] ; then
   rm -rf "${BUILD_DIR}"
 fi
 
-if [ ! -d "${BUILD_DIR}" ] ; then 
-  mkdir -p "${BUILD_DIR}" 
+if [ ! -d "${BUILD_DIR}" ] ; then
+  mkdir -p "${BUILD_DIR}"
 fi
 
 echo "#"
@@ -57,11 +57,11 @@ echo "# Extracting sources ... "
 echo "#"
 
 for file in $(ls -1 "${ARCHIVE}") ; do
-  tar xjvf "${ARCHIVE}/${file}" -C "${BUILD_DIR}" --use-compress-prog=pbunzip2
+  tar -xvf "${ARCHIVE}/${file}" -C "${BUILD_DIR}" --use-compress-prog=pbzip2
 done
 
-if [ ! -d "${PREFIX}" ] ; then 
-  mkdir -p "${PREFIX}" 
+if [ ! -d "${PREFIX}" ] ; then
+  mkdir -p "${PREFIX}"
 fi
 
 echo "#"
@@ -94,8 +94,8 @@ make install
 
 cd "${BUILD_DIR}"
 
-if [ ! -d "${PREFIX}" ] ; then 
-  mkdir -p "${PREFIX}" 
+if [ ! -d "${PREFIX}" ] ; then
+  mkdir -p "${PREFIX}"
 fi
 
 cd "${BUILD_DIR}"
@@ -104,7 +104,7 @@ echo "#############"
 echo "# bin-utils #"
 echo "#############"
 
-if [ ! -d "${BUILD_DIR}/build-binutils" ] ; then 
+if [ ! -d "${BUILD_DIR}/build-binutils" ] ; then
   mkdir -p "${BUILD_DIR}/build-binutils"
 fi
 
@@ -132,8 +132,8 @@ cd "${BUILD_DIR}"
 echo "#######"
 echo "# GCC #"
 echo "#######"
- 
-if [ ! -d "${BUILD_DIR}/build-gcc" ] ; then 
+
+if [ ! -d "${BUILD_DIR}/build-gcc" ] ; then
   mkdir -p "${BUILD_DIR}/build-gcc"
 fi
 
