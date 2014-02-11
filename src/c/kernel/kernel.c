@@ -3,10 +3,10 @@
 #include "../drivers/screen.h"
 
 /*
- * Available headers from GCC:
+ * Available headers from GCC (source is in includes/):
  * float.h
  * iso646.h
- * limits.h
+ * limits.h ?
  * stdarg.h
  * stdbool.h
  * stddef.h
