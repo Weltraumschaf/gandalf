@@ -1,5 +1,5 @@
-#ifndef __CONV_H_INCLUDED__ 
-#define __CONV_H_INCLUDED__
+#ifndef __CONV_H__ 
+#define __CONV_H__
 
 char * itoa( int value, char * str, int base );
 

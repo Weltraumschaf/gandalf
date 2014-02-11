@@ -1,5 +1,5 @@
-#ifndef __LOW_LEVEL_H_INCLUDED__ 
-#define __LOW_LEVEL_H_INCLUDED__
+#ifndef __LOW_LEVEL_H__ 
+#define __LOW_LEVEL_H__
 
 #include <stdint.h>
 #include <stdbool.h>

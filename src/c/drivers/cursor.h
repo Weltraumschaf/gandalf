@@ -1,5 +1,5 @@
-#ifndef __CURSOR_H_INCLUDED__ 
-#define __CURSOR_H_INCLUDED__ 
+#ifndef __CURSOR_H__ 
+#define __CURSOR_H__ 
 
 #include <stdint.h>
 

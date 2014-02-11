@@ -1,5 +1,5 @@
-#ifndef __SCREEN_H_INCLUDED__ 
-#define __SCREEN_H_INCLUDED__ 
+#ifndef __SCREEN_H__ 
+#define __SCREEN_H__ 
 
 #include <stdint.h>
 #include "cursor.h"
