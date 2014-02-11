@@ -2,6 +2,17 @@
 #include "low_level.h"
 #include "../drivers/screen.h"
 
+/*
+ * Available headers from GCC:
+ * float.h
+ * iso646.h
+ * limits.h
+ * stdarg.h
+ * stdbool.h
+ * stddef.h
+ * stdint.h
+ */
+
 #define TIMER_START 10
 
 void welcome() {
