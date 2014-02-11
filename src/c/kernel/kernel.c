@@ -2,11 +2,12 @@
 #include "low_level.h"
 #include "../drivers/screen.h"
 
+#define TIMER_START 10
+
 void welcome() {
   print("Gandalf 1.0\n");
 }
 
-#define TIMER_START 1000
 int timer = TIMER_START;
 
 bool timerNotGoneOff() {
@@ -21,7 +22,7 @@ bool timerNotGoneOff() {
 }
 
 void assignCpuToSuitableProcess() {
-  print("Assign process CPU to suitable process ... \n");
+  print("Assign process CPU to suitable process ...\n");
 }
 
 void executeProcess() {
@@ -29,10 +30,10 @@ void executeProcess() {
   
   if (a) {
     a = false;
-    print("Execute a ... \n");
+    print("Execute a ...\n");
   } else {
     a = true;
-    print("Execute b ... \n");
+    print("Execute b ...\n");
   }
 
   sleep(1000);
@@ -60,4 +61,14 @@ void main() {
   clear_screen();
   welcome();
   run();
+  // print("0000\n");
+  // print("1111\n");
+  // print("2222\n");
+  // print("3333\n");
+  // print("4444\n");
+  // print("5555\n");
+  // print("6666\n");
+  // print("7777\n");
+  // print("8888\n");
+  // print("9999\n");
 }
