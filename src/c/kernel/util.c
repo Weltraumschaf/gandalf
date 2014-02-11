@@ -8,7 +8,7 @@ void memory_copy(char* source, char* dest, int no_bytes) {
 }
 
 void sleep(int count) {
-  int i = count * 1000;
+  int i = count * 100000;
   
   while (i > 0) {
     --i;
