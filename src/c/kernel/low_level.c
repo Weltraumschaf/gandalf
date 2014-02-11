@@ -174,3 +174,10 @@ uint64_t rdmsr(uint32_t msr_id) {
   asm volatile ( "rdmsr" : "=A" (msr_value) : "c" (msr_id) );
   return msr_value;
 }
+
+/*
+ * Halts the CPU.
+ */
+void halt() {
+  asm( "hlt" );
+}
