@@ -5,3 +5,4 @@
 *.dis
 target/
 build-tools/cross/
+stash/
