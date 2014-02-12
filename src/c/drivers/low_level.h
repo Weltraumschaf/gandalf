@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+/* See http://wiki.osdev.org/Inline_Assembly/Examples */
+
 // Memory access
 uint32_t farpeekl(uint16_t sel, void* off);
 void farpokeb(uint16_t sel, void* off, uint8_t v);

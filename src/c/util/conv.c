@@ -1,4 +1,6 @@
 
+#include "conv.h"
+
 // From http://wiki.osdev.org/Printing_to_Screen
 
 char* itoa(int value, char * str, int base) {

@@ -31,8 +31,8 @@ run : all
 
 
 # Automatically generate lists of sources using wildcards. 
-C_SOURCES = $(wildcard src/c/kernel/*.c src/c/drivers/*.c)
-HEADERS = $(wildcard src/c/kernel/*.h src/c/drivers/*.h)
+C_SOURCES = $(wildcard src/c/kernel/*.c src/c/drivers/*.c src/c/util/*.c)
+HEADERS = $(wildcard src/c/kernel/*.h src/c/drivers/*.h src/c/util/*.h)
 # Create a list of object files to build, simple by replacing 
 # the '.c' extension of filenames in C_SOURCES with '.o'
 OBJ = ${C_SOURCES:.c=.o}
@@ -64,7 +64,7 @@ boot_sector.bin : src/asm/boot_sector.asm
 
 clean :
 	$(RM) *.o *.bin *.img *.map *.dis
-	$(RM) src/c/kernel/*.o src/c/drivers/*.o
+	$(RM) src/c/kernel/*.o src/c/drivers/*.o src/c/util/*.o
 	
 # Disassemble our kernel - might be useful for debugging.
 kernel.dis : kernel.bin 
