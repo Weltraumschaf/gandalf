@@ -7,6 +7,8 @@ CXX := ./build-tools/cross/bin/i586-elf-g++
 CPP := ./build-tools/cross/bin/i586-elf-cpp
 LD  := ./build-tools/cross/bin/i586-elf-ld
 
+CFLAGS := -Wall
+
 all : os.img
 
 CPU = 486
