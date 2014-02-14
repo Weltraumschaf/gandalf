@@ -51,23 +51,8 @@ run : all
 	  -fda os.img
 
 # Automatically generate lists of sources using wildcards.
-C_SOURCES = $(wildcard	$(C_SRC_DIR)/drivers/*.c \
-			$(C_SRC_DIR)/includes/*.c \
-			$(C_SRC_DIR)/kernel/*.c \
-			$(C_SRC_DIR)/libc/*.c \
-			$(C_SRC_DIR)/libc/ctype/*.c \
-			$(C_SRC_DIR)/util/*.c \
-	    )
-
-
-
-HEADERS = $(wildcard	$(C_SRC_DIR)/drivers/*.h \
-			$(C_SRC_DIR)/includes/*.h \
-			$(C_SRC_DIR)/kernel/*.h \
-			$(C_SRC_DIR)/libc/*.h \
-			$(C_SRC_DIR)/libc/ctype/*.h \
-			$(C_SRC_DIR)/util/*.h \
-	    )
+C_SOURCES := $(shell find $(C_SRC_DIR) -name "*.c" -print)
+HEADERS := $(filter_out */provided/* ,$(shell find $(C_SRC_DIR) -name "*.h" -print))
 
 # Create a list of object files to build, simple by replacing
 # the '.c' extension of filenames in C_SOURCES with '.o'
