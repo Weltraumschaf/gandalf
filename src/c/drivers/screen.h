@@ -40,8 +40,11 @@
 // Attribute byte for our default colour scheme.
 #define WHITE_ON_BLACK 0x0f
 
+const char NEW_LINE = '\n';
+
 void print_char(char character, int col, int row, uint8_t attribute_byte);
 void clear_screen();
 void print(const char* message);
+void println(const char* message);
 
 #endif

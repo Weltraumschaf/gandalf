@@ -61,7 +61,7 @@ void print_char(char character, int col, int row, uint8_t attribute_byte) {
         offset = get_screen_offset(col, row);
     }
 
-    if (character == '\n') {
+    if (character == NEW_LINE) {
         // If we see a newline character, set offset to the end of
         // current row, so it will be advanced to the first col
         // of the next row.
@@ -85,6 +85,16 @@ void print_char(char character, int col, int row, uint8_t attribute_byte) {
 
 void print(const char* message) {
     print_at(message, -1, -1);
+}
+
+void println(const char* message) {
+//    char* name_with_extension;
+//
+//    messageWithNewLine = malloc(strlen(message) + 1);
+//    strcpy(messageWithNewLine, message);
+//    strcat(messageWithNewLine, NEW_LINE);
+//
+//    print(messageWithNewLine);
 }
 
 void clear_screen() {
