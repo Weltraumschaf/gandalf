@@ -1,5 +1,5 @@
-#ifndef __SCREEN_H__ 
-#define __SCREEN_H__ 
+#ifndef __SCREEN_H__
+#define __SCREEN_H__
 
 #include <stdint.h>
 #include "cursor.h"
@@ -34,7 +34,7 @@
   [79,01] -> (79 + 1 * 80) * 2 = 318
   [00,02] -> ( 0 + 2 * 80) * 2 = 320
 
-*/
+ */
 #define VIDEO_ADDRESS 0xb8000
 
 // Attribute byte for our default colour scheme.
@@ -43,5 +43,5 @@
 void print_char(char character, int col, int row, uint8_t attribute_byte);
 void clear_screen();
 void print(const char* message);
-  
+
 #endif
