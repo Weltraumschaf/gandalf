@@ -45,6 +45,12 @@ Build the kernel by invoking in the main direcotry:
 And running it in [QEMU][qemu] by invoking:
 
     $> make run
+    
+## Legalstuff
+
+All my work is licensed under [the Beer-Ware License][beer]. But I reuse some
+third party libraries such as [klibc][klibc]. They may have less open licenses.
+I add a license and source notice in each when it is not already mentioned.
 
 [how-to]:   http://www.cs.bham.ac.uk/~exr/lectures/opsys/10_11/lectures/os-dev.pdf
 [nasm]:     http://www.nasm.us/
@@ -54,3 +60,5 @@ And running it in [QEMU][qemu] by invoking:
 [cyg]:      http://www.cygwin.com/
 [cross]:    http://wiki.osdev.org/GCC_Cross-Compiler
 [qemu]:     http://wiki.qemu.org/Main_Page
+[beer]:     http://www.weltraumschaf.de/the-beer-ware-license.txt
+[klibc]:    https://en.wikipedia.org/wiki/Klibc
