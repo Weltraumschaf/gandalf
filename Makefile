@@ -2,12 +2,22 @@
 # Builds the kernel.
 #
 
+# Cross compiler
 CC  := ./build-tools/cross/bin/i586-elf-gcc
 CXX := ./build-tools/cross/bin/i586-elf-g++
 CPP := ./build-tools/cross/bin/i586-elf-cpp
 LD  := ./build-tools/cross/bin/i586-elf-ld
-
+# Compiler flags
 CFLAGS := -Wall
+
+# Variables
+SRC_DIR	    := src
+C_SRC_DIR   := $(SRC_DIR)/c
+ASM_SRC_DIR := $(SRC_DIR)/asm
+
+#
+# Targets
+#
 
 all : os.img
 
@@ -41,24 +51,24 @@ run : all
 	  -fda os.img
 
 # Automatically generate lists of sources using wildcards.
-C_SOURCES = $(wildcard	src/c/drivers/*.c \
-			src/c/includes/*.c \
-			src/c/includes/sys/*.c \
-			src/c/kernel/*.c \
-			src/c/libc/*.c \
-			src/c/libc/ctype/*.c \
-			src/c/util/*.c \
+C_SOURCES = $(wildcard	$(C_SRC_DIR)/drivers/*.c \
+			$(C_SRC_DIR)/includes/*.c \
+			$(C_SRC_DIR)/includes/sys/*.c \
+			$(C_SRC_DIR)/kernel/*.c \
+			$(C_SRC_DIR)/libc/*.c \
+			$(C_SRC_DIR)/libc/ctype/*.c \
+			$(C_SRC_DIR)/util/*.c \
 	    )
 
 
 
-HEADERS = $(wildcard	src/c/drivers/*.h \
-			src/c/includes/*.h \
-			src/c/includes/sys/*.h \
-			src/c/kernel/*.h \
-			src/c/libc/*.h \
-			src/c/libc/ctype/*.h \
-			src/c/util/*.h \
+HEADERS = $(wildcard	$(C_SRC_DIR)/drivers/*.h \
+			$(C_SRC_DIR)/includes/*.h \
+			$(C_SRC_DIR)/includes/sys/*.h \
+			$(C_SRC_DIR)/kernel/*.h \
+			$(C_SRC_DIR)/libc/*.h \
+			$(C_SRC_DIR)/libc/ctype/*.h \
+			$(C_SRC_DIR)/util/*.h \
 	    )
 
 # Create a list of object files to build, simple by replacing
@@ -81,18 +91,18 @@ kernel.bin: kernel_entry.o ${OBJ}
 	$(CC) -ffreestanding -c $< -o $@
 
 # Build the kernel entry object file.
-kernel_entry.o : src/asm/kernel_entry.asm
+kernel_entry.o : $(ASM_SRC_DIR)/kernel_entry.asm
 	nasm $< -f elf -o $@
 
 # Assemble the boot sector to raw machine code
 # The -I options tells nasm where to find our useful assembly
 # routines that we include in boot_sect.asm
-boot_sector.bin : src/asm/boot_sector.asm
+boot_sector.bin : $(ASM_SRC_DIR)/boot_sector.asm
 	nasm $< -f bin -o $@
 
 clean :
-	$(RM) *.o *.bin *.img *.map *.dis
-	$(RM) src/c/kernel/*.o src/c/drivers/*.o src/c/util/*.o
+	$(RM) -v *.bin *.img *.map *.dis
+	find $(SRC_DIR) -name "*.o" -exec $(RM) -rv {} \;
 
 # Disassemble our kernel - might be useful for debugging.
 kernel.dis : kernel.bin
