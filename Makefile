@@ -2,6 +2,11 @@
 # Builds the kernel.
 #
 
+CC  := ./build-tools/cross/bin/i586-elf-gcc
+CXX := ./build-tools/cross/bin/i586-elf-g++
+CPP := ./build-tools/cross/bin/i586-elf-cpp
+LD  := ./build-tools/cross/bin/i586-elf-ld
+
 all : os.img
 
 CPU = 486
