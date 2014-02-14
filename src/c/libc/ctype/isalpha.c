@@ -1,3 +1,3 @@
 #include "ctypefunc.h"
 
-//CTYPEFUNC(isalpha)
+CTYPEFUNC(isalpha)

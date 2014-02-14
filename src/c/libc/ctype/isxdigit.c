@@ -1,3 +1,3 @@
 #include "ctypefunc.h"
 
-//CTYPEFUNC(isxdigit)
+CTYPEFUNC(isxdigit)

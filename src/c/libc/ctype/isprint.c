@@ -1,3 +1,3 @@
 #include "ctypefunc.h"
 
-//CTYPEFUNC(isprint)
+CTYPEFUNC(isprint)
