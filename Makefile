@@ -1,3 +1,7 @@
+#
+# Builds the kernel.
+#
+
 all : os.img
 
 CPU = 486
@@ -29,11 +33,28 @@ run : all
 	  -d $(DEBUG) \
 	  -fda os.img
 
+# Automatically generate lists of sources using wildcards.
+C_SOURCES = $(wildcard	src/c/drivers/*.c \
+			src/c/includes/*.c \
+			src/c/includes/sys/*.c \
+			src/c/kernel/*.c \
+			src/c/libc/*.c \
+			src/c/libc/ctype/*.c \
+			src/c/util/*.c \
+	    )
 
-# Automatically generate lists of sources using wildcards. 
-C_SOURCES = $(wildcard src/c/kernel/*.c src/c/drivers/*.c src/c/util/*.c)
-HEADERS = $(wildcard src/c/kernel/*.h src/c/drivers/*.h src/c/util/*.h)
-# Create a list of object files to build, simple by replacing 
+
+
+HEADERS = $(wildcard	src/c/drivers/*.h \
+			src/c/includes/*.h \
+			src/c/includes/sys/*.h \
+			src/c/kernel/*.h \
+			src/c/libc/*.h \
+			src/c/libc/ctype/*.h \
+			src/c/util/*.h \
+	    )
+
+# Create a list of object files to build, simple by replacing
 # the '.c' extension of filenames in C_SOURCES with '.o'
 OBJ = ${C_SOURCES:.c=.o}
 
@@ -42,7 +63,7 @@ OBJ = ${C_SOURCES:.c=.o}
 os.img : boot_sector.bin kernel.bin
 	cat $^ > os.img
 
-# This links the binary of our kernel from two object files: 
+# This links the binary of our kernel from two object files:
 # - the kernel_entry, which jumps to main() in our kernel
 # - the compiled C kernel
 kernel.bin: kernel_entry.o ${OBJ}
@@ -57,7 +78,7 @@ kernel_entry.o : src/asm/kernel_entry.asm
 	nasm $< -f elf -o $@
 
 # Assemble the boot sector to raw machine code
-# The -I options tells nasm where to find our useful assembly 
+# The -I options tells nasm where to find our useful assembly
 # routines that we include in boot_sect.asm
 boot_sector.bin : src/asm/boot_sector.asm
 	nasm $< -f bin -o $@
@@ -65,7 +86,7 @@ boot_sector.bin : src/asm/boot_sector.asm
 clean :
 	$(RM) *.o *.bin *.img *.map *.dis
 	$(RM) src/c/kernel/*.o src/c/drivers/*.o src/c/util/*.o
-	
+
 # Disassemble our kernel - might be useful for debugging.
-kernel.dis : kernel.bin 
+kernel.dis : kernel.bin
 	ndisasm -b 32 $< > $@

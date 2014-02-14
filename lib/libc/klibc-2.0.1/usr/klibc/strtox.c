@@ -1,4 +1,4 @@
-/*
+/* 
  * strtox.c
  *
  * strto...() functions, by macro definition

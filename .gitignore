@@ -6,3 +6,4 @@
 target/
 build-tools/cross/
 stash/
+nbproject/

@@ -1,6 +1,7 @@
 
 #include "../drivers/low_level.h"
 #include "../drivers/screen.h"
+#include "../util/time.h"
 
 /*
  * Available headers from GCC (source is in includes/):
