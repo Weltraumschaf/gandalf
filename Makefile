@@ -53,7 +53,6 @@ run : all
 # Automatically generate lists of sources using wildcards.
 C_SOURCES = $(wildcard	$(C_SRC_DIR)/drivers/*.c \
 			$(C_SRC_DIR)/includes/*.c \
-			$(C_SRC_DIR)/includes/sys/*.c \
 			$(C_SRC_DIR)/kernel/*.c \
 			$(C_SRC_DIR)/libc/*.c \
 			$(C_SRC_DIR)/libc/ctype/*.c \
@@ -64,7 +63,6 @@ C_SOURCES = $(wildcard	$(C_SRC_DIR)/drivers/*.c \
 
 HEADERS = $(wildcard	$(C_SRC_DIR)/drivers/*.h \
 			$(C_SRC_DIR)/includes/*.h \
-			$(C_SRC_DIR)/includes/sys/*.h \
 			$(C_SRC_DIR)/kernel/*.h \
 			$(C_SRC_DIR)/libc/*.h \
 			$(C_SRC_DIR)/libc/ctype/*.h \
