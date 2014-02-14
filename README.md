@@ -27,14 +27,18 @@ as a prerequisite.  After that invoke the  built script: `build-tools/build.sh`.
 This will  take a  while and  build a standalone  C compiler  for the  kernel in
 `build-tools/cross` used by the `Makefile`.
 
+__ATTENTION__: You have to set your GCC compiler in `build-tools/environment`.
+
+    $> cd build-tools
+    $> . environment
+    $> ./build.sh
+
 ## Build the kernel
 
-After you  have installed the prerequisites  and cross compiler you  need to set
-thecompilerflags for make:
+You should use a new temrinal session so that your environment is fresh and not
+polluted by environment varibales from building the cross compiler.
 
-    $> . environment
-    
-After that you can build the kernel by invoking:
+Build the kernel by invoking in the main direcotry:
 
     $> make
     
