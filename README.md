@@ -2,7 +2,7 @@
 
 [How to][how-to] make an operating system from scratch.
 
-Why "Ganfdalf"? I  needed a "code name"  for the GitHub repo and  Gandalf was my
+Why "Gandalf"? I  needed a "code name"  for the GitHub repo and  Gandalf was my
 first thought. Don't know why. I'm not really a Hobbit-fan.
 
 ## Prerequisites
