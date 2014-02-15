@@ -14,7 +14,7 @@ DISAS	:= ndisasm
 CFLAGS	?=  -O2 -g
 
 # Add mandatory options to CFLAGS:
-CFLAGS	:=  $(CFLAGS) -Wall -Wextra
+CFLAGS	:=  $(CFLAGS) -Wall -Wextra -Wmissing-prototypes -Wstrict-prototypes
 
 # VN
 QEMU	:= qemu-system-i386

@@ -1,23 +1,16 @@
 
 #include "../drivers/low_level.h"
 #include "../drivers/screen.h"
-#include "../util/time.h"
-
-/*
- * Available headers from GCC (source is in includes/):
- * float.h
- * iso646.h
- * limits.h ?
- * stdarg.h
- * stdbool.h
- * stddef.h
- * stdint.h
- */
+#include "../util/util.h"
+#include "../libc/include/string.h"
 
 #define TIMER_START 10
 
 void welcome() {
     print("Gandalf 1.0\n");
+    char* len;
+    len = itoa(strlen("Gandalf 1.0"), len);
+    print(len);
 }
 
 int timer = TIMER_START;
@@ -72,7 +65,7 @@ void run() {
 void main() {
     clear_screen();
     welcome();
-    run();
+    //    run();
     // print("0000\n");
     // print("1111\n");
     // print("2222\n");
