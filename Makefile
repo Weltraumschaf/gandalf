@@ -3,12 +3,16 @@
 #
 
 # Cross compiler
-CC  := ./build-tools/cross/bin/i586-elf-gcc
-CXX := ./build-tools/cross/bin/i586-elf-g++
-CPP := ./build-tools/cross/bin/i586-elf-cpp
-LD  := ./build-tools/cross/bin/i586-elf-ld
+CC  	:= ./build-tools/cross/bin/i586-elf-gcc
+CXX 	:= ./build-tools/cross/bin/i586-elf-g++
+CPP 	:= ./build-tools/cross/bin/i586-elf-cpp
+LD  	:= ./build-tools/cross/bin/i586-elf-ld
+AS		:= nasm
+DISAS	:= ndisasm
 # Compiler flags
-CFLAGS := -Wall
+CFLAGS	:= -Wall
+# VN
+QEMU	:= qemu-system-i386
 
 # Variables
 SRC_DIR	    := src
@@ -39,8 +43,9 @@ RAM = 32
 #               non-existent register)
 DEBUG = guest_errors,int,pcall,unimp,ioport,in_asm
 
-run : all
-	qemu-system-i386 \
+run : all	
+
+	$(QEMU) \
 	  -cpu $(CPU) \
 	  -m $(RAM) \
 	  -k en \
@@ -75,13 +80,13 @@ kernel.bin: kernel_entry.o ${OBJ}
 
 # Build the kernel entry object file.
 kernel_entry.o : $(ASM_SRC_DIR)/kernel_entry.asm
-	nasm $< -f elf -o $@
+	$(AS) $< -f elf -o $@
 
 # Assemble the boot sector to raw machine code
 # The -I options tells nasm where to find our useful assembly
 # routines that we include in boot_sect.asm
 boot_sector.bin : $(ASM_SRC_DIR)/boot_sector.asm
-	nasm $< -f bin -o $@
+	$(AS) $< -f bin -o $@
 
 clean :
 	$(RM) -v *.bin *.img *.map *.dis
@@ -89,4 +94,4 @@ clean :
 
 # Disassemble our kernel - might be useful for debugging.
 kernel.dis : kernel.bin
-	ndisasm -b 32 $< > $@
+	$(DISAS) -b 32 $< > $@
