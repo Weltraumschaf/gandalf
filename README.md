@@ -27,10 +27,9 @@ as a prerequisite.  After that invoke the  built script: `build-tools/build.sh`.
 This will  take a  while and  build a standalone  C compiler  for the  kernel in
 `build-tools/cross` used by the `Makefile`.
 
-__ATTENTION__: You have to set your GCC compiler in `build-tools/environment`.
+__ATTENTION__: You have to set your GCC compiler in `build-tools/environment` first.
 
     $> cd build-tools
-    $> . environment
     $> ./build.sh
 
 ## Build the kernel
