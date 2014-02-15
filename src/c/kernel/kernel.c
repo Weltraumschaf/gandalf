@@ -1,4 +1,4 @@
-
+#include <stdbool.h>
 #include "../drivers/low_level.h"
 #include "../drivers/screen.h"
 #include "../util/util.h"
