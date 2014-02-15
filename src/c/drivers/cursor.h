@@ -18,4 +18,4 @@ void update_cursor(int col, int row);
 int get_cursor();
 void set_cursor(int offset);
 
-#endif
+#endif /* __CURSOR_H__  */

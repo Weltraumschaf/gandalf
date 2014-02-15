@@ -1,5 +1,7 @@
 #include "screen.h"
 
+const char NEW_LINE = '\n';
+
 /* Advance the text cursor, scrolling the video buffer if necessary. */
 int handle_scrolling(int cursor_offset) {
     // If the cursor is within the screen, return it unmodified.
