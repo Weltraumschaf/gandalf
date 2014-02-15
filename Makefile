@@ -9,8 +9,13 @@ CPP 	:= ./build-tools/cross/bin/i586-elf-cpp
 LD  	:= ./build-tools/cross/bin/i586-elf-ld
 AS		:= nasm
 DISAS	:= ndisasm
-# Compiler flags
-CFLAGS	:= -Wall
+
+# Default CFLAGS:
+CFLAGS	?=  -O2 -g
+
+# Add mandatory options to CFLAGS:
+CFLAGS	:=  $(CFLAGS) -Wall -Wextra
+
 # VN
 QEMU	:= qemu-system-i386
 
@@ -43,7 +48,7 @@ RAM = 32
 #               non-existent register)
 DEBUG = guest_errors,int,pcall,unimp,ioport,in_asm
 
-run : all	
+run : all
 
 	$(QEMU) \
 	  -cpu $(CPU) \
