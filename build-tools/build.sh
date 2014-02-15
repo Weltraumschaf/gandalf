@@ -1,6 +1,13 @@
 #!/bin/bash
 
-# http://wiki.osdev.org/GCC_Cross-Compiler
+#
+# This script builds the cross compiler. Before executing it you need 
+# to set the environment variables in `environment` file according to
+# your GCC installion. This script may not work with clang or any other
+# compiler than GCC.
+#
+# Based on: http://wiki.osdev.org/GCC_Cross-Compiler
+#
 
 set -e
 
@@ -24,7 +31,7 @@ echo "#"
 echo "# Setting environment ..."
 echo "#"
 
-source environment
+source "./environment"
 export CFLAGS="-Wno-deprecated-declarations"
 
 export PREFIX="${PROGRAM_DIRECTORY}/cross"
