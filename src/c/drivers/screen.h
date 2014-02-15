@@ -2,7 +2,6 @@
 #define __SCREEN_H__
 
 #include <stdint.h>
-#include "cursor.h"
 
 /*
           row

@@ -1,6 +1,6 @@
 #include "screen.h"
-
-const char NEW_LINE = '\n';
+#include "cursor.h"
+#include "../include/string.h"
 
 /* Advance the text cursor, scrolling the video buffer if necessary. */
 int handle_scrolling(int cursor_offset) {
@@ -63,7 +63,7 @@ void print_char(char character, int col, int row, uint8_t attribute_byte) {
         offset = get_screen_offset(col, row);
     }
 
-    if (character == NEW_LINE) {
+    if (character == '\n') {
         // If we see a newline character, set offset to the end of
         // current row, so it will be advanced to the first col
         // of the next row.
@@ -90,13 +90,13 @@ void print(const char* message) {
 }
 
 void println(const char* message) {
-//    char* name_with_extension;
-//
-//    messageWithNewLine = malloc(strlen(message) + 1);
-//    strcpy(messageWithNewLine, message);
-//    strcat(messageWithNewLine, NEW_LINE);
-//
-//    print(messageWithNewLine);
+   char* messageWithNewLine;
+
+   messageWithNewLine = (char *) malloc(strlen(message) + 1);
+   strcpy(messageWithNewLine, message);
+   strcat(messageWithNewLine, (char *) '\n');
+
+   print(messageWithNewLine);
 }
 
 void clear_screen() {
