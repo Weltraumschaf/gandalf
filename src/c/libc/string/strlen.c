@@ -1,11 +1,11 @@
 #include "../include/string.h"
 
 size_t strlen(const char* string) {
-    size_t result = 0;
+    size_t length;
 
-    while (string[result]) {
-        ++result;
+    for(length = 0; *string != '\0'; ++string) {
+        ++length;
     }
 
-    return result;
+    return length;
 }
