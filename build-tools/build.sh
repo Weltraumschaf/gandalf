@@ -68,7 +68,10 @@ else
   exit 1
 fi
 
-command -v ${COMPRESSOR} >/dev/null 2>&1 || { echo >&2 "I require ${COMPRESSOR} but it's not installed.  Aborting."; exit 1; }
+command -v ${COMPRESSOR} >/dev/null 2>&1 || { 
+  echo >&2 "I require ${COMPRESSOR} but it's not installed.  Aborting."; 
+  exit 1; 
+}
 
 for file in $(ls -1 "${ARCHIVE}") ; do
   tar -xvf "${ARCHIVE}/${file}" -C "${BUILD_DIR}" --use-compress-prog=${COMPRESSOR}
