@@ -1,6 +1,5 @@
 #include "screen.h"
 #include "cursor.h"
-#include "../include/string.h"
 
 /* Advance the text cursor, scrolling the video buffer if necessary. */
 int handle_scrolling(int cursor_offset) {
@@ -90,13 +89,13 @@ void print(const char* message) {
 }
 
 void println(const char* message) {
-   char* messageWithNewLine;
-
-   messageWithNewLine = (char *) malloc(strlen(message) + 1);
-   strcpy(messageWithNewLine, message);
-   strcat(messageWithNewLine, (char *) '\n');
-
-   print(messageWithNewLine);
+//   char* messageWithNewLine;
+//
+//   messageWithNewLine = (char *) malloc(strlen(message) + 1);
+//   strcpy(messageWithNewLine, message);
+//   strcat(messageWithNewLine, (char *) '\n');
+//
+//   print(messageWithNewLine);
 }
 
 void clear_screen() {
