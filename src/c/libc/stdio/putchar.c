@@ -1,15 +1,18 @@
 #include "../include/stdio.h"
 
-#if defined(__is_myos_kernel)
+#if defined(__is_gandalf_kernel)
 #include "../../kernel/tty.h"
 #endif
 
 int putchar(int ic) {
-#if defined(__is_myos_kernel)
     char c = (char) ic;
-    tty_write(&c, sizeof (c));
+
+#if defined(__is_gandalf_kernel)
+    tty_write(&c); // Kernel API call.
 #else
-    // TODO: You need to implement a write system call.
+    // FIXME: Need to implement a write system call.
+    tty_write(&c);
 #endif
+
     return ic;
 }

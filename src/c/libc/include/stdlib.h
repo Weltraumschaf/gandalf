@@ -6,8 +6,10 @@
 
 __BEGIN_DECLS
 
-__attribute__((__noreturn__))
-void abort();
+/**
+ * The abort() function causes abnormal program termination to occur.
+ */
+void abort() __attribute__((__noreturn__));
 
 __END_DECLS
 

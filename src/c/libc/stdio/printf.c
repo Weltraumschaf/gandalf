@@ -3,10 +3,6 @@
 #include "../include/stdio.h"
 #include "../include/string.h"
 
-#if defined(__is_myos_kernel)
-#include "../../kernel/tty.h"
-#endif
-
 static void print_string(const char* data, size_t data_length) {
     for (size_t i = 0; i < data_length; i++) {
         putchar((int) ((const unsigned char*) data)[i]);
