@@ -24,17 +24,6 @@ static const uint8_t COLOR_LIGHT_MAGENTA        = 13;
 static const uint8_t COLOR_LIGHT_BROWN          = 14;
 static const uint8_t COLOR_WHITE                = 15;
 
-inline uint8_t make_color(uint8_t foreground, uint8_t background) {
-    return foreground | background << 4;
-}
-
-inline uint16_t make_vgaentry(char character, uint8_t color) {
-    uint16_t c16 = character;
-    uint16_t color16 = color;
-
-    return c16 | color16 << 8;
-}
-
 static const size_t VGA_WIDTH = 80;
 static const size_t VGA_HEIGHT = 24;
 
