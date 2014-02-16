@@ -1,3 +1,6 @@
+/*
+ * http://www.nongnu.org/avr-libc/user-manual/group__avr__stdint.html
+ */
 #ifndef _GCC_WRAP_STDINT_H
 #if __STDC_HOSTED__
 # if defined __cplusplus && __cplusplus >= 201103L

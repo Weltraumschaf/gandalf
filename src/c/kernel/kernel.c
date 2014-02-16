@@ -6,10 +6,11 @@
 
 #define TIMER_START 10
 
-//void welcome() {
-//    print("Gandalf 1.0\n");
-//}
-//
+void welcome() {
+    tty_writestring("Gandalf 1.0");
+    tty_setcursor(0, 1);
+}
+
 //int timer = TIMER_START;
 //
 //bool timerNotGoneOff() {
@@ -61,8 +62,7 @@
  */
 void main() {
     tty_initialize();
-//    printf("Hello, kernel World!\n");
-//    welcome();
+    welcome();
     //    run();
     // print("0000\n");
     // print("1111\n");
