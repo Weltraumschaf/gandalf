@@ -8,9 +8,6 @@
 
 void welcome() {
     print("Gandalf 1.0\n");
-    char* len;
-    len = itoa(strlen("Gandalf 1.0"), len);
-    print(len);
 }
 
 int timer = TIMER_START;

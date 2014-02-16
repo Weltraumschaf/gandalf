@@ -3,7 +3,7 @@
 size_t strlen(const char* string) {
     size_t length;
 
-    for(length = 0; *string != '\0'; ++string) {
+    for(length = 0; *string != NULL; ++string) {
         ++length;
     }
 
