@@ -64,14 +64,9 @@ void main() {
     tty_initialize();
     welcome();
     //    run();
-     println("0000");
-     println("1111");
-     println("2222");
-     println("3333");
-     println("4444");
-     println("5555");
-     println("6666");
-     println("7777");
-     println("8888");
-     print("9999");
+    char* b = " ";
+
+    for (int i = 1; i < 25; ++i) {
+        println(itoa(i, b));
+    }
 }

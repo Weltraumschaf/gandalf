@@ -32,7 +32,7 @@ static const size_t VGA_WIDTH = 80;
 /**
  * Lines per screen.
  */
-static const size_t VGA_HEIGHT = 24;
+static const size_t VGA_HEIGHT = 25;
 
 /**
  * Address of memory mapped video memory.
