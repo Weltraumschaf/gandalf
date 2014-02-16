@@ -17,12 +17,18 @@ void tty_clear() {
     }
 }
 
-void tty_setcursor(int column, int row) {
-    size_t offset = column + row * VGA_WIDTH;
+size_t tty_computeOffset(uint8_t row, uint8_t column) {
+    size_t offset = row * VGA_WIDTH + column;
 
     if (offset >= MAX_OFFSET) {
         offset = 0;
     }
+
+    return offset;
+}
+
+void tty_setCursor(int row, int column) {
+    size_t offset = tty_computeOffset(row, column);
 
     // cursor LOW port to vga INDEX register
     port_byte_out(REG_SCREEN_CTRL, CURSOR_OFFSET_LOW);
@@ -38,20 +44,20 @@ void tty_initialize() {
     tty_color      = DEFAULT_COLOR;
     tty_buffer     = VGA_MEMORY;
     tty_clear();
-    tty_setcursor(tty_column, tty_row);
+    tty_setCursor(tty_column, tty_row);
 }
 
-void tty_setcolor(uint8_t color) {
+void tty_setColor(uint8_t color) {
     tty_color = color;
 }
 
-void tty_putentryat(char c, uint8_t color, size_t x, size_t y) {
-    const size_t index = y * VGA_WIDTH + x;
-    tty_buffer[index] = make_vgaentry(c, color);
+void tty_putEntryAt(char c, uint8_t color, size_t row, size_t column) {
+    const size_t offset = tty_computeOffset(row, column);
+    tty_buffer[offset] = make_vgaentry(c, color);
 }
 
-void tty_putchar(char c) {
-    tty_putentryat(c, tty_color, tty_column, tty_row);
+void tty_putChar(char c) {
+    tty_putEntryAt(c, tty_color, tty_row, tty_column);
 
     if (++tty_column == VGA_WIDTH) {
         tty_column = 0;
@@ -60,14 +66,15 @@ void tty_putchar(char c) {
             tty_row = 0;
         }
     }
+
+    tty_setCursor(tty_row, tty_column);
 }
 
-void tty_write(const char* data, size_t size) {
+void tty_write(const char* data) {
+    const size_t size = strlen(data);
+
     for (size_t i = 0; i < size; i++) {
-        tty_putchar(data[i]);
+        tty_putChar(data[i]);
     }
 }
 
-void tty_writestring(const char* data) {
-    tty_write(data, strlen(data));
-}

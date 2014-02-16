@@ -78,11 +78,26 @@ static const uint8_t CURSOR_OFFSET_LOW  = 0x0f;
  */
 static const char BLANK = ' ';
 
+/**
+ * Set all terminal settings (color, cursor position etc) to initial values and clears screen.
+ */
 void tty_initialize();
+/**
+ * Print empty characters onto the whole screen.
+ */
 void tty_clear();
-void tty_setcolor(uint8_t color);
-void tty_putchar(char c);
-void tty_writestring(const char* data);
-void tty_setcursor(int column, int row);
+/**
+ * Set the current terminal color.
+ *
+ * Use make_color() from vga.h to create color byte.
+ */
+void tty_setColor(uint8_t color);
+/**
+ * Set the cursor on the screen.
+ */
+void tty_setCursor(int column, int row);
+
+void tty_putChar(char c);
+void tty_write(const char* data);
 
 #endif /* __TTY_H_ */
