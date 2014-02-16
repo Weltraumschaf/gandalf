@@ -1,3 +1,6 @@
+/*
+ * From http://wiki.osdev.org/User:Sortie/Meaty_Skeleton
+ */
 #include "../include/string.h"
 
 void* memmove(void* dstptr, const void* srcptr, size_t size) {

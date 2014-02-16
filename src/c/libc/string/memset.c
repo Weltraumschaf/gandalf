@@ -1,3 +1,6 @@
+/*
+ * From http://wiki.osdev.org/User:Sortie/Meaty_Skeleton
+ */
 #include "../include/string.h"
 
 void* memset(void* bufptr, int value, size_t size) {
@@ -6,6 +9,6 @@ void* memset(void* bufptr, int value, size_t size) {
     for (size_t i = 0; i < size; i++) {
         buf[i] = (unsigned char) value;
     }
-    
+
     return bufptr;
 }

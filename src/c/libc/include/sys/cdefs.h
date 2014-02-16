@@ -1,3 +1,7 @@
+/*
+ * From http://wiki.osdev.org/User:Sortie/Meaty_Skeleton
+ */
+
 #ifndef __SYS_CDEFS_H
 #define __SYS_CDEFS_H
 
@@ -11,13 +15,14 @@
 #define __END_DECLS
 #endif
 
+#define NULL 0
 /**
  * The \0 character.
  */
-#define NULL 0
+#define END_OF_STRING ((char) '\0')
 /**
  * The\n character.
  */
-#define NEW_LINE 10
+#define NEW_LINE ((char) '\n')
 
 #endif /* __SYS_CDEFS_H */
