@@ -10,5 +10,7 @@
 #define __BEGIN_DECLS
 #define __END_DECLS
 #endif
- 
+
+#define NULL 0
+
 #endif /* __SYS_CDEFS_H */
