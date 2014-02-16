@@ -7,7 +7,7 @@
 #define TIMER_START 10
 
 void welcome() {
-    tty_write("Gandalf 1.0");
+    tty_write("Gandalf 1.0\n");
 }
 
 //int timer = TIMER_START;

@@ -57,7 +57,11 @@ void tty_putEntryAt(char c, uint8_t color, size_t row, size_t column) {
 }
 
 void tty_putChar(char c) {
-    tty_putEntryAt(c, tty_color, tty_row, tty_column);
+    if (NEW_LINE == c) {
+        tty_column = VGA_WIDTH - 1; // Move to end of column.
+    } else {
+        tty_putEntryAt(c, tty_color, tty_row, tty_column);
+    }
 
     if (++tty_column == VGA_WIDTH) {
         tty_column = 0;
