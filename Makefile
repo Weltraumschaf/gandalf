@@ -11,10 +11,10 @@ AS		:= nasm
 DISAS	:= ndisasm
 
 # Default CFLAGS:
-CFLAGS	?=  -O2 -g
+CFLAGS	?= -O2 -g
 
 # Add mandatory options to CFLAGS:
-CFLAGS	:=  $(CFLAGS) -Wall -Wextra -Wmissing-prototypes -Wstrict-prototypes
+CFLAGS	:= $(CFLAGS) -Wall -Wextra -Wmissing-prototypes -Wstrict-prototypes
 
 # VN
 QEMU	:= qemu-system-i386
@@ -59,7 +59,19 @@ run : all
 	  -no-hpet \
 	  -d $(DEBUG) \
 	  -fda os.img
+	  
+debug : all
 
+	$(QEMU) -gdb tcp::1234 -S \
+	  -cpu $(CPU) \
+	  -m $(RAM) \
+	  -k en \
+	  -vga std \
+	  -no-acpi \
+	  -no-hpet \
+	  -d $(DEBUG) \
+	  -fda os.img
+	  
 # Automatically generate lists of sources using wildcards.
 C_SOURCES := $(shell find $(C_SRC_DIR) -name "*.c" -print)
 HEADERS := $(filter_out */provided/* ,$(shell find $(C_SRC_DIR) -name "*.h" -print))
