@@ -1,7 +1,7 @@
 /*
  * From http://wiki.osdev.org/User:Sortie/Meaty_Skeleton
  */
-#include <stdint.h>
+#include "vga.h"
 
 uint8_t make_color(uint8_t foreground, uint8_t background) {
     return foreground | background << 4;
