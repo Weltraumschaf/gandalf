@@ -2,7 +2,7 @@
  * From klibc.
  */
 
-#include "../include/sys/cdefs.h"
+#include "../include/string.h"
 
 char *strchr(const char *haystack, int needle) {
     while (*haystack != (char) needle) {

@@ -36,6 +36,18 @@ char *strcpy(char *dst, const char *src);
  * @return a pointer to the located character, or NULL if the character does not appear in the string
  */
 char *strchr(const char *haystack, int needle);
+/**
+ * The strcat() and strncat() functions append a copy of the null-terminated string src to the end of the
+ * null-terminated string dst, then add a terminating `\0'. The string dst must have sufficient space to hold
+ * the result.
+ *
+ * The source and destination strings should not overlap, as the behavior is undefined.
+ *
+ * @param dst target to append src
+ * @param src appended string
+ * @return the pointer to dst
+ */
+char *strcat(char *dst, const char *src);
 
 __END_DECLS
 
