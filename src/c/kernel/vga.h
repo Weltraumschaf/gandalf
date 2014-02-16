@@ -25,12 +25,35 @@ static const uint8_t COLOR_LIGHT_MAGENTA        = 13;
 static const uint8_t COLOR_LIGHT_BROWN          = 14;
 static const uint8_t COLOR_WHITE                = 15;
 
+/**
+ * Characters per screen row.
+ */
 static const size_t VGA_WIDTH = 80;
+/**
+ * Lines per screen.
+ */
 static const size_t VGA_HEIGHT = 24;
 
+/**
+ * Address of memory mapped video memory.
+ */
 static uint16_t * const VGA_MEMORY = (uint16_t*) 0xB8000;
 
+/**
+ * Creates a combined color setting byte.
+ *
+ * @param foreground one of COLOR_* constants
+ * @param background one of COLOR_* constants
+ * @return the combiend byte
+ */
 uint8_t make_color(uint8_t foreground, uint8_t background);
+/**
+ * Combines color setting byte and character byte to word directly usable for video memory.
+ *
+ * @param character character to print
+ * @param color color setting for character
+ * @return video memory byte
+ */
 uint16_t make_vgaentry(char character, uint8_t color);
 
 #endif /* __VGA_H_ */

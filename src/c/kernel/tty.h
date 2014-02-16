@@ -45,15 +45,31 @@
 
 #include <stddef.h>
 
-
+/**
+ * Maximum offset in video memory.
+ */
 static const size_t MAX_OFFSET = 2000;
 
-// Screen device I/O ports
+/**
+ * Register port address for screen control.
+ */
 static const uint16_t REG_SCREEN_CTRL   = 0x3d4;
+/**
+ * Register port address for screen data.
+ */
 static const uint16_t REG_SCREEN_DATA   = 0x3d5;
+/**
+ * High byte offset for cursor position.
+ */
 static const uint8_t CURSOR_OFFSET_HIGH = 0x0e;
+/**
+ * Low byte offset for cursor position.
+ */
 static const uint8_t CURSOR_OFFSET_LOW  = 0x0f;
 
+/**
+ * Used to clear screen.
+ */
 static const char BLANK = ' ';
 
 void tty_initialize();
