@@ -1,5 +1,5 @@
 #include "cursor.h"
-#include "low_level.h"
+#include "../kernel/arch/i386/low_level.h"
 
 int get_screen_offset(int col, int row) {
     if (col >= MAX_COLS) {

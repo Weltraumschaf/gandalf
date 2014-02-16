@@ -1,8 +1,9 @@
 #include <stdbool.h>
-#include "../drivers/low_level.h"
 #include "../drivers/screen.h"
 #include "../util/util.h"
 #include "../libc/include/string.h"
+#include "../libc/include/stdio.h"
+#include "tty.h"
 
 #define TIMER_START 10
 
@@ -61,7 +62,9 @@ void run() {
  */
 void main() {
     clear_screen();
-    welcome();
+    tty_initialize();
+    printf("Hello, kernel World!\n");
+//    welcome();
     //    run();
     // print("0000\n");
     // print("1111\n");

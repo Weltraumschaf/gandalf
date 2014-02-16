@@ -30,4 +30,7 @@ static const size_t VGA_HEIGHT = 24;
 
 static uint16_t * const VGA_MEMORY = (uint16_t*) 0xB8000;
 
+uint8_t make_color(uint8_t foreground, uint8_t background);
+uint16_t make_vgaentry(char character, uint8_t color);
+
 #endif /* __VGA_H_ */
