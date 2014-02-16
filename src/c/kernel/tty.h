@@ -6,6 +6,7 @@
 #define __TTY_H_
 
 #include <stdint.h>
+#include <stdbool.h>
 #include "vga.h"
 
 /**
@@ -47,11 +48,6 @@
 #include <stddef.h>
 
 /**
- * Default color for terminal.
- */
-#define DEFAULT_COLOR (make_color(COLOR_LIGHT_BROWN, COLOR_BLUE));
-
-/**
  * Maximum offset in video memory.
  */
 static const size_t MAX_OFFSET = 2000;
@@ -87,17 +83,46 @@ void tty_initialize();
  */
 void tty_clear();
 /**
+ * This function turn auto scrolling off and on.
+ *
+ * Auto scrolling means that the terminal shift all rows one up
+ * if last rows columns were exceeded.
+ *
+ * Auto scrolling is off by default.
+ *
+ * @param flag true to turn on, false to turn off
+ */
+void tty_setAutoScrolling(bool flag);
+/**
  * Set the current terminal color.
  *
  * Use make_color() from vga.h to create color byte.
+ *
+ * @param color byte with high nibble as background and low nibble as foreground
  */
 void tty_setColor(uint8_t color);
 /**
  * Set the cursor on the screen.
+ *
+ * @param row to position the cursor
+ * @param column to position the cursor
  */
-void tty_setCursor(int column, int row);
-
+void tty_setCursor(int row, int column);
+/**
+ * Put given character at current cursor position.
+ *
+ * Handles also wrap around to next row if end of row reached or '\n' input.
+ *
+ * @param c character to put on terminal
+ */
 void tty_putChar(char c);
+/**
+ * Write given string at current cursor position.
+ *
+ * Handles also wrap around to next row if end of row reached or '\n' input.
+ *
+ * @param data string to write on terminal
+ */
 void tty_write(const char* data);
 
 #endif /* __TTY_H_ */

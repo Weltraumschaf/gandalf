@@ -8,22 +8,25 @@
 #include <stdint.h>
 #include "../libc/include/sys/types.h"
 
-static const uint8_t COLOR_BLACK                = 0;
-static const uint8_t COLOR_BLUE                 = 1;
-static const uint8_t COLOR_GREEN                = 2;
-static const uint8_t COLOR_CYAN                 = 3;
-static const uint8_t COLOR_RED                  = 4;
-static const uint8_t COLOR_MAGENTA              = 5;
-static const uint8_t COLOR_BROWN                = 6;
-static const uint8_t COLOR_LIGHT_GREY           = 7;
-static const uint8_t COLOR_DARK_GREY            = 8;
-static const uint8_t COLOR_LIGHT_BLUE           = 9;
-static const uint8_t COLOR_LIGHT_GREEN          = 10;
-static const uint8_t COLOR_LIGHT_CYAN           = 11;
-static const uint8_t COLOR_LIGHT_RED            = 12;
-static const uint8_t COLOR_LIGHT_MAGENTA        = 13;
-static const uint8_t COLOR_LIGHT_BROWN          = 14;
-static const uint8_t COLOR_WHITE                = 15;
+static const uint8_t COLOR_BLACK                = 0x00;
+static const uint8_t COLOR_BLUE                 = 0x01;
+static const uint8_t COLOR_GREEN                = 0x02;
+static const uint8_t COLOR_CYAN                 = 0x03;
+static const uint8_t COLOR_RED                  = 0x04;
+static const uint8_t COLOR_MAGENTA              = 0x05;
+static const uint8_t COLOR_BROWN                = 0x06;
+static const uint8_t COLOR_LIGHT_GREY           = 0x07;
+static const uint8_t COLOR_DARK_GREY            = 0x08;
+static const uint8_t COLOR_LIGHT_BLUE           = 0x09;
+static const uint8_t COLOR_LIGHT_GREEN          = 0x0a;
+static const uint8_t COLOR_LIGHT_CYAN           = 0x0b;
+static const uint8_t COLOR_LIGHT_RED            = 0x0c;
+static const uint8_t COLOR_LIGHT_MAGENTA        = 0x0d;
+static const uint8_t COLOR_LIGHT_BROWN          = 0x0e;
+static const uint8_t COLOR_WHITE                = 0x0f;
+
+static const uint8_t DEFAULT_COLOR              = 0x1e; // BG: COLOR_BLUE, FG: COLOR_LIGHT_BROWN
+static const uint8_t DEFAULT_COLOR_INVERTED     = 0xe1; // BG: COLOR_LIGHT_BROWN, FG: COLOR_BLUE
 
 /**
  * Characters per screen row.
