@@ -7,7 +7,7 @@
 #include "../../kernel/tty.h"
 #endif
 
-static void print(const char* data, size_t data_length) {
+static void print_string(const char* data, size_t data_length) {
     for (size_t i = 0; i < data_length; i++) {
         putchar((int) ((const unsigned char*) data)[i]);
     }
@@ -29,7 +29,7 @@ print_c:
                 amount++;
             }
 
-            print(format, amount);
+            print_string(format, amount);
             format += amount;
             written += amount;
             continue;
@@ -51,11 +51,11 @@ incomprehensible_conversion:
         if (*format == 'c') {
             format++;
             char c = (char) va_arg(parameters, int /* char promotes to int */);
-            print(&c, sizeof (c));
+            print_string(&c, sizeof (c));
         } else if (*format == 's') {
             format++;
             const char* s = va_arg(parameters, const char*);
-            print(s, strlen(s));
+            print_string(s, strlen(s));
         } else {
             goto incomprehensible_conversion;
         }

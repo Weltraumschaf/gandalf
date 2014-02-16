@@ -7,7 +7,7 @@
 int putchar(int ic) {
 #if defined(__is_myos_kernel)
     char c = (char) ic;
-    terminal_write(&c, sizeof (c));
+    tty_write(&c, sizeof (c));
 #else
     // TODO: You need to implement a write system call.
 #endif
