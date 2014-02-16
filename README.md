@@ -61,6 +61,13 @@ All my work is licensed under [the Beer-Ware License][beer]. But I reuse some
 third party libraries such as [klibc][klibc]. They may have less open licenses.
 I add a license and source notice in each when it is not already mentioned.
 
+## Architecture
+
+### Terminal emulation - tty
+
+The tty is defined in `kernel/tty.h`. It ptovides kernel API to initialize the 
+tty, set curos, color, and print characters and messages on the screen.
+
 [how-to]:   http://www.cs.bham.ac.uk/~exr/lectures/opsys/10_11/lectures/os-dev.pdf
 [nasm]:     http://www.nasm.us/
 [binutils]: https://www.gnu.org/software/binutils/
