@@ -1,8 +1,7 @@
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdint.h>
-#include "../libc/include/string.h"
+#include "tty.h"
 #include "vga.h"
+#include "arch/i386/low_level.h"
+#include "../libc/include/string.h"
 
 size_t tty_row;
 size_t tty_column;
@@ -10,12 +9,27 @@ uint8_t tty_color;
 uint16_t* tty_buffer;
 
 void tty_clear() {
-    for (size_t y = 0; y < VGA_HEIGHT; y++) {
+    for (size_t y = 0; y <= VGA_HEIGHT; y++) {
         for (size_t x = 0; x < VGA_WIDTH; x++) {
             const size_t index = y * VGA_WIDTH + x;
-            tty_buffer[index] = make_vgaentry(' ', tty_color);
+            tty_buffer[index] = make_vgaentry(BLANK, tty_color);
         }
     }
+}
+
+void tty_setcursor(int column, int row) {
+    size_t offset = column + row * VGA_WIDTH;
+
+    if (offset >= MAX_OFFSET) {
+        offset = 0;
+    }
+
+    // cursor LOW port to vga INDEX register
+    port_byte_out(REG_SCREEN_CTRL, CURSOR_OFFSET_LOW);
+    port_byte_out(REG_SCREEN_DATA, (int) (offset & 0xff));
+    // cursor HIGH port to vga INDEX register
+    port_byte_out(REG_SCREEN_CTRL, CURSOR_OFFSET_HIGH);
+    port_byte_out(REG_SCREEN_DATA, (int) ((offset >> 8) & 0xff));
 }
 
 void tty_initialize() {
@@ -24,6 +38,7 @@ void tty_initialize() {
     tty_color      = make_color(COLOR_LIGHT_GREY, COLOR_BLACK);
     tty_buffer     = VGA_MEMORY;
     tty_clear();
+    tty_setcursor(tty_column, tty_row);
 }
 
 void tty_setcolor(uint8_t color) {

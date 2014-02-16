@@ -7,7 +7,7 @@
 __BEGIN_DECLS
 
 __attribute__((__noreturn__))
-void abort(void);
+void abort();
 
 __END_DECLS
 

@@ -6,7 +6,7 @@
 #define __VGA_H_
 
 #include <stdint.h>
-#include "../libc/include/stdlib.h"
+#include "../libc/include/sys/types.h"
 
 static const uint8_t COLOR_BLACK                = 0;
 static const uint8_t COLOR_BLUE                 = 1;
