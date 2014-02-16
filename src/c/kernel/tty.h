@@ -6,6 +6,7 @@
 #define __TTY_H_
 
 #include <stdint.h>
+#include "vga.h"
 
 /**
  * This is the kernel API to access the terminal.
@@ -44,6 +45,11 @@
  */
 
 #include <stddef.h>
+
+/**
+ * Default color for terminal.
+ */
+#define DEFAULT_COLOR (make_color(COLOR_LIGHT_BROWN, COLOR_BLUE));
 
 /**
  * Maximum offset in video memory.

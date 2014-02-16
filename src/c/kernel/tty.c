@@ -35,7 +35,7 @@ void tty_setcursor(int column, int row) {
 void tty_initialize() {
     tty_row        = 0;
     tty_column     = 0;
-    tty_color      = make_color(COLOR_LIGHT_GREY, COLOR_BLACK);
+    tty_color      = DEFAULT_COLOR;
     tty_buffer     = VGA_MEMORY;
     tty_clear();
     tty_setcursor(tty_column, tty_row);
