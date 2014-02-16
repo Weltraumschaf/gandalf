@@ -11,6 +11,8 @@ AS		:= nasm
 DISAS	:= ndisasm
 
 # Default CFLAGS:
+# -g	w/ debug symbols
+# -O2	optimization
 CFLAGS	?= -O2 -g
 
 # Add mandatory options to CFLAGS:

@@ -45,7 +45,17 @@ And running it in [QEMU][qemu] by invoking:
 
     $> make run
     
-## Legalstuff
+You can connect with gdb to the kernel. (Currently the whole kernel is compiled
+with debug symbols by defautl.) First run OS in debug mode:
+
+    $> make debug
+    
+Then connect with gdb:
+
+    $> gdb 
+    (gdb) target remote localhost:1234 
+    
+## Legal stuff
 
 All my work is licensed under [the Beer-Ware License][beer]. But I reuse some
 third party libraries such as [klibc][klibc]. They may have less open licenses.
