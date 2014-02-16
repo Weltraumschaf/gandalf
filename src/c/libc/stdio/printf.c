@@ -21,7 +21,7 @@ int printf(const char* restrict format, ...) {
     size_t amount;
     bool rejected_bad_specifier = false;
 
-    while (*format != '\0') {
+    while (*format != END_OF_STRING) {
         if (*format != '%') {
 print_c:
             amount = 1;

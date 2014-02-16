@@ -15,7 +15,6 @@
 #define __END_DECLS
 #endif
 
-#define NULL 0
 /**
  * The \0 character.
  */

@@ -3,12 +3,12 @@
  */
 #include "../include/string.h"
 
-void* memset(void* bufptr, int value, size_t size) {
-    unsigned char* buf = (unsigned char*) bufptr;
+void* memset(void* b, int c, size_t len){
+    unsigned char* buf = (unsigned char*) b;
 
-    for (size_t i = 0; i < size; i++) {
-        buf[i] = (unsigned char) value;
+    for (size_t i = 0; i < len; i++) {
+        buf[i] = (unsigned char) c;
     }
 
-    return bufptr;
+    return b;
 }

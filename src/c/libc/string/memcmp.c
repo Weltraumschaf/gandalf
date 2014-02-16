@@ -3,11 +3,11 @@
  */
 #include "../include/string.h"
 
-int memcmp(const void* aptr, const void* bptr, size_t size) {
-    const unsigned char* a = (const unsigned char*) aptr;
-    const unsigned char* b = (const unsigned char*) bptr;
+int memcmp(const void* s1, const void* s2, size_t n) {
+    const unsigned char* a = (const unsigned char*) s1;
+    const unsigned char* b = (const unsigned char*) s2;
 
-    for (size_t i = 0; i < size; i++) {
+    for (size_t i = 0; i < n; i++) {
         if (a[i] < b[i]) {
             return -1;
         } else if (b[i] < a[i]) {
