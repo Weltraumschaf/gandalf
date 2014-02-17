@@ -14,8 +14,6 @@ void gandalf_unprepareScreen() {
 }
 
 void gandalf_showBootScreen() {
-    gandalf_prepareScreen();
-
     // From http://ascii.co.uk/art/gandalf
     println(
         "              ,                      _,-\n"
@@ -44,23 +42,29 @@ void gandalf_showBootScreen() {
         "                          _:     :        :8:  ,--'\n"
         "                         :dd`-._,'-._.__-\"\"' ,'                      Booting...");
     tty_setCursor(24, 79);
-//    gandalf_unprepareScreen();
 }
 
 void gandalf_showWelcomeScreen() {
-    gandalf_prepareScreen();
-
     // From http://ascii.co.uk/art/gandalf
     println(
-        "  .....  $   $\n"
-        "   : :  .'  .'\n"
-        "   : :.'  .'\n"
-        "   : :  .'\n"
-        "   : :.'\n"
-        "   : :\n"
-        "   : :\n"
-        "   : :\n"
-        "  '''''");
+        "\n"
+        "\n"
+        "                                  .....  $   $\n"
+        "                                   : :  .'  .'\n"
+        "                                   : :.'  .'\n"
+        "                                   : :  .'\n"
+        "                                   : :.'\n"
+        "                                   : :\n"
+        "                                   : :\n"
+        "                                   : :\n"
+        "                                  '''''\n"
+        "\n"
+        "\n"
+        "                  ____                 _       _  __   _   ___\n"
+        "                 / ___| __ _ _ __   __| | __ _| |/ _| / | / _ \\\n"
+        "                | |  _ / _` | '_ \\ / _` |/ _` | | |_  | || | | |\n"
+        "                | |_| | (_| | | | | (_| | (_| | |  _| | || |_| |\n"
+        "                 \\____|\\__,_|_| |_|\\__,_|\\__,_|_|_|   |_(_)___/ \n");
 
-    gandalf_unprepareScreen();
+    tty_setCursor(24, 79);
 }
