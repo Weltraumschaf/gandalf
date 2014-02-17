@@ -3,8 +3,11 @@
 #include "arch/i386/low_level.h"
 #include "../libc/include/string.h"
 
-size_t tty_row = 0;
-size_t tty_column = 0;
+#define INIT_ROW 0
+#define INIT_COLUMN 0
+
+size_t tty_row = INIT_ROW;
+size_t tty_column = INIT_COLUMN;
 bool tty_autoScrolling = false;
 uint8_t tty_color;
 uint16_t* tty_buffer;
@@ -15,13 +18,13 @@ void tty_clearChar(uint8_t row, uint8_t column) {
 }
 
 void tty_clearRow(uint8_t row) {
-    for (size_t column = 0; column < VGA_WIDTH; column++) {
+    for (size_t column = INIT_COLUMN; column < VGA_WIDTH; column++) {
         tty_clearChar(row, column);
     }
 }
 
 void tty_clear() {
-    for (size_t row = 0; row < VGA_HEIGHT; row++) {
+    for (size_t row = INIT_ROW; row < VGA_HEIGHT; row++) {
         tty_clearRow(row);
     }
 }
@@ -49,9 +52,9 @@ void tty_setCursor(int row, int column) {
 }
 
 void tty_initialize() {
-    tty_row = 0;
-    tty_column = 0;
-    tty_color = DEFAULT_COLOR;
+    tty_row    = INIT_ROW;
+    tty_column = INIT_COLUMN;
+    tty_color  = DEFAULT_COLOR;
     tty_buffer = VGA_MEMORY;
     tty_clear();
     tty_setCursor(tty_column, tty_row);
@@ -78,8 +81,8 @@ void tty_handleScrolling() {
     int row;
 
     for (row = 1; row < VGA_HEIGHT; ++row) {
-        size_t dstOffset = tty_computeOffset(row - 1, 0);
-        size_t srcOffset = tty_computeOffset(row, 0);
+        size_t dstOffset = tty_computeOffset(row - 1, INIT_COLUMN);
+        size_t srcOffset = tty_computeOffset(row, INIT_COLUMN);
 
         memcpy(dstOffset + VGA_MEMORY, srcOffset + VGA_MEMORY, VGA_WIDTH * 2);
     }
@@ -89,14 +92,14 @@ void tty_handleScrolling() {
 
 void tty_recalculatePosition() {
     if (++tty_column == VGA_WIDTH) {
-        tty_column = 0;
+        tty_column = INIT_COLUMN;
 
         if (++tty_row == VGA_HEIGHT) {
             if (tty_autoScrolling) {
                 tty_handleScrolling();
                 tty_row = VGA_HEIGHT - 1;
             } else {
-                tty_row = 0;
+                tty_row = INIT_ROW;
             }
         }
     }
@@ -120,4 +123,3 @@ void tty_write(const char* data) {
         tty_putChar(data[i]);
     }
 }
-
