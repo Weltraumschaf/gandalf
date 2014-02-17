@@ -18,22 +18,13 @@ CFLAGS	?= -O2 -g
 # Add mandatory options to CFLAGS:
 CFLAGS	:= $(CFLAGS) -Wall -Wextra -Wmissing-prototypes -Wstrict-prototypes
 
-# VN
-QEMU	:= qemu-system-i386
-
-# Variables
-SRC_DIR	    := src
-C_SRC_DIR   := $(SRC_DIR)/c
-ASM_SRC_DIR := $(SRC_DIR)/asm
-
 #
-# Targets
+# VN options.
 #
-
-all : os.img
-
-CPU = 486
-RAM = 32
+QEMU_BIN	  := qemu-system-i386
+QEMU_CPU    := 486
+QEMU_RAM    := 32
+QEMU_KEYMAP := en-us
 # out_asm       show generated host assembly code for each compiled TB
 # in_asm        show target assembly code for each compiled TB
 # op            show micro ops for each compiled TB
@@ -48,32 +39,44 @@ RAM = 32
 # unimp         log unimplemented functionality
 # guest_errors  log when the guest OS does something invalid (eg accessing a
 #               non-existent register)
-DEBUG = guest_errors,int,pcall,unimp,ioport,in_asm
+QEMU_DEBUG      := cpu
+QEMU_GDB_PORT   := tcp::1234
+
+# Variables
+SRC_DIR	    := src
+C_SRC_DIR   := $(SRC_DIR)/c
+ASM_SRC_DIR := $(SRC_DIR)/asm
+
+#
+# Targets
+#
+
+all : os.img
 
 run : all
 
-	$(QEMU) \
-	  -cpu $(CPU) \
-	  -m $(RAM) \
-	  -k en \
+	$(QEMU_BIN) \
+	  -cpu $(QEMU_CPU) \
+	  -m $(QEMU_RAM) \
+	  -k $(QEMU_KEYMAP) \
 	  -vga std \
 	  -no-acpi \
 	  -no-hpet \
-	  -d $(DEBUG) \
+	  -d $(QEMU_DEBUG) \
 	  -fda os.img
-	  
+
 debug : all
 
-	$(QEMU) -gdb tcp::1234 -S \
-	  -cpu $(CPU) \
-	  -m $(RAM) \
-	  -k en \
+	$(QEMU_BIN) -gdb $(QEMU_GDB_PORT) -S \
+	  -cpu $(QEMU_CPU) \
+	  -m $(QEMU_RAM) \
+	  -k $(QEMU_KEYMAP) \
 	  -vga std \
 	  -no-acpi \
 	  -no-hpet \
-	  -d $(DEBUG) \
+	  -d $(QEMU_DEBUG) \
 	  -fda os.img
-	  
+
 # Automatically generate lists of sources using wildcards.
 C_SOURCES := $(shell find $(C_SRC_DIR) -name "*.c" -print)
 HEADERS := $(filter_out */provided/* ,$(shell find $(C_SRC_DIR) -name "*.h" -print))
