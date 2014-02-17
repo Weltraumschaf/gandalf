@@ -62,17 +62,18 @@ void run() {
 
 void kernel_boot() {
     tty_initialize();
-    gandalf_showBootScreen();
+//    gandalf_showBootScreen();
 //    sleep(1000);
 //    gandalf_showWelcomeScreen();
 //    sleep(1000);
 //    tty_setAutoScrolling(true);
 }
+
 /*
  * The kernels entry point.
  */
 void main() {
     kernel_boot();
-//    welcome();
+    welcome();
 //    run();
 }
