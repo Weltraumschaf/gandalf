@@ -75,9 +75,10 @@ void main() {
     sleep(1000);
     tty_clear();
     gandalf_showWelcomeScreen();
-//    sleep(1000);
-//    tty_clear();
-//    tty_setAutoScrolling(true);
-//    welcome();
+    sleep(1000);
+    tty_clear();
+    tty_setCursor(0, 0);
+    tty_setAutoScrolling(true);
+    welcome();
 //    run();
 }

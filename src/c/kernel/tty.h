@@ -107,7 +107,7 @@ void tty_setColor(uint8_t color);
  * @param row to position the cursor
  * @param column to position the cursor
  */
-void tty_setCursor(int row, int column);
+void tty_setCursor(size_t row, size_t column);
 /**
  * Put given character at current cursor position.
  *

@@ -40,7 +40,7 @@ size_t tty_computeOffset(uint8_t row, uint8_t column) {
 }
 
 // See http://wiki.osdev.org/Text_Mode_Cursor
-void tty_setCursor(int row, int column) {
+void tty_setCursor(size_t row, size_t column) {
     size_t offset = tty_computeOffset(row, column);
 
     // cursor LOW port to vga INDEX register
@@ -49,6 +49,9 @@ void tty_setCursor(int row, int column) {
     // cursor HIGH port to vga INDEX register
     port_byte_out(REG_SCREEN_CTRL, CURSOR_OFFSET_HIGH);
     port_byte_out(REG_SCREEN_DATA, (int) ((offset >> 8) & 0xff));
+
+    tty_row = row;
+    tty_column = column;
 }
 
 void tty_initialize() {
