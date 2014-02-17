@@ -1,5 +1,9 @@
 #include "util.h"
 
+/*
+ * Maybebetter http://wiki.osdev.org/Printing_to_Screen
+ */
+
 char* itoa(int i, char b[]) {
     char const digit[] = "0123456789";
     char* p = b;
