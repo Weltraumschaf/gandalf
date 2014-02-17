@@ -36,6 +36,7 @@ size_t tty_computeOffset(uint8_t row, uint8_t column) {
     return offset;
 }
 
+// See http://wiki.osdev.org/Text_Mode_Cursor
 void tty_setCursor(int row, int column) {
     size_t offset = tty_computeOffset(row, column);
 
@@ -65,7 +66,7 @@ void tty_setAutoScrolling(bool flag) {
 }
 
 void tty_setEnableBlinkingCursor(bool flag) {
-    
+
 }
 
 void tty_putEntryAt(char c, uint8_t color, size_t row, size_t column) {
