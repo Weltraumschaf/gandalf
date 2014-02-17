@@ -24,4 +24,7 @@
  */
 #define NEW_LINE ((char) '\n')
 
+/* number of bits in a byte */
+#define NBBY    8
+
 #endif /* __SYS_CDEFS_H */

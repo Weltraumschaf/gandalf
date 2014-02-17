@@ -5,11 +5,7 @@
 #ifndef __TTY_H_
 #define __TTY_H_
 
-#include <stdint.h>
-#include <stdbool.h>
-#include "vga.h"
-
-/**
+/*
  * This is the kernel API to access the terminal.
  *
  * The terminal is a 80 x 24 VGA console.
@@ -46,6 +42,9 @@
  */
 
 #include <stddef.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include "vga.h"
 
 /**
  * Maximum offset in video memory.

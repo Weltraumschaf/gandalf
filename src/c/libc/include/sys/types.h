@@ -1,4 +1,6 @@
-#ifndef __SIZE_T
-#define __SIZE_T
-typedef unsigned int size_t;
-#endif
+#ifndef __TYPES_H_
+#define __TYPES_H_
+
+typedef int ssize_t;
+
+#endif /* __TYPES_H_ */

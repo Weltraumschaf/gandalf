@@ -6,8 +6,10 @@
 #define __STRING_H_
 
 #include "sys/cdefs.h"
-
 #include <stddef.h>
+
+#define hex2ascii(hex)  (hex2ascii_data[hex])
+#define toupper(c)      ((c) - 0x20 * (((c) >= 'a') && ((c) <= 'z')))
 
 __BEGIN_DECLS
 

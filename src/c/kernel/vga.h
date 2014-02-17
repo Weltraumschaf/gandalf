@@ -5,8 +5,8 @@
 #ifndef __VGA_H_
 #define __VGA_H_
 
+#include <stddef.h>
 #include <stdint.h>
-#include "../libc/include/sys/types.h"
 
 static const uint8_t COLOR_BLACK                = 0x00;
 static const uint8_t COLOR_BLUE                 = 0x01;

@@ -61,7 +61,7 @@ void run() {
 }
 
 void kernel_boot() {
-    tty_initialize();
+//    tty_initialize();
 //    gandalf_showBootScreen();
 //    sleep(1000);
 //    gandalf_showWelcomeScreen();
@@ -73,7 +73,8 @@ void kernel_boot() {
  * The kernels entry point.
  */
 void main() {
-    kernel_boot();
+//    kernel_boot();
+    tty_initialize();
     welcome();
 //    run();
 }
