@@ -62,7 +62,6 @@ run : all
 	  -vga std \
 	  -no-acpi \
 	  -no-hpet \
-	  -d $(QEMU_DEBUG) \
 	  -fda os.img
 
 debug : all

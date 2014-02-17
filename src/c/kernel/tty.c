@@ -64,6 +64,10 @@ void tty_setAutoScrolling(bool flag) {
     tty_autoScrolling = flag;
 }
 
+void tty_setEnableBlinkingCursor(bool flag) {
+    
+}
+
 void tty_putEntryAt(char c, uint8_t color, size_t row, size_t column) {
     const size_t offset = tty_computeOffset(row, column);
     tty_buffer[offset] = make_vgaentry(c, color);

@@ -93,6 +93,7 @@ void tty_clear();
  * @param flag true to turn on, false to turn off
  */
 void tty_setAutoScrolling(bool flag);
+void tty_setEnableBlinkingCursor(bool flag);
 /**
  * Set the current terminal color.
  *

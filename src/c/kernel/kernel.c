@@ -1,6 +1,7 @@
 #include "kernel.h"
 #include <stdbool.h>
 #include "tty.h"
+#include "gandalf.h"
 #include "../util/util.h"
 #include "../libc/include/string.h"
 #include "../libc/include/stdio.h"
@@ -9,7 +10,7 @@
 
 void welcome() {
     tty_setColor(DEFAULT_COLOR_INVERTED);
-    println("  Gandalf 1.0                                                                   ");
+    println("Y  Gandalf 1.0  started :-)                                                     ");
     tty_setColor(DEFAULT_COLOR);
 }
 
@@ -59,12 +60,19 @@ void run() {
     }
 }
 
+void kernel_boot() {
+    tty_initialize();
+    gandalf_showBootScreen();
+//    sleep(1000);
+//    gandalf_showWelcomeScreen();
+//    sleep(1000);
+//    tty_setAutoScrolling(true);
+}
 /*
  * The kernels entry point.
  */
 void main() {
-    tty_initialize();
-    tty_setAutoScrolling(true);
-    welcome();
-    run();
+    kernel_boot();
+//    welcome();
+//    run();
 }
