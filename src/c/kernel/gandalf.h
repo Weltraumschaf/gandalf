@@ -1,6 +1,7 @@
 #ifndef __GANDALF_H_
 #define __GANDALF_H_
 
+void gandalf_prepareScreen();
 /**
  * Displays the boot screen.
  */
