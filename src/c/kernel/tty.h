@@ -54,19 +54,19 @@ static const size_t MAX_OFFSET = 2000;
 /**
  * Register port address for screen control.
  */
-static const uint16_t REG_SCREEN_CTRL   = 0x3d4;
+static const uint16_t PORT_SCREEN_CTRL   = 0x3d4;
 /**
  * Register port address for screen data.
  */
-static const uint16_t REG_SCREEN_DATA   = 0x3d5;
+static const uint16_t PORT_SCREEN_DATA   = 0x3d5;
 /**
  * High byte offset for cursor position.
  */
-static const uint8_t CURSOR_OFFSET_HIGH = 0x0e;
+static const uint8_t REG_CURSOR_LOCATION_HIGH = 0x0e;
 /**
  * Low byte offset for cursor position.
  */
-static const uint8_t CURSOR_OFFSET_LOW  = 0x0f;
+static const uint8_t REG_CURSOR_LOCATION_LOW  = 0x0f;
 
 /**
  * Used to clear screen.
@@ -92,7 +92,12 @@ void tty_clear();
  * @param flag true to turn on, false to turn off
  */
 void tty_setAutoScrolling(bool flag);
-void tty_setEnableBlinkingCursor(bool flag);
+/**
+ * Enables or disables the blinking cursor.
+ *
+ * @param flag true shows the cursor, false hides the cursor
+ */
+void tty_setEnableCursor(bool flag);
 /**
  * Set the current terminal color.
  *

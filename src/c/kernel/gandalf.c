@@ -5,12 +5,12 @@
 
 void gandalf_prepareScreen() {
     tty_clear();
-    tty_setEnableBlinkingCursor(false);
+    tty_setEnableCursor(false);
 }
 
 void gandalf_unprepareScreen() {
     tty_clear();
-    tty_setEnableBlinkingCursor(true);
+    tty_setEnableCursor(true);
 }
 
 void gandalf_showBootScreen() {
@@ -40,8 +40,7 @@ void gandalf_showBootScreen() {
         "                         :  .   '       :   :`   `,-' ,--'\n"
         "                          :     :   :      ,'-._,' ,-'\n"
         "                          _:     :        :8:  ,--'\n"
-        "                         :dd`-._,'-._.__-\"\"' ,'                      Booting...");
-    tty_setCursor(24, 79);
+        "                         :dd`-._,'-._.__-\"\"' ,'                       Booting...");
 }
 
 void gandalf_showWelcomeScreen() {
@@ -66,5 +65,4 @@ void gandalf_showWelcomeScreen() {
         "                | |_| | (_| | | | | (_| | (_| | |  _| | || |_| |\n"
         "                 \\____|\\__,_|_| |_|\\__,_|\\__,_|_|_|   |_(_)___/ \n");
 
-    tty_setCursor(24, 79);
 }

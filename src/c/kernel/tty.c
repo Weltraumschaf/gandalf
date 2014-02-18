@@ -3,12 +3,18 @@
 #include "arch/i386/low_level.h"
 #include "../libc/include/string.h"
 
+/*
+ * http://www.stanford.edu/class/cs140/projects/pintos/specs/freevga/vga/textcur.htm
+ */
+
 #define INIT_ROW 0
 #define INIT_COLUMN 0
 
-size_t tty_row = INIT_ROW;
-size_t tty_column = INIT_COLUMN;
-bool tty_autoScrolling = false;
+size_t tty_row          = INIT_ROW;
+size_t tty_column       = INIT_COLUMN;
+bool tty_autoScrolling  = false;
+bool tty_cursorEnabled  = false;
+
 uint8_t tty_color;
 uint16_t* tty_buffer;
 
@@ -30,27 +36,25 @@ void tty_clear() {
 }
 
 size_t tty_computeOffset(uint8_t row, uint8_t column) {
-    size_t offset = row * VGA_WIDTH + column;
+    return row * VGA_WIDTH + column;
+}
 
-    if (offset >= MAX_OFFSET) {
-        offset = 0;
-    }
+static void setCursor(size_t row, size_t column) {
+    size_t offset = tty_computeOffset(row, column);
 
-    return offset;
+    // cursor LOW port to vga INDEX register
+    port_byte_out(PORT_SCREEN_CTRL, REG_CURSOR_LOCATION_LOW);
+    port_byte_out(PORT_SCREEN_DATA, (int) (offset & 0xff));
+    // cursor HIGH port to vga INDEX register
+    port_byte_out(PORT_SCREEN_CTRL, REG_CURSOR_LOCATION_HIGH);
+    port_byte_out(PORT_SCREEN_DATA, (int) ((offset >> 8) & 0xff));
 }
 
 // See http://wiki.osdev.org/Text_Mode_Cursor
 void tty_setCursor(size_t row, size_t column) {
-    size_t offset = tty_computeOffset(row, column);
-
-    // cursor LOW port to vga INDEX register
-    port_byte_out(REG_SCREEN_CTRL, CURSOR_OFFSET_LOW);
-    port_byte_out(REG_SCREEN_DATA, (int) (offset & 0xff));
-    // cursor HIGH port to vga INDEX register
-    port_byte_out(REG_SCREEN_CTRL, CURSOR_OFFSET_HIGH);
-    port_byte_out(REG_SCREEN_DATA, (int) ((offset >> 8) & 0xff));
-
-    tty_row = row;
+    // TODO Check mas values.
+    setCursor(row, column);
+    tty_row    = row;
     tty_column = column;
 }
 
@@ -71,8 +75,14 @@ void tty_setAutoScrolling(bool flag) {
     tty_autoScrolling = flag;
 }
 
-void tty_setEnableBlinkingCursor(bool flag) {
+void tty_setEnableCursor(bool flag) {
+    tty_cursorEnabled = flag;
 
+    if (tty_cursorEnabled) {
+        setCursor(tty_row, tty_column);
+    } else {
+        setCursor(100, 100); // Move out of view port.
+    }
 }
 
 void tty_putEntryAt(char c, uint8_t color, size_t row, size_t column) {
@@ -116,7 +126,10 @@ void tty_putChar(char c) {
     }
 
     tty_recalculatePosition();
-    tty_setCursor(tty_row, tty_column);
+
+    if (tty_cursorEnabled) {
+        tty_setCursor(tty_row, tty_column);
+    }
 }
 
 void tty_write(const char* data) {
