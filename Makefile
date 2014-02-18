@@ -110,7 +110,7 @@ boot_sector.bin : $(ASM_SRC_DIR)/boot_sector.asm
 	$(AS) $< -f bin -o $@
 
 clean :
-	$(RM) -v *.bin *.img *.map *.dis
+	$(RM) -v *.bin *.img *.map *.dis *.o
 	find $(SRC_DIR) -name "*.o" -exec $(RM) -rv {} \;
 
 # Disassemble our kernel - might be useful for debugging.
