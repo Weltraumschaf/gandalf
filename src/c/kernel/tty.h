@@ -41,7 +41,7 @@
  *
  */
 
-#include <stddef.h>
+#include <stddef.h> /* For size_t */
 #include <stdint.h>
 #include <stdbool.h>
 #include "vga.h"

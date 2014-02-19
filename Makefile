@@ -97,7 +97,10 @@ kernel.bin: kernel_entry.o ${OBJ}
 
 # Generic rule for building 'somefile.o' from 'somefile.c'
 %.o : %.c ${HEADERS}
-	$(CC) -ffreestanding -std=gnu99 -c $< -o $@
+	$(CC) -ffreestanding -std=gnu99 \
+		-I$(C_SRC_DIR)/include \
+		-I$(C_SRC_DIR)/libc/include \
+		-c $< -o $@
 
 # Build the kernel entry object file.
 kernel_entry.o : $(ASM_SRC_DIR)/kernel_entry.asm
