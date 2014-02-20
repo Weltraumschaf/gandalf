@@ -1,7 +1,7 @@
 /*
  * From http://wiki.osdev.org/User:Sortie/Meaty_Skeleton
  */
-#include "../include/string.h"
+#include <string.h>
 
 void* memmove(void* dst, const void* src, size_t len) {
     unsigned char* _dst = (unsigned char*) dst;

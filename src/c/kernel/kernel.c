@@ -3,8 +3,8 @@
 #include "tty.h"
 #include "gandalf.h"
 #include "../util/util.h"
-#include "../libc/include/string.h"
-#include "../libc/include/stdio.h"
+#include <string.h>
+#include <stdio.h>
 
 #define TIMER_START 10
 

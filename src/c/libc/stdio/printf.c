@@ -1,7 +1,7 @@
 #include <stdbool.h>
 #include <stdarg.h>
-#include "../include/stdio.h"
-#include "../include/string.h"
+#include <stdio.h>
+#include <string.h>
 
 static void print_string(const char* data, size_t data_length) {
     for (size_t i = 0; i < data_length; i++) {

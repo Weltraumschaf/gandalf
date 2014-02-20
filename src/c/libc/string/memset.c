@@ -1,7 +1,7 @@
 /*
  * From http://wiki.osdev.org/User:Sortie/Meaty_Skeleton
  */
-#include "../include/string.h"
+#include <string.h>
 
 void* memset(void* b, int c, size_t len){
     unsigned char* buf = (unsigned char*) b;

@@ -1,7 +1,7 @@
 #include "tty.h"
 #include "vga.h"
 #include "arch/i386/low_level.h"
-#include "../libc/include/string.h"
+#include <string.h>
 
 /*
  * http://www.stanford.edu/class/cs140/projects/pintos/specs/freevga/vga/textcur.htm

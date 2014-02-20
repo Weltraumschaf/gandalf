@@ -1,7 +1,7 @@
 /*
  * From http://wiki.osdev.org/User:Sortie/Meaty_Skeleton
  */
-#include "../include/string.h"
+#include <string.h>
 
 size_t strlen(const char* string) {
     size_t length;

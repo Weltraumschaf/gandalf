@@ -1,7 +1,7 @@
 #ifndef __STDIO_H_
 #define __STDIO_H_
 
-#include "../../include/sys/cdefs.h"
+#include <sys/cdefs.h>
 
 __BEGIN_DECLS
 

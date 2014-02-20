@@ -6,7 +6,7 @@
 //#pragma warning( disable : 4146 ) /* no "unsigned" warnings */
 //#endif /* _MSC_VER */
 //#if !NO_MALLOC_STATS
-//#include "../libc/include/stdio.h"       /* for printing in malloc_stats */
+//#include <stdio.h>       /* for printing in malloc_stats */
 //#endif /* NO_MALLOC_STATS */
 //#ifndef LACKS_ERRNO_H
 //#include <errno.h>       /* for MALLOC_FAILURE_ACTION */

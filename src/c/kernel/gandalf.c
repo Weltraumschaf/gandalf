@@ -1,7 +1,7 @@
 #include "gandalf.h"
 #include "tty.h"
 #include "../util/util.h"
-#include "../libc/include/stdio.h"
+#include <stdio.h>
 
 void gandalf_prepareScreen() {
     tty_clear();

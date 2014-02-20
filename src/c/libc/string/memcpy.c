@@ -1,7 +1,7 @@
 /*
  * From http://wiki.osdev.org/User:Sortie/Meaty_Skeleton
  */
-#include "../include/string.h"
+#include <string.h>
 
 void* memcpy(void* __restrict dst, const void* __restrict src, size_t n) {
     unsigned char* _dst = (unsigned char*) dst;

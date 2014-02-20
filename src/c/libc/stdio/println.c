@@ -1,4 +1,4 @@
-#include "../include/stdio.h"
+#include <stdio.h>
 
 void println(const char* string) {
     puts(string);

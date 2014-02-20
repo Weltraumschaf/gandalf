@@ -1,4 +1,4 @@
-#include "../include/stdio.h"
+#include <stdio.h>
 
 #if defined(__is_gandalf_kernel)
 #include "../../kernel/tty.h"

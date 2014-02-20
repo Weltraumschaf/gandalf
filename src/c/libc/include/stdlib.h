@@ -1,8 +1,8 @@
 #ifndef __STDLIB_H_
 #define __STDLIB_H_
 
-#include "sys/cdefs.h"
-#include "sys/types.h"
+#include <sys/cdefs.h>
+#include <sys/types.h>
 
 __BEGIN_DECLS
 

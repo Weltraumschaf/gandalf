@@ -1,7 +1,7 @@
 /*
  * From http://wiki.osdev.org/User:Sortie/Meaty_Skeleton
  */
-#include "../include/string.h"
+#include <string.h>
 
 int memcmp(const void* s1, const void* s2, size_t n) {
     const unsigned char* a = (const unsigned char*) s1;
