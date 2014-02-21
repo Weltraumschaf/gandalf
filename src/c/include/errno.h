@@ -137,35 +137,15 @@
 #define	EKEYREJECTED	129	/* Key was rejected by service */
 #define __SYS_NERR  ((EKEYREJECTED) + 1)
 
-#ifndef __ASSEMBLER__
-
 #include <sys/cdefs.h>
 
 __BEGIN_DECLS
 
-#ifndef _REENTRANT
-extern int errno;
-#else
-#define errno (*__errno_location())
-#endif /* _REENTRANT */
-
-extern int *__errno_location(void);
+//extern int errno;
+//extern int * __attribute__((__errno_location()));
 
 #define __set_errno(x) errno=(x)
 
-#ifdef _BSD_SOURCE
-/* don't use, use strerror() instead! */
-extern const char *const sys_errlist[] __attribute_dontuse__;
-extern int sys_nerr __attribute_dontuse__;
-#endif /* _BSD_SOURCE */
-
-#ifdef _GNU_SOURCE
-extern char* program_invocation_name __attribute_dontuse__;
-extern char* program_invocation_short_name __attribute_dontuse__;
-#endif /* _GNU_SOURCE */
-
 __END_DECLS
-
-#endif /* __ASSEMBLER__ */
 
 #endif /* _ERRNO_H */

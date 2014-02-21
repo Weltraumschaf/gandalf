@@ -14,21 +14,22 @@ __BEGIN_DECLS
  */
 #define EOF = -1
 
-typedef struct __stdio_file FILE;
-struct __stdio_file {
-  int fd;
-  int flags;
-  uint32_t bs;	/* read: bytes in buffer */
-  uint32_t bm;	/* position in buffer */
-  uint32_t buflen;	/* length of buf */
-  char *buf;
-  struct __stdio_file *next;	/* for fflush */
-  pid_t popen_kludge;
-  unsigned char ungetbuf;
-  char ungotten;
-};
-
-extern FILE *stdin, *stdout, *stderr;
+//typedef struct __stdio_file FILE;
+//
+//struct __stdio_file {
+//    int fd;
+//    int flags;
+//    uint32_t bs; /* read: bytes in buffer */
+//    uint32_t bm; /* position in buffer */
+//    uint32_t buflen; /* length of buf */
+//    char *buf;
+//    struct __stdio_file *next; /* for fflush */
+//    pid_t popen_kludge;
+//    unsigned char ungetbuf;
+//    char ungotten;
+//};
+//
+//extern FILE *stdin, *stdout, *stderr;
 
 /**
  * The printf utility formats and prints its arguments, after the first, under control of the format.
@@ -40,7 +41,7 @@ extern FILE *stdin, *stdout, *stderr;
  * @return
  */
 int printf(const char* restrict format, ...);
-int fprintf(FILE * __restrict stream, const char * __restrict format, ...);
+//int fprintf(FILE * __restrict stream, const char * __restrict format, ...);
 /**
  * The putchar() function is identical to putc() with an output stream of stdout.
  *
