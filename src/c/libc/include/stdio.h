@@ -1,7 +1,9 @@
 #ifndef __STDIO_H_
 #define __STDIO_H_
 
+#include <stdint.h>
 #include <sys/cdefs.h>
+#include <sys/types.h>
 
 __BEGIN_DECLS
 
@@ -12,8 +14,19 @@ __BEGIN_DECLS
  */
 #define EOF = -1
 
-struct __stdio_file;
 typedef struct __stdio_file FILE;
+struct __stdio_file {
+  int fd;
+  int flags;
+  uint32_t bs;	/* read: bytes in buffer */
+  uint32_t bm;	/* position in buffer */
+  uint32_t buflen;	/* length of buf */
+  char *buf;
+  struct __stdio_file *next;	/* for fflush */
+  pid_t popen_kludge;
+  unsigned char ungetbuf;
+  char ungotten;
+};
 
 extern FILE *stdin, *stdout, *stderr;
 
@@ -27,7 +40,7 @@ extern FILE *stdin, *stdout, *stderr;
  * @return
  */
 int printf(const char* restrict format, ...);
-int fprintf(FILE *__restrict, const char *__restrict, ...);
+int fprintf(FILE * __restrict stream, const char * __restrict format, ...);
 /**
  * The putchar() function is identical to putc() with an output stream of stdout.
  *
