@@ -11,7 +11,8 @@
 
 __BEGIN_DECLS
 
-int open(const char *, int, ...);
+int open(const char * path, int oflags);
+int open(const char * path, int oflags, mode_t mode);
 
 __END_DECLS
 
