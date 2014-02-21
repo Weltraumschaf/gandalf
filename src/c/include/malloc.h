@@ -523,9 +523,9 @@ MAX_RELEASE_CHECK_RATE   default: 4095 unless not HAVE_MMAP
 
 /* Customization (sxs) */
 #define LACKS_UNISTD_H 1
-#define LACKS_FCNTL_H 1
+//#define LACKS_FCNTL_H 1
 #define LACKS_SYS_PARAM_H 1
-#define LACKS_SYS_MMAN_H 1
+//#define LACKS_SYS_MMAN_H 1
 #define LACKS_STRINGS_H 1
 //#define LACKS_STRING_H 1
 //#define LACKS_SYS_TYPES_H 1
@@ -813,7 +813,7 @@ struct mallinfo {
 #endif
 
 #ifdef __cplusplus
-extern "C" {
+__BEGIN_DECLS
 #ifndef FORCEINLINE
 #define FORCEINLINE inline
 #endif
@@ -1427,6 +1427,4 @@ extern "C" {
 
 #endif /* MSPACES */
 
-#ifdef __cplusplus
-} /* end of extern "C" */
-#endif /* __cplusplus */
+__END_DECLS

@@ -2,6 +2,8 @@
 
 /*------------------------------ internal #includes ---------------------- */
 
+#include <sys/cdefs.h>
+
 #ifdef _MSC_VER
 #pragma warning( disable : 4146 ) /* no "unsigned" warnings */
 #endif /* _MSC_VER */
@@ -74,15 +76,15 @@ extern void* sbrk(ptrdiff_t);
 #endif /* USE_RECURSIVE_LOCKS ... */
 #elif defined(_MSC_VER)
 #ifndef _M_AMD64
+
 /* These are already defined on AMD64 builds */
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-    LONG __cdecl _InterlockedCompareExchange(LONG volatile *Dest, LONG Exchange, LONG Comp);
-    LONG __cdecl _InterlockedExchange(LONG volatile *Target, LONG Value);
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+__BEGIN_DECLS
+
+LONG __cdecl _InterlockedCompareExchange(LONG volatile *Dest, LONG Exchange, LONG Comp);
+LONG __cdecl _InterlockedExchange(LONG volatile *Target, LONG Value);
+
+__END_DECLS
+
 #endif /* _M_AMD64 */
 #pragma intrinsic (_InterlockedCompareExchange)
 #pragma intrinsic (_InterlockedExchange)
@@ -102,14 +104,13 @@ extern "C" {
 /* Declarations for bit scanning on win32 */
 #if defined(_MSC_VER) && _MSC_VER>=1300
 #ifndef BitScanForward /* Try to avoid pulling in WinNT.h */
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-    unsigned char _BitScanForward(unsigned long *index, unsigned long mask);
-    unsigned char _BitScanReverse(unsigned long *index, unsigned long mask);
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+
+__BEGIN_DECLS
+
+unsigned char _BitScanForward(unsigned long *index, unsigned long mask);
+unsigned char _BitScanReverse(unsigned long *index, unsigned long mask);
+
+__END_DECLS
 
 #define BitScanForward _BitScanForward
 #define BitScanReverse _BitScanReverse
