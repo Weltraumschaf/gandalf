@@ -3,7 +3,7 @@
 
 int fprintf(FILE * __restrict stream, const char * __restrict format, ...) {
     va_list parameters;
-    va_start(stream, parameters, format);
+    va_start(parameters, format);
 
     int written = 0;
 
