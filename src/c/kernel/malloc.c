@@ -2122,10 +2122,9 @@ static void internal_malloc_stats(mstate m) {
             }
         }
         POSTACTION(m); /* drop lock */
-// TODO Add fprintf())
-//        fprintf(stderr, "max system bytes = %10lu\n", (unsigned long) (maxfp));
-//        fprintf(stderr, "system bytes     = %10lu\n", (unsigned long) (fp));
-//        fprintf(stderr, "in use bytes     = %10lu\n", (unsigned long) (used));
+        fprintf(stderr, "max system bytes = %10lu\n", (unsigned long) (maxfp));
+        fprintf(stderr, "system bytes     = %10lu\n", (unsigned long) (fp));
+        fprintf(stderr, "in use bytes     = %10lu\n", (unsigned long) (used));
     }
 }
 #endif /* NO_MALLOC_STATS */

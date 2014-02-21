@@ -12,6 +12,11 @@ __BEGIN_DECLS
  */
 #define EOF = -1
 
+struct __stdio_file;
+typedef struct __stdio_file FILE;
+
+extern FILE *stdin, *stdout, *stderr;
+
 /**
  * The printf utility formats and prints its arguments, after the first, under control of the format.
  * The format is a character string which contains three types of objects: plain characters, which are
@@ -22,6 +27,7 @@ __BEGIN_DECLS
  * @return
  */
 int printf(const char* restrict format, ...);
+int fprintf(FILE *__restrict, const char *__restrict, ...);
 /**
  * The putchar() function is identical to putc() with an output stream of stdout.
  *
