@@ -76,9 +76,12 @@ debug : all
 	  -d $(QEMU_DEBUG) \
 	  -fda os.img
 
+KERNEL_HEADERS	= $(C_SRC_DIR)/include
+LIBC_HEADERS	= $(C_SRC_DIR)/libc/include
+
 # Automatically generate lists of sources using wildcards.
-C_SOURCES := $(shell find $(C_SRC_DIR) -name "*.c" -print)
-HEADERS := $(filter_out */provided/* ,$(shell find $(C_SRC_DIR) -name "*.h" -print))
+C_SOURCES	:= $(shell find $(C_SRC_DIR) -name "*.c" -print)
+HEADERS		:= $(filter_out */provided/* ,$(shell find $(C_SRC_DIR) -name "*.h" -print))
 
 # Create a list of object files to build, simple by replacing
 # the '.c' extension of filenames in C_SOURCES with '.o'
@@ -98,8 +101,8 @@ kernel.bin: kernel_entry.o ${OBJ}
 # Generic rule for building 'somefile.o' from 'somefile.c'
 %.o : %.c ${HEADERS}
 	$(CC) -ffreestanding -std=gnu99 \
-		-I$(C_SRC_DIR)/include \
-		-I$(C_SRC_DIR)/libc/include \
+		-I$(KERNEL_HEADERS) \
+		-I$(LIBC_HEADERS) \
 		-c $< -o $@
 
 # Build the kernel entry object file.
