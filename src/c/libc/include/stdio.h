@@ -5,6 +5,8 @@
 
 __BEGIN_DECLS
 
+#define SDTIO_HAS_FILE_IO 0
+
 /**
  * Indicates end of file.
  */
