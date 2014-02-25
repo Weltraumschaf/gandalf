@@ -5,6 +5,14 @@
 Why "Gandalf"? I  needed a "code name"  for the GitHub repo and  Gandalf was my
 first thought. Don't know why. I'm not really a Hobbit-fan.
 
+## I only want to run it
+
+If you don't want to build your own cross compiler and build the OS image from
+scratch you can use a binary distribution from the `dist` direcotry. You can 
+run it e.g. with [QEMU][qemu]:
+
+    $> qemu-system-i386 -cpu 486 -m 32 -fda dist/gandalf.img
+
 ## Prerequisites
 
 What you need:

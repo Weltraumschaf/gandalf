@@ -21,7 +21,7 @@ CFLAGS	:= $(CFLAGS) -Wall -Wextra -Wmissing-prototypes -Wstrict-prototypes
 #
 # VN options.
 #
-QEMU_BIN	  := qemu-system-i386
+QEMU_BIN	:= qemu-system-i386
 QEMU_CPU    := 486
 QEMU_RAM    := 32
 QEMU_KEYMAP := en-us
@@ -47,11 +47,13 @@ SRC_DIR	    := src
 C_SRC_DIR   := $(SRC_DIR)/c
 ASM_SRC_DIR := $(SRC_DIR)/asm
 
+OUTPUT_IMAGE := gandalf.img
+
 #
 # Targets
 #
 
-all : os.img
+all : image
 
 run : all
 
@@ -62,7 +64,7 @@ run : all
 	  -vga std \
 	  -no-acpi \
 	  -no-hpet \
-	  -fda os.img
+	  -fda $(OUTPUT_IMAGE)
 
 debug : all
 
@@ -74,7 +76,7 @@ debug : all
 	  -no-acpi \
 	  -no-hpet \
 	  -d $(QEMU_DEBUG) \
-	  -fda os.img
+	  -fda $(OUTPUT_IMAGE)
 
 KERNEL_HEADERS	= $(C_SRC_DIR)/include
 LIBC_HEADERS	= $(C_SRC_DIR)/libc/include
@@ -89,8 +91,8 @@ OBJ = ${C_SOURCES:.c=.o}
 
 # This is the actual disk image that the computer loads,
 # which is the combination of our compiled bootsector and kernel
-os.img : boot_sector.bin kernel.bin
-	cat $^ > os.img
+image : boot_sector.bin kernel.bin
+	cat $^ > $(OUTPUT_IMAGE)
 
 # This links the binary of our kernel from two object files:
 # - the kernel_entry, which jumps to main() in our kernel
