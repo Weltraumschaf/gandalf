@@ -1,4 +1,4 @@
-# Includes for available for standalone compilers
+# Includes available for standalone compilers
 
 This are the  header sources  available to  a standalone  compiler. They  will be
 linked by  the the cross  compile  automatically.  Here they  are  stored only  for

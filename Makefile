@@ -1,6 +1,13 @@
 #
-# Builds the kernel.
+# Builds the image with the kernel.
 #
+
+# Hints:
+# First line of target must start with tab. No spaces!
+# $<	First dependency.
+# $@	Name of target.
+# $+	List of all dependnecies.
+# $^	List of all dependnecies w/o duplicates.
 
 CWD = $(shell pwd)
 $(info CWD is $(CWD))
@@ -11,8 +18,8 @@ CC  	:= $(BUILD_TOOLS_PREFIX)gcc
 CXX 	:= $(BUILD_TOOLS_PREFIX)g++
 CPP 	:= $(BUILD_TOOLS_PREFIX)cpp
 LD  	:= $(BUILD_TOOLS_PREFIX)ld
-AS		:= nasm
-DISAS	:= ndisasm
+ASM		:= nasm
+DISASM	:= ndisasm
 
 $(info CC is $(CC))
 $(info CXX is $(CXX))
@@ -49,20 +56,19 @@ QEMU_DEBUG      := cpu
 QEMU_GDB_PORT   := tcp::1234
 
 # Variables
-SRC_DIR	    := src
-C_SRC_DIR   := $(SRC_DIR)/c
-ASM_SRC_DIR := $(SRC_DIR)/asm
-
-OUTPUT_IMAGE := gandalf.img
+SRC_DIR         := src
+GO_SRC_DIR      := $(SRC_DIR)/go
+C_SRC_DIR       := $(SRC_DIR)/c
+ASM_SRC_DIR     := $(SRC_DIR)/asm
+OUTPUT_IMAGE    := gandalf.img
 
 #
 # Targets
 #
-
 all : image
 
+# Run the final image with Qemu.
 run : all
-
 	$(QEMU_BIN) \
 		-cpu $(QEMU_CPU) \
 		-m $(QEMU_RAM) \
@@ -72,9 +78,11 @@ run : all
 		-no-hpet \
 		-fda $(OUTPUT_IMAGE)
 
+# Run the final image with Qemu and enabled GDB port.
 debug : all
-
-	$(QEMU_BIN) -gdb $(QEMU_GDB_PORT) -S \
+	$(QEMU_BIN) \
+		-S \
+		-gdb $(QEMU_GDB_PORT) \
 		-cpu $(QEMU_CPU) \
 		-m $(QEMU_RAM) \
 		-k $(QEMU_KEYMAP) \
@@ -89,25 +97,29 @@ LIBC_HEADERS	= $(C_SRC_DIR)/libc/include
 
 # Automatically generate lists of sources using wildcards.
 C_SOURCES	:= $(shell find $(C_SRC_DIR) -name "*.c" -print)
-HEADERS		:= $(filter_out */provided/* ,$(shell find $(C_SRC_DIR) -name "*.h" -print))
+C_HEADERS	:= $(filter_out */provided/* ,$(shell find $(C_SRC_DIR) -name "*.h" -print))
 
 # Create a list of object files to build, simple by replacing
-# the '.c' extension of filenames in C_SOURCES with '.o'
+# the '.c' extension of filenames in C_SOURCES with '.o'.
 OBJ = ${C_SOURCES:.c=.o}
 
+clean :
+	$(RM) -v *.bin *.img *.map *.dis *.o
+	find $(SRC_DIR) -name "*.o" -exec $(RM) -rv {} \;
+
 # This is the actual disk image that the computer loads,
-# which is the combination of our compiled bootsector and kernel
+# which is the combination of our compiled bootsector and kernel.
 image : boot_sector.bin kernel.bin
 	cat $^ > $(OUTPUT_IMAGE)
 
 # This links the binary of our kernel from two object files:
-# - the kernel_entry, which jumps to main() in our kernel
+# - the kernel_entry, which jumps to main() in our kernel (ASM)
 # - the compiled C kernel
 kernel.bin: kernel_entry.o ${OBJ}
 	$(LD) $^ -o $@ -Ttext 0x1000 --oformat binary
 
 # Generic rule for building 'somefile.o' from 'somefile.c'
-%.o : %.c ${HEADERS}
+%.o : %.c ${C_HEADERS}
 	$(CC) $(CFLAGS) \
 		-I$(KERNEL_HEADERS) \
 		-I$(LIBC_HEADERS) \
@@ -115,18 +127,14 @@ kernel.bin: kernel_entry.o ${OBJ}
 
 # Build the kernel entry object file.
 kernel_entry.o : $(ASM_SRC_DIR)/kernel_entry.asm
-	$(AS) $< -f elf -o $@
+	$(ASM) $< -f elf -o $@
 
 # Assemble the boot sector to raw machine code
 # The -I options tells nasm where to find our useful assembly
-# routines that we include in boot_sect.asm
+# routines that we include in boot_sector.asm
 boot_sector.bin : $(ASM_SRC_DIR)/boot_sector.asm
-	$(AS) $< -f bin -o $@
-
-clean :
-	$(RM) -v *.bin *.img *.map *.dis *.o
-	find $(SRC_DIR) -name "*.o" -exec $(RM) -rv {} \;
+	$(ASM) $< -f bin -o $@
 
 # Disassemble our kernel - might be useful for debugging.
 kernel.dis : kernel.bin
-	$(DISAS) -b 32 $< > $@
+	$(DISASM) -b 32 $< > $@
