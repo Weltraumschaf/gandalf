@@ -1,5 +1,4 @@
-#ifndef __LOW_LEVEL_H__
-#define __LOW_LEVEL_H__
+#pragma once
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -27,5 +26,3 @@ void invlpg(void* m);
 void wrmsr(uint32_t msr_id, uint64_t msr_value);
 uint64_t rdmsr(uint32_t msr_id);
 void halt();
-
-#endif

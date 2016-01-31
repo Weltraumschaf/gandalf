@@ -1,9 +1,7 @@
 /*
  * From http://wiki.osdev.org/User:Sortie/Meaty_Skeleton
  */
-
-#ifndef __STRING_H_
-#define __STRING_H_
+#pragma once
 
 #include <sys/cdefs.h>
 #include <stddef.h> /* for size_t */
@@ -94,5 +92,3 @@ char *strchr(const char *haystack, int needle);
 char *strcat(char *dst, const char *src);
 
 __END_DECLS
-
-#endif /* __STRING_H_ */

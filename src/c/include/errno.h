@@ -1,8 +1,7 @@
 /*
  * From http://www.fefe.de/dietlibc/
  */
-#ifndef _ERRNO_H
-#define _ERRNO_H
+#pragma once
 
 /* i386, arm, ppc, x86_64, ia64 */
 #define EPERM		 1	/* Operation not permitted */
@@ -147,5 +146,3 @@ __BEGIN_DECLS
 #define __set_errno(x) errno=(x)
 
 __END_DECLS
-
-#endif /* _ERRNO_H */

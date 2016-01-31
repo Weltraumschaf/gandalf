@@ -1,9 +1,7 @@
 /*
  * From http://wiki.osdev.org/User:Sortie/Meaty_Skeleton
  */
-
-#ifndef __VGA_H_
-#define __VGA_H_
+#pragma once
 
 #include <stddef.h>
 #include <stdint.h>
@@ -58,5 +56,3 @@ uint8_t make_color(uint8_t foreground, uint8_t background);
  * @return video memory byte
  */
 uint16_t make_vgaentry(char character, uint8_t color);
-
-#endif /* __VGA_H_ */

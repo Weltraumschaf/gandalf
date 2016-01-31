@@ -2,8 +2,7 @@
  * From http://wiki.osdev.org/User:Sortie/Meaty_Skeleton
  */
 
-#ifndef __SYS_CDEFS_H
-#define __SYS_CDEFS_H
+#pragma once
 
 #define __gandalf_libc 1
 
@@ -30,5 +29,3 @@
 
 /* number of bits in a byte */
 #define NBBY    8
-
-#endif /* __SYS_CDEFS_H */

@@ -1,5 +1,4 @@
-#ifndef __MMAN_H_
-#define	__MMAN_H_
+#pragma once
 
 #include <stddef.h> /* for size_t */
 #include <sys/cdefs.h>
@@ -16,6 +15,3 @@ extern void *mremap (void *__addr, size_t __old_len, size_t __new_len, unsigned 
 extern int mincore (void *__start, size_t __len, unsigned char *__vec);
 
 __END_DECLS
-
-#endif	/* __MMAN_H_ */
-

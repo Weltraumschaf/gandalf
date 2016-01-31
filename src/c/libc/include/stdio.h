@@ -1,5 +1,4 @@
-#ifndef __STDIO_H_
-#define __STDIO_H_
+#pragma once
 
 #include <stdint.h>
 #include <sys/cdefs.h>
@@ -70,5 +69,3 @@ void print(const char* string);
 void println(const char* string);
 
 __END_DECLS
-
-#endif /* __STDIO_H_ */

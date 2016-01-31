@@ -2,8 +2,7 @@
  * From http://wiki.osdev.org/User:Sortie/Meaty_Skeleton
  */
 
-#ifndef __TTY_H_
-#define __TTY_H_
+#pragma once
 
 /*
  * This is the kernel API to access the terminal.
@@ -129,5 +128,3 @@ void tty_putChar(char c);
  * @param data string to write on terminal
  */
 void tty_write(const char* data);
-
-#endif /* __TTY_H_ */

@@ -1,5 +1,4 @@
-#ifndef __GANDALF_H_
-#define __GANDALF_H_
+#pragma once
 
 void gandalf_prepareScreen();
 /**
@@ -7,5 +6,3 @@ void gandalf_prepareScreen();
  */
 void gandalf_showBootScreen();
 void gandalf_showWelcomeScreen();
-
-#endif /* __GANDALF_H_ */

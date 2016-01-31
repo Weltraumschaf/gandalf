@@ -1,5 +1,4 @@
-#ifndef __FCNTL_H_
-#define __FCNTL_H_
+#pragma once
 
 /*
  * From lib/libc//musl-0.9.15/include/fcntl.h
@@ -39,5 +38,3 @@ int open(const char * path, int oflags, ...);
 //int open(const char * path, int oflags, mode_t mode);
 
 __END_DECLS
-
-#endif
