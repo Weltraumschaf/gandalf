@@ -15,12 +15,13 @@ run it e.g. with [QEMU][qemu]:
 
 ## Prerequisites
 
-What you need (for hacking andcompiling):
+What you need (for hacking and compiling):
 
 - [NASM][nasm] assembler
 - [binutils][binutils] for make and such
 - [GCC][gcc] compiler (only for building cross compiler)
 - [QEMU][qemu] to run the OS
+- pbzip2 for creating the build tools
 
 On Linux  this should be  no problem at  all. On Mac  OS X [home  brew][brew] is
 recommended to  install the tools.  On Windows I  guess [CygWin][cyg] is  a good
