@@ -28,7 +28,7 @@ $(info LD is $(LD))
 
 # Add mandatory options to CFLAGS:
 # -g	w/ debug symbols
-CFLAGS	:= -ffreestanding -std=gnu11 -g -Wall -Wextra -Wmissing-prototypes -Wstrict-prototypes
+CFLAGS	:= -ffreestanding -std=gnu11 -g -Wall -Wextra -Wpedantic
 $(info CFLAGS is $(CFLAGS))
 
 #
