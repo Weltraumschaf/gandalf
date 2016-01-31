@@ -70,7 +70,6 @@ void kernel_boot() {
 void main() {
     //    kernel_boot();
     tty_initialize();
-    ;
     gandalf_prepareScreen();
     gandalf_showBootScreen();
     sleep(1000);
