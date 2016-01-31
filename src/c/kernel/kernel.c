@@ -10,7 +10,8 @@
 
 void welcome() {
     tty_setColor(DEFAULT_COLOR_INVERTED);
-    println("Y  Gandalf 1.0  started :-)                                                     ");
+    println("Y  Gandalf 1.0  started :-)                                       "
+            "              ");
     tty_setColor(DEFAULT_COLOR);
 }
 
@@ -61,15 +62,15 @@ void run() {
 }
 
 void kernel_boot() {
-
 }
 
 /*
  * The kernels entry point.
  */
 void main() {
-//    kernel_boot();
-    tty_initialize();;
+    //    kernel_boot();
+    tty_initialize();
+    ;
     gandalf_prepareScreen();
     gandalf_showBootScreen();
     sleep(1000);

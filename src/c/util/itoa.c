@@ -4,9 +4,9 @@
  * Maybebetter http://wiki.osdev.org/Printing_to_Screen
  */
 
-char* itoa(int i, char b[]) {
+char *itoa(int i, char b[]) {
     char const digit[] = "0123456789";
-    char* p = b;
+    char *p = b;
 
     if (i < 0) {
         *p++ = '-';
@@ -15,14 +15,14 @@ char* itoa(int i, char b[]) {
 
     int shifter = i;
 
-    do { //Move to where representation ends
+    do { // Move to where representation ends
         ++p;
         shifter = shifter / 10;
     } while (shifter);
 
     *p = '\0';
 
-    do { //Move back, inserting digits as u go
+    do { // Move back, inserting digits as u go
         *--p = digit[i % 10];
         i = i / 10;
     } while (i);

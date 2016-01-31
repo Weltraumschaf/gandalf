@@ -7,16 +7,18 @@
 /*
  * Read a 8/16/32-bit value at a given memory location using another segment
  * than the default C data segment. Unfortunately there is no constraint for
- * manipulating segment registers directly, so issuing the mov <reg>, <segmentreg>
+ * manipulating segment registers directly, so issuing the mov <reg>,
+ * <segmentreg>
  * manually is required.
  */
-uint32_t farpeekl(uint16_t sel, void* off) {
+uint32_t farpeekl(uint16_t sel, void *off) {
     uint32_t ret;
     asm("push %%fs\n\t"
-            "mov  %1, %%fs\n\t"
-            "mov  %%fs:(%2), %0\n\t"
-            "pop  %%fs"
-            : "=r"(ret) : "g"(sel), "r"(off));
+        "mov  %1, %%fs\n\t"
+        "mov  %%fs:(%2), %0\n\t"
+        "pop  %%fs"
+        : "=r"(ret)
+        : "g"(sel), "r"(off));
     return ret;
 }
 
@@ -25,12 +27,13 @@ uint32_t farpeekl(uint16_t sel, void* off) {
  * like in farpeek, this version of farpoke saves and restore the segment
  * register used for the access.
  */
-void farpokeb(uint16_t sel, void* off, uint8_t v) {
+void farpokeb(uint16_t sel, void *off, uint8_t v) {
     asm("push %%fs\n\t"
-            "mov  %0, %%fs\n\t"
-            "movb %2, %%fs:(%1)\n\t"
-            "pop %%fs"
-            : : "g"(sel), "r"(off), "r"(v));
+        "mov  %0, %%fs\n\t"
+        "movb %2, %%fs:(%1)\n\t"
+        "pop %%fs"
+        :
+        : "g"(sel), "r"(off), "r"(v));
     /* TODO: Should "memory" be in the clobber list here? */
 }
 
@@ -47,7 +50,7 @@ void farpokeb(uint16_t sel, void* off, uint8_t v) {
  * "d" (port) means: load EDX with port
  */
 void port_byte_out(uint16_t port, uint8_t val) {
-    asm volatile ( "outb %0, %1" : : "a"(val), "Nd"(port));
+    asm volatile("outb %0, %1" : : "a"(val), "Nd"(port));
     /* TODO: Is it wrong to use 'N' for the port? It's not a 8-bit constant. */
     /* TODO: Should %1 be %w1? */
     /* TODO: Is there any reason to force the use of eax and edx? */
@@ -63,7 +66,7 @@ void port_byte_out(uint16_t port, uint8_t val) {
  */
 uint8_t port_byte_in(uint16_t port) {
     uint8_t ret;
-    asm volatile ( "inb %1, %0" : "=a"(ret) : "Nd"(port));
+    asm volatile("inb %1, %0" : "=a"(ret) : "Nd"(port));
     /* TODO: Is it wrong to use 'N' for the port? It's not a 8-bit constant. */
     /* TODO: Should %1 be %w1? */
     /* TODO: Is there any reason to force the use of eax and edx? */
@@ -78,7 +81,7 @@ uint8_t port_byte_in(uint16_t port) {
 void io_wait(void) {
     /* Port 0x80 is used for 'checkpoints' during POST. */
     /* The Linux kernel seems to think it is free for use :-/ */
-    asm volatile ( "outb %%al, $0x80" : : "a"(0));
+    asm volatile("outb %%al, $0x80" : : "a"(0));
     /* TODO: Is there any reason why al is forced? */
 }
 
@@ -89,9 +92,9 @@ void io_wait(void) {
  */
 bool are_interrupts_enabled() {
     unsigned long flags;
-    asm volatile ( "pushf\n\t"
-            "pop %0"
-            : "=g"(flags));
+    asm volatile("pushf\n\t"
+                 "pop %0"
+                 : "=g"(flags));
     return flags & (1 << 9);
     return false;
 }
@@ -99,16 +102,15 @@ bool are_interrupts_enabled() {
 /*
  * Define a new interrupt table. .
  */
-void lidt(void* base, uint16_t size) {
-
+void lidt(void *base, uint16_t size) {
     struct {
         uint16_t length;
         uint32_t base;
     } __attribute__((packed)) IDTR;
 
     IDTR.length = size;
-    IDTR.base = (uint32_t) base;
-    asm volatile ( "lidt (%0)" : : "p"(&IDTR));
+    IDTR.base = (uint32_t)base;
+    asm volatile("lidt (%0)" : : "p"(&IDTR));
 }
 
 // CPU-related functions
@@ -118,22 +120,25 @@ void lidt(void* base, uint16_t size) {
  *
  * GCC has a <cpuid.h> header you should use instead of this.
  */
-void cpuid(int code, uint32_t* a, uint32_t* d) {
-    asm volatile ( "cpuid" : "=a"(*a), "=d"(*d) : "0"(code) : "ebx", "ecx");
+void cpuid(int code, uint32_t *a, uint32_t *d) {
+    asm volatile("cpuid" : "=a"(*a), "=d"(*d) : "0"(code) : "ebx", "ecx");
 }
 
 /*
- * Read the current value of the CPU's time-stamp counter and store into EDX:EAX.
+ * Read the current value of the CPU's time-stamp counter and store into
+ * EDX:EAX.
  * The time-stamp counter contains the amount of clock ticks that have elapsed
- * since the last CPU reset. The value is stored in a 64-bit MSR and is incremented
+ * since the last CPU reset. The value is stored in a 64-bit MSR and is
+ * incremented
  * after each clock cycle.
  *
  * This can be used to find out how much time it takes to do certain functions,
- * very useful for testing/benchmarking /etc. Note: This is only an approximation.
+ * very useful for testing/benchmarking /etc. Note: This is only an
+ * approximation.
  */
-void rdtsc(uint32_t* upper, uint32_t* lower) {
+void rdtsc(uint32_t *upper, uint32_t *lower) {
     /* TODO: It may be better to return a struct instead of using pointers. */
-    asm volatile ( "rdtsc" : "=a"(*lower), "=d"(*upper));
+    asm volatile("rdtsc" : "=a"(*lower), "=d"(*upper));
 }
 
 /*
@@ -141,7 +146,7 @@ void rdtsc(uint32_t* upper, uint32_t* lower) {
  */
 unsigned long read_cr0(void) {
     unsigned long val;
-    asm volatile ( "mov %%cr0, %0" : "=r"(val));
+    asm volatile("mov %%cr0, %0" : "=r"(val));
     return val;
 }
 
@@ -152,10 +157,10 @@ unsigned long read_cr0(void) {
  * tables. The m pointer points to a logical address, not a physical or virtual
  * one: an offset for your ds segment.
  */
-void invlpg(void* m) {
+void invlpg(void *m) {
     /* Clobber memory to avoid optimizer re-ordering access before invlpg,
        which may cause nasty bugs. */
-    //asm volatile ( "invlpg (%0)" : : "m"(m) : "memory" );
+    // asm volatile ( "invlpg (%0)" : : "m"(m) : "memory" );
 }
 
 /*
@@ -163,7 +168,7 @@ void invlpg(void* m) {
  * registers EAX and EDX.
  */
 void wrmsr(uint32_t msr_id, uint64_t msr_value) {
-    asm volatile ( "wrmsr" : : "c" (msr_id), "A" (msr_value));
+    asm volatile("wrmsr" : : "c"(msr_id), "A"(msr_value));
 }
 
 /*
@@ -172,7 +177,7 @@ void wrmsr(uint32_t msr_id, uint64_t msr_value) {
  */
 uint64_t rdmsr(uint32_t msr_id) {
     uint64_t msr_value;
-    asm volatile ( "rdmsr" : "=A" (msr_value) : "c" (msr_id));
+    asm volatile("rdmsr" : "=A"(msr_value) : "c"(msr_id));
     return msr_value;
 }
 

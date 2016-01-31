@@ -10,13 +10,13 @@
 #define INIT_ROW 0
 #define INIT_COLUMN 0
 
-size_t tty_row          = INIT_ROW;
-size_t tty_column       = INIT_COLUMN;
-bool tty_autoScrolling  = false;
-bool tty_cursorEnabled  = false;
+size_t tty_row = INIT_ROW;
+size_t tty_column = INIT_COLUMN;
+bool tty_autoScrolling = false;
+bool tty_cursorEnabled = false;
 
 uint8_t tty_color;
-uint16_t* tty_buffer;
+uint16_t *tty_buffer;
 
 void tty_clearChar(uint8_t row, uint8_t column) {
     const size_t index = row * VGA_WIDTH + column;
@@ -44,24 +44,24 @@ static void setCursor(size_t row, size_t column) {
 
     // cursor LOW port to vga INDEX register
     port_byte_out(PORT_SCREEN_CTRL, REG_CURSOR_LOCATION_LOW);
-    port_byte_out(PORT_SCREEN_DATA, (int) (offset & 0xff));
+    port_byte_out(PORT_SCREEN_DATA, (int)(offset & 0xff));
     // cursor HIGH port to vga INDEX register
     port_byte_out(PORT_SCREEN_CTRL, REG_CURSOR_LOCATION_HIGH);
-    port_byte_out(PORT_SCREEN_DATA, (int) ((offset >> 8) & 0xff));
+    port_byte_out(PORT_SCREEN_DATA, (int)((offset >> 8) & 0xff));
 }
 
 // See http://wiki.osdev.org/Text_Mode_Cursor
 void tty_setCursor(size_t row, size_t column) {
     // TODO Check mas values.
     setCursor(row, column);
-    tty_row    = row;
+    tty_row = row;
     tty_column = column;
 }
 
 void tty_initialize() {
-    tty_row    = INIT_ROW;
+    tty_row = INIT_ROW;
     tty_column = INIT_COLUMN;
-    tty_color  = DEFAULT_COLOR;
+    tty_color = DEFAULT_COLOR;
     tty_buffer = VGA_MEMORY;
     tty_clear();
     tty_setCursor(tty_column, tty_row);
@@ -132,7 +132,7 @@ void tty_putChar(char c) {
     }
 }
 
-void tty_write(const char* data) {
+void tty_write(const char *data) {
     const size_t size = strlen(data);
 
     for (size_t i = 0; i < size; i++) {

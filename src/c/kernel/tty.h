@@ -53,11 +53,11 @@ static const size_t MAX_OFFSET = 2000;
 /**
  * Register port address for screen control.
  */
-static const uint16_t PORT_SCREEN_CTRL   = 0x3d4;
+static const uint16_t PORT_SCREEN_CTRL = 0x3d4;
 /**
  * Register port address for screen data.
  */
-static const uint16_t PORT_SCREEN_DATA   = 0x3d5;
+static const uint16_t PORT_SCREEN_DATA = 0x3d5;
 /**
  * High byte offset for cursor position.
  */
@@ -65,7 +65,7 @@ static const uint8_t REG_CURSOR_LOCATION_HIGH = 0x0e;
 /**
  * Low byte offset for cursor position.
  */
-static const uint8_t REG_CURSOR_LOCATION_LOW  = 0x0f;
+static const uint8_t REG_CURSOR_LOCATION_LOW = 0x0f;
 
 /**
  * Used to clear screen.
@@ -73,7 +73,8 @@ static const uint8_t REG_CURSOR_LOCATION_LOW  = 0x0f;
 static const char BLANK = ' ';
 
 /**
- * Set all terminal settings (color, cursor position etc) to initial values and clears screen.
+ * Set all terminal settings (color, cursor position etc) to initial values and
+ * clears screen.
  */
 void tty_initialize();
 /**
@@ -127,4 +128,4 @@ void tty_putChar(char c);
  *
  * @param data string to write on terminal
  */
-void tty_write(const char* data);
+void tty_write(const char *data);

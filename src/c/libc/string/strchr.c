@@ -5,7 +5,7 @@
 #include <string.h>
 
 char *strchr(const char *haystack, int needle) {
-    while (*haystack != (char) needle) {
+    while (*haystack != (char)needle) {
         if (!*haystack) {
             return NULL;
         }
@@ -13,5 +13,5 @@ char *strchr(const char *haystack, int needle) {
         haystack++;
     }
 
-    return (char *) haystack;
+    return (char *)haystack;
 }

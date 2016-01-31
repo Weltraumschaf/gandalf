@@ -1,5 +1,5 @@
 #include <stdio.h>
 
-void print(const char* string) {
+void print(const char *string) {
     printf("%s", string);
 }
