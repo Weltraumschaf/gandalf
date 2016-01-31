@@ -3,7 +3,7 @@
   KERNEL_OFFSET equ 0x1000  ; This is the memory offset to which 
                             ; we will load our kernel
 
-  mov [BOOT_DRIVE], dl      ; BIOS stores our boot drive in DL, so it’s 
+  mov [BOOT_DRIVE], dl      ; BIOS stores our boot drive in DL, so it’s
                             ; best to remember this for later.
 
   mov bp, 0x9000            ; Set the stack.
@@ -40,7 +40,7 @@ BEGIN_PM:
   call print_string_pm
   
   call KERNEL_OFFSET            ; Now jump to the address of our loaded
-                                ; kernel code , assume the brace position , 
+                                ; kernel code, assume the brace position, 
                                 ; and cross your fingers. Here we go!
   jmp $                         ; Infinite loop.
 

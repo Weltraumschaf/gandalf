@@ -6,7 +6,7 @@ gdt_null: ; the mandatory null descriptor
   dd 0x0
 
 gdt_code: ; the code segment descriptor
-  ; base=0x0, limit=0xfffff,
+  ; base=0x0, limit=0xffff (65.535 = 63k), 
   ; 1st flags:  (present)1 (privilege)00 (descriptor type)1 -> 1001b
   ; type flags: (code)1 (conforming)0 (readable)1 (accessed)0 -> 1010b
   ; 2nd flags:  (granularity)1 (32-bit default)1 (64-bit seg)0 (AVL)0 -> 1100b
