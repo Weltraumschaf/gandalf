@@ -27,15 +27,18 @@ done
 DIR=`dirname "${PROGRAM}"`
 PROGRAM_DIRECTORY=$(cd "${DIR}" ; pwd)
 
-echo "#"
-echo "# Setting environment ..."
-echo "#"
-
+echo "## Setting environment ..."
 source "./environment"
+echo "CC=${CC}"
+echo "CXX=${CXX}"
+echo "CPP=${CPP}"
+echo "LD=${LD}"
 export CFLAGS="-Wno-deprecated-declarations"
-
+echo "CFLAGS=${CFLAGS}"
 export PREFIX="${PROGRAM_DIRECTORY}/cross"
+echo "PREFIX=${PREFIX}"
 export TARGET="i586-elf"
+echo "TARGET=${TARGET}"
 
 BUILD_DIR="${PROGRAM_DIRECTORY}/target"
 ARCHIVE="${PROGRAM_DIRECTORY}/archive"
@@ -46,149 +49,110 @@ LIB_GMP="gmp-5.1.3"
 LIB_MPFR="mpfr-3.1.2"
 LIB_MPC="mpc-1.0.2"
 
-echo "#"
-echo "# Cleaning"
-echo "#"
+echo "## Cleaning"
 
-if [ -d "${BUILD_DIR}" ] ; then
-  echo "Deleting ${BUILD_DIR} ..."
-  rm -rf "${BUILD_DIR}"
+if [ -d "${PREFIX}" ] ; then
+    echo "## Deleting ${PREFIX} ..."
+    rm -rf "${PREFIX}"
+    mkdir -p "${PREFIX}"
+fi
+
+if [ -d "${BUILD_DIR}" ] && [ "${1}" == "clean" ] ; then
+    echo "## Deleting ${BUILD_DIR} ..."
+    rm -rf "${BUILD_DIR}"
 fi
 
 if [ ! -d "${BUILD_DIR}" ] ; then
-  mkdir -p "${BUILD_DIR}"
+    echo "## Extracting sources ... "
+    mkdir -p "${BUILD_DIR}"
+
+    PLATFORM=`uname`
+    COMPRESSOR=""
+
+    if [ "${PLATFORM}" == "Darwin" ] ; then
+    COMPRESSOR="pbunzip2"
+    elif [ "${PLATFORM}" == "Linux" ] ; then
+    COMPRESSOR="pbzip2"
+    else
+    echo "Unsupported platform: ${PLATFORM}"
+    exit 1
+    fi
+
+    command -v ${COMPRESSOR} >/dev/null 2>&1 || { 
+    echo >&2 "I require ${COMPRESSOR} but it's not installed.  Aborting."; 
+    exit 1; 
+    }
+
+    for file in $(ls -1 "${ARCHIVE}") ; do
+    tar -xvf "${ARCHIVE}/${file}" -C "${BUILD_DIR}" --use-compress-prog=${COMPRESSOR}
+    done
 fi
 
-echo "#"
-echo "# Extracting sources ... "
-echo "#"
-
-PLATFORM=`uname`
-COMPRESSOR=""
-
-if [ "${PLATFORM}" == "Darwin" ] ; then
-  COMPRESSOR="pbunzip2"
-elif [ "${PLATFORM}" == "Linux" ] ; then
-  COMPRESSOR="pbzip2"
-else
-  echo "Unsupported platform: ${PLATFORM}"
-  exit 1
-fi
-
-command -v ${COMPRESSOR} >/dev/null 2>&1 || { 
-  echo >&2 "I require ${COMPRESSOR} but it's not installed.  Aborting."; 
-  exit 1; 
-}
-
-for file in $(ls -1 "${ARCHIVE}") ; do
-  tar -xvf "${ARCHIVE}/${file}" -C "${BUILD_DIR}" --use-compress-prog=${COMPRESSOR}
-done
-
-if [ ! -d "${PREFIX}" ] ; then
-  mkdir -p "${PREFIX}"
-fi
-
-echo "#"
-echo "# Building GMP ..."
-echo "#"
+echo "## Building GMP ..."
 
 cd "${BUILD_DIR}/${LIB_GMP}"
 ./configure --prefix="${PREFIX}"
 make
 make install
+cd -
 
-echo "#"
-echo "# Building MPFR ..."
-echo "#"
+echo "## Building MPFR ..."
 
 cd "${BUILD_DIR}/${LIB_MPFR}"
-./configure --prefix="${PREFIX}"
+./configure --prefix="${PREFIX}" \
+    --with-gmp-include="${PREFIX}/include" \
+    --with-gmp-lib="${PREFIX}/lib"
 make
 make install
+cd -
 
-echo "#"
-echo "# Building MPC ..."
-echo "#"
+echo "## Building MPC ..."
 
 cd "${BUILD_DIR}/${LIB_MPC}"
 ./configure --prefix="${PREFIX}" \
-  --with-mpfr="${PREFIX}"
+    --with-mpfr="${PREFIX}"
 make
 make install
+cd -
 
-cd "${BUILD_DIR}"
-
-if [ ! -d "${PREFIX}" ] ; then
-  mkdir -p "${PREFIX}"
-fi
-
-cd "${BUILD_DIR}"
-
-echo "#############"
-echo "# bin-utils #"
-echo "#############"
+echo "## Building bin-utils ..."
 
 if [ ! -d "${BUILD_DIR}/build-binutils" ] ; then
   mkdir -p "${BUILD_DIR}/build-binutils"
 fi
 
 cd "${BUILD_DIR}/build-binutils"
-echo "#"
-echo "# Configuring bin-utils ..."
-echo "#"
-../${LIB_BINUTILS}/configure --prefix="${PREFIX}" \
-  --target="${TARGET}" \
-  --with-gmp="${PREFIX}" \
-  --with-mpfr="${PREFIX}" \
-  --with-mpc="${PREFIX}" \
-  --disable-nls
-echo "#"
-echo "# Making bin-utils ..."
-echo "#"
+../${LIB_BINUTILS}/configure \
+    --prefix="${PREFIX}" \
+    --target="${TARGET}" \
+    --with-gmp="${PREFIX}" \
+    --with-mpfr="${PREFIX}" \
+    --with-mpc="${PREFIX}" \
+    --disable-nls
 make
-echo "#"
-echo "# Intsalling bin-utils ..."
-echo "#"
 make install
+cd -
 
-cd "${BUILD_DIR}"
-
-echo "#######"
-echo "# GCC #"
-echo "#######"
+echo "## Building GCC ..."
 
 if [ ! -d "${BUILD_DIR}/build-gcc" ] ; then
   mkdir -p "${BUILD_DIR}/build-gcc"
 fi
 
 cd "${BUILD_DIR}/build-gcc"
-echo "#"
-echo "# Configuring GCC ..."
-echo "#"
-../${LIB_GCC}/configure --prefix="${PREFIX}" \
-  --target="${TARGET}" \
-  --with-gmp="${PREFIX}" \
-  --with-mpfr="${PREFIX}" \
-  --with-mpc="${PREFIX}" \
-  --disable-nls \
-  --enable-languages=c,c++ \
-  --without-headers
-echo "#"
-echo "# Making GCC ..."
-echo "#"
+../${LIB_GCC}/configure 
+    --prefix="${PREFIX}" \
+    --target="${TARGET}" \
+    --with-gmp="${PREFIX}/lib" \
+    --with-mpfr="${PREFIX}/lib" \
+    --with-mpc="${PREFIX}/lib" \
+    --disable-nls \
+    --enable-languages=c,c++ \
+    --without-headers
 make all-gcc
-echo "#"
-echo "# Making Lib GCC ..."
-echo "#"
 make all-target-libgcc
-echo "#"
-echo "# Installing GCC ..."
-echo "#"
 make install-gcc
-echo "#"
-echo "# Installing Lib GCC ..."
-echo "#"
 make install-target-libgcc
+cd -
 
-cd "${PROGRAM_DIRECTORY}"
 echo "Done :)"
