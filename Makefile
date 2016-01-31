@@ -19,13 +19,9 @@ $(info CXX is $(CXX))
 $(info CPP is $(CPP))
 $(info LD is $(LD))
 
-# Default CFLAGS, if nothing set by CLI:
-# -g	w/ debug symbols
-# -O2	optimization
-CFLAGS	?= -O2 -g
-
 # Add mandatory options to CFLAGS:
-CFLAGS	:= $(CFLAGS) -Wall -Wextra -Wmissing-prototypes -Wstrict-prototypes
+# -g	w/ debug symbols
+CFLAGS	:= -ffreestanding -std=gnu11 -g -Wall -Wextra -Wmissing-prototypes -Wstrict-prototypes
 $(info CFLAGS is $(CFLAGS))
 
 #
@@ -112,7 +108,7 @@ kernel.bin: kernel_entry.o ${OBJ}
 
 # Generic rule for building 'somefile.o' from 'somefile.c'
 %.o : %.c ${HEADERS}
-	$(CC) -ffreestanding -std=gnu99 \
+	$(CC) $(CFLAGS) \
 		-I$(KERNEL_HEADERS) \
 		-I$(LIBC_HEADERS) \
 		-c $< -o $@
