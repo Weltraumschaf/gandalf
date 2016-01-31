@@ -75,7 +75,7 @@
 //#include <sched.h>
 //#endif /* solaris or LACKS_SCHED_H */
 //#if (defined(USE_RECURSIVE_LOCKS) && USE_RECURSIVE_LOCKS != 0) ||
-//!USE_SPIN_LOCKS
+//! USE_SPIN_LOCKS
 //#include <pthread.h>
 //#endif /* USE_RECURSIVE_LOCKS ... */
 //#elif defined(_MSC_VER)
@@ -97,7 +97,7 @@
 //#define interlockedexchange _InterlockedExchange
 //#elif defined(WIN32) && defined(__GNUC__)
 //#define interlockedcompareexchange(a, b, c) __sync_val_compare_and_swap(a, c,
-//b)
+// b)
 //#define interlockedexchange __sync_lock_test_and_set
 //#endif /* Win32 */
 //#else /* USE_LOCKS */
@@ -405,7 +405,7 @@
 ///* Note CAS_LOCK defined to return 0 on success */
 //
 //#if defined(__GNUC__)&& (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >=
-//1))
+// 1))
 //#define CAS_LOCK(sl)     __sync_lock_test_and_set(sl, 1)
 //#define CLEAR_LOCK(sl)   __sync_lock_release(sl)
 //
@@ -558,7 +558,7 @@
 //#define RELEASE_LOCK(lk)      LeaveCriticalSection(lk)
 //#define TRY_LOCK(lk)          TryEnterCriticalSection(lk)
 //#define INITIAL_LOCK(lk)      (!InitializeCriticalSectionAndSpinCount((lk),
-//0x80000000|4000))
+// 0x80000000|4000))
 //#define DESTROY_LOCK(lk)      (DeleteCriticalSection(lk), 0)
 //#define NEED_GLOBAL_LOCK_INIT
 //
