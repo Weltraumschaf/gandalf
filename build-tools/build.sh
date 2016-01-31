@@ -147,7 +147,7 @@ cd "${BUILD_DIR}/build-gcc"
     --with-mpfr="${PREFIX}" \
     --with-mpc="${PREFIX}" \
     --disable-nls \
-    --enable-languages=c,c++ \
+    --enable-languages=c,c++,go \
     --without-headers
 make all-gcc
 make all-target-libgcc
