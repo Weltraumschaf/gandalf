@@ -140,12 +140,12 @@ if [ ! -d "${BUILD_DIR}/build-gcc" ] ; then
 fi
 
 cd "${BUILD_DIR}/build-gcc"
-../${LIB_GCC}/configure 
+"${BUILD_DIR}//${LIB_GCC}/configure" \
     --prefix="${PREFIX}" \
     --target="${TARGET}" \
-    --with-gmp="${PREFIX}/lib" \
-    --with-mpfr="${PREFIX}/lib" \
-    --with-mpc="${PREFIX}/lib" \
+    --with-gmp="${PREFIX}" \
+    --with-mpfr="${PREFIX}" \
+    --with-mpc="${PREFIX}" \
     --disable-nls \
     --enable-languages=c,c++ \
     --without-headers
