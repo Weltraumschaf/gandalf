@@ -2,21 +2,31 @@
 # Builds the kernel.
 #
 
+CWD = $(shell pwd)
+$(info CWD is $(CWD))
+
 # Cross compiler
-CC  	:= ./build-tools/cross/bin/i586-elf-gcc
-CXX 	:= ./build-tools/cross/bin/i586-elf-g++
-CPP 	:= ./build-tools/cross/bin/i586-elf-cpp
-LD  	:= ./build-tools/cross/bin/i586-elf-ld
+BUILD_TOOLS_PREFIX := $(CWD)/build-tools/cross/bin/i586-elf-
+CC  	:= $(BUILD_TOOLS_PREFIX)gcc
+CXX 	:= $(BUILD_TOOLS_PREFIX)g++
+CPP 	:= $(BUILD_TOOLS_PREFIX)cpp
+LD  	:= $(BUILD_TOOLS_PREFIX)ld
 AS		:= nasm
 DISAS	:= ndisasm
 
-# Default CFLAGS:
+$(info CC is $(CC))
+$(info CXX is $(CXX))
+$(info CPP is $(CPP))
+$(info LD is $(LD))
+
+# Default CFLAGS, if nothing set by CLI:
 # -g	w/ debug symbols
 # -O2	optimization
 CFLAGS	?= -O2 -g
 
 # Add mandatory options to CFLAGS:
 CFLAGS	:= $(CFLAGS) -Wall -Wextra -Wmissing-prototypes -Wstrict-prototypes
+$(info CFLAGS is $(CFLAGS))
 
 #
 # VN options.
@@ -58,25 +68,25 @@ all : image
 run : all
 
 	$(QEMU_BIN) \
-	  -cpu $(QEMU_CPU) \
-	  -m $(QEMU_RAM) \
-	  -k $(QEMU_KEYMAP) \
-	  -vga std \
-	  -no-acpi \
-	  -no-hpet \
-	  -fda $(OUTPUT_IMAGE)
+		-cpu $(QEMU_CPU) \
+		-m $(QEMU_RAM) \
+		-k $(QEMU_KEYMAP) \
+		-vga std \
+		-no-acpi \
+		-no-hpet \
+		-fda $(OUTPUT_IMAGE)
 
 debug : all
 
 	$(QEMU_BIN) -gdb $(QEMU_GDB_PORT) -S \
-	  -cpu $(QEMU_CPU) \
-	  -m $(QEMU_RAM) \
-	  -k $(QEMU_KEYMAP) \
-	  -vga std \
-	  -no-acpi \
-	  -no-hpet \
-	  -d $(QEMU_DEBUG) \
-	  -fda $(OUTPUT_IMAGE)
+		-cpu $(QEMU_CPU) \
+		-m $(QEMU_RAM) \
+		-k $(QEMU_KEYMAP) \
+		-vga std \
+		-no-acpi \
+		-no-hpet \
+		-d $(QEMU_DEBUG) \
+		-fda $(OUTPUT_IMAGE)
 
 KERNEL_HEADERS	= $(C_SRC_DIR)/include
 LIBC_HEADERS	= $(C_SRC_DIR)/libc/include
