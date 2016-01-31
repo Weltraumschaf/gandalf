@@ -74,6 +74,8 @@ I add a license and source notice in each when it is not already mentioned.
 
 ## Architecture
 
+How to [code C][howto-c].
+
 ### Terminal emulation - tty
 
 The tty is defined in `kernel/tty.h`. It ptovides kernel API to initialize the 
@@ -89,3 +91,4 @@ tty, set curos, color, and print characters and messages on the screen.
 [qemu]:     http://wiki.qemu.org/Main_Page
 [beer]:     http://www.weltraumschaf.de/the-beer-ware-license.txt
 [klibc]:    https://en.wikipedia.org/wiki/Klibc
+[howto-c]:  https://matt.sh/howto-c
