@@ -66,14 +66,32 @@ uint8_t port_byte_in(uint16_t port);
  * there's nothing like a status register or an IRQ to tell you the info has
  * been received.
  */
-void io_wait(void);
+void io_wait();
 
-// Interrupt-related functions
+// Flags
+
+bool flag_carry();
+bool flag_parity();
+bool flag_adjust();
+bool flag_zero();
+bool flag_sign();
+bool flag_trap();
 
 /*
  * Returns a true boolean value if irq are enabled for the CPU.
  */
-bool are_interrupts_enabled();
+bool flag_interrupt();
+bool flag_direction();
+bool flag_overflow();
+bool flag_io_privileged_level();
+bool flag_resume();
+bool flag_virtual_mode();
+bool flag_alignment_check();
+bool flag_virtual_interupt();
+bool flag_virtual_interupt_pending();
+bool flag_able_to_use_cpuid();
+
+// Interrupt-related functions
 
 /*
  * Define a new interrupt table.
