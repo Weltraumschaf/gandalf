@@ -12,7 +12,7 @@
  * __asm__ ( assembler template
  *    : output operands
  *    : input operands
- *    : list of clobbered registers 
+ *    : list of clobbered registers
  *    );
  */
 
