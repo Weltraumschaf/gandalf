@@ -16,6 +16,7 @@ uint32_t farpeek(uint16_t sel, void *off) {
 }
 
 void farpoke(uint16_t sel, void *off, uint8_t v) {
+    // TODO Should "memory" be in the clobber list here?
     __asm__("push %%fs\n\t"
             "mov  %0, %%fs\n\t"
             "movb %2, %%fs:(%1)\n\t"
@@ -23,5 +24,4 @@ void farpoke(uint16_t sel, void *off, uint8_t v) {
             :                            /* no output operands */
             : "g"(sel), "r"(off), "r"(v) /* input operands */
             );
-    /* TODO: Should "memory" be in the clobber list here? */
 }
