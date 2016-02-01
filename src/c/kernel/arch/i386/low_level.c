@@ -12,7 +12,7 @@
  *    );
  */
  
-uint32_t farpeekl(uint16_t sel, void *off) {
+uint32_t farpeek(uint16_t sel, void *off) {
     uint32_t ret;
     asm("push %%fs\n\t"
         "mov  %1, %%fs\n\t"
@@ -24,7 +24,7 @@ uint32_t farpeekl(uint16_t sel, void *off) {
     return ret;
 }
 
-void farpokeb(uint16_t sel, void *off, uint8_t v) {
+void farpoke(uint16_t sel, void *off, uint8_t v) {
     asm("push %%fs\n\t"
         "mov  %0, %%fs\n\t"
         "movb %2, %%fs:(%1)\n\t"

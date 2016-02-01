@@ -16,14 +16,14 @@ __BEGIN_DECLS
  * manipulating segment registers directly, so issuing the mov <reg>,
  * <segmentreg> manually is required.
  */
-uint32_t farpeekl(uint16_t sel, void *off);
+uint32_t farpeek(uint16_t sel, void *off);
 
 /*
  * Write a 8/16/32-bit value to a segment:offset address too. Note that much
  * like in farpeek, this version of farpoke saves and restore the segment
  * register used for the access.
  */
-void farpokeb(uint16_t sel, void *off, uint8_t v);
+void farpoke(uint16_t sel, void *off, uint8_t v);
 
 // I/O access
 
