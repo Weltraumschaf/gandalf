@@ -84,7 +84,7 @@ unsigned long read_cr0(void) {
 void invlpg(void *m) {
     /* Clobber memory to avoid optimizer re-ordering access before invlpg,
        which may cause nasty bugs. */
-    //asm volatile("invlpg (%0)" : : "m"(m) : "memory" );
+    asm volatile("invlpg %0" : : "m"(m) : "memory" );
 }
 
 void wrmsr(uint32_t msr_id, uint64_t msr_value) {
