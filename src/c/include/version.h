@@ -1,8 +1,6 @@
 #pragma once
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+__BEGIN_DECLS
 
 #define GANDALF_VERSION "1.0.0"
 #define GANDALF_VERSION_MAJOR 1
@@ -11,6 +9,4 @@ extern "C" {
 
 void gandalf_version(int *major, int *minor, int *revision);
 
-#ifdef __cplusplus
-}
-#endif
+__END_DECLS

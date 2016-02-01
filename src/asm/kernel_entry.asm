@@ -8,7 +8,7 @@ global _start
                 ; so the linker can substitute the final address.
 
 _start:
-  call main     ; invoke main() in our C kernel
+  call main     ; Invoke main() in our C kernel (in kernel.c).
 
 .hang:
   jmp .hang     ; Hang forever when we return from the kernel.
