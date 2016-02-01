@@ -6,6 +6,16 @@
 
 /* See http://wiki.osdev.org/Inline_Assembly/Examples */
 
+/*
+ * Extended ASM:
+ *
+ * __asm__ ( assembler template
+ *    : output operands
+ *    : input operands
+ *    : list of clobbered registers 
+ *    );
+ */
+
 __BEGIN_DECLS
 
 // Memory access

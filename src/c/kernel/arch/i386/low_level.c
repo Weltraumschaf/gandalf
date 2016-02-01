@@ -2,39 +2,6 @@
 
 // From http://wiki.osdev.org/Inline_Assembly/Examples
 
-/*
- * Extended ASM:
- *
- * asm( assembler template
- *    : output operands
- *    : input operands
- *    : list of clobbered registers 
- *    );
- */
- 
-uint32_t farpeek(uint16_t sel, void *off) {
-    uint32_t ret;
-    asm("push %%fs\n\t"
-        "mov  %1, %%fs\n\t"
-        "mov  %%fs:(%2), %0\n\t"
-        "pop  %%fs"
-        : "=r"(ret) /* output operands */
-        : "g"(sel), "r"(off) /* input operands */
-        );
-    return ret;
-}
-
-void farpoke(uint16_t sel, void *off, uint8_t v) {
-    asm("push %%fs\n\t"
-        "mov  %0, %%fs\n\t"
-        "movb %2, %%fs:(%1)\n\t"
-        "pop %%fs"
-        : /* no output operands */
-        : "g"(sel), "r"(off), "r"(v) /* input operands */
-        );
-    /* TODO: Should "memory" be in the clobber list here? */
-}
-
 void port_byte_out(uint16_t port, uint8_t val) {
     asm volatile("outb %0, %1" 
         : /* no output operands */
