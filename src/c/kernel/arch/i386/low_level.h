@@ -14,6 +14,8 @@
  *    : input operands
  *    : list of clobbered registers
  *    );
+ *
+ * See https://www.ibiblio.org/gferg/ldp/GCC-Inline-Assembly-HOWTO.html
  */
 
 __BEGIN_DECLS
