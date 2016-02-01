@@ -40,10 +40,13 @@
  *
  */
 
+#include <sys/cdefs.h>
 #include <stddef.h> /* For size_t */
 #include <stdint.h>
 #include <stdbool.h>
 #include "vga.h"
+
+__BEGIN_DECLS
 
 /**
  * Maximum offset in video memory.
@@ -129,3 +132,5 @@ void tty_putChar(char c);
  * @param data string to write on terminal
  */
 void tty_write(const char *data);
+
+__END_DECLS

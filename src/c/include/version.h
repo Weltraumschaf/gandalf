@@ -1,5 +1,7 @@
 #pragma once
 
+#include <sys/cdefs.h>
+
 __BEGIN_DECLS
 
 #define GANDALF_VERSION "1.0.0"

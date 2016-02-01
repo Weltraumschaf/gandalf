@@ -3,8 +3,11 @@
  */
 #pragma once
 
+#include <sys/cdefs.h>
 #include <stddef.h>
 #include <stdint.h>
+
+__BEGIN_DECLS
 
 static const uint8_t COLOR_BLACK = 0x00;
 static const uint8_t COLOR_BLUE = 0x01;
@@ -59,3 +62,5 @@ uint8_t make_color(uint8_t foreground, uint8_t background);
  * @return video memory byte
  */
 uint16_t make_vgaentry(char character, uint8_t color);
+
+__END_DECLS
