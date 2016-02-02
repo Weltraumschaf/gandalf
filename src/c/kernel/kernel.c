@@ -1,10 +1,11 @@
 #include "kernel.h"
 #include <stdbool.h>
+#include <string.h>
+#include <stdio.h>
 #include "tty.h"
 #include "gandalf.h"
 #include "../util/util.h"
-#include <string.h>
-#include <stdio.h>
+#include "arch/i386/low_level.h"
 
 void welcome() {
     tty_setColor(DEFAULT_COLOR_INVERTED);
@@ -60,4 +61,79 @@ void run() {
 }
 
 void kernel_boot() {
+}
+
+void show_flags() {
+    print("Flags:\n");
+
+    print("Interupt: ");
+
+    if (flag_interrupt()) {
+        print("enabled\n");
+    } else {
+        print("disabled\n");
+    }
+
+    print("Direction: ");
+    if (flag_direction()) {
+        print("enabled\n");
+    } else {
+        print("disabled\n");
+    }
+
+    print("Overflow: ");
+    if (flag_overflow()) {
+        print("enabled\n");
+    } else {
+        print("disabled\n");
+    }
+
+    print("I/O privileged level: ");
+    if (flag_io_privileged_level()) {
+        print("enabled\n");
+    } else {
+        print("disabled\n");
+    }
+
+    print("Resume: ");
+    if (flag_resume()) {
+        print("enabled\n");
+    } else {
+        print("disabled\n");
+    }
+
+    print("Virtual mode: ");
+    if (flag_virtual_mode()) {
+        print("enabled\n");
+    } else {
+        print("disabled\n");
+    }
+
+    print("Alignment check: ");
+    if (flag_alignment_check()) {
+        print("enabled\n");
+    } else {
+        print("disabled\n");
+    }
+
+    print("Virtual interupt: ");
+    if (flag_virtual_interupt()) {
+        print("enabled\n");
+    } else {
+        print("disabled\n");
+    }
+
+    print("Virtual interupt pending: ");
+    if (flag_virtual_interupt_pending()) {
+        print("enabled\n");
+    } else {
+        print("disabled\n");
+    }
+
+    print("Able to use CPUID: ");
+    if (flag_able_to_use_cpuid()) {
+        print("enabled\n");
+    } else {
+        print("disabled\n");
+    }
 }

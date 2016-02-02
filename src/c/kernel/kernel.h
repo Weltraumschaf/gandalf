@@ -4,7 +4,7 @@
 
 #define TIMER_START 10
 
-void welcome() ;
+void welcome();
 
 bool timerNotGoneOff();
 
@@ -17,3 +17,5 @@ void selectNextSuitableProcess();
 void run();
 
 void kernel_boot();
+
+void show_flags();
