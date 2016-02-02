@@ -1,5 +1,19 @@
 #pragma once
 
-#ifndef __is_gandalf_kernel
-#define __is_gandalf_kernel 1
-#endif
+#include <stdbool.h>
+
+#define TIMER_START 10
+
+void welcome() ;
+
+bool timerNotGoneOff();
+
+void assignCpuToSuitableProcess();
+
+void executeProcess();
+
+void selectNextSuitableProcess();
+
+void run();
+
+void kernel_boot();

@@ -6,8 +6,6 @@
 #include <string.h>
 #include <stdio.h>
 
-#define TIMER_START 10
-
 void welcome() {
     tty_setColor(DEFAULT_COLOR_INVERTED);
     println("Y  Gandalf 1.0  started :-)                                       "
@@ -62,26 +60,4 @@ void run() {
 }
 
 void kernel_boot() {
-}
-
-/*
- * The kernels entry point.
- */
-void main() {
-    //    kernel_boot();
-    tty_initialize();
-    gandalf_prepareScreen();
-    gandalf_showBootScreen();
-    sleep(1000);
-
-    tty_clear();
-    gandalf_showWelcomeScreen();
-    sleep(1000);
-
-    tty_clear();
-    tty_setCursor(0, 0);
-    tty_setEnableCursor(true);
-    tty_setAutoScrolling(true);
-    welcome();
-    run();
 }
