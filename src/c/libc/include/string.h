@@ -12,100 +12,245 @@
 __BEGIN_DECLS
 
 /**
- * The memcmp() function compares byte string s1 against byte string s2.  Both
- * strings are assumed to be n bytes long.
- *
- * @param string one
- * @param string two
- * @param number of bytes
- * @return zero if the two strings are identical, otherwise returns the
- * difference between the first two differing
- *         bytes (treated as unsigned char values, so that `\200' is greater
- * than `\0', for example).  Zero-length
- *         strings are always identical.
+ * The memchr() function looks for the first occurrence of ch within count
+ * characters in the array pointed to by buffer. The return value points to the
+ * location of the first occurrence of ch, or NULL if ch isn't found. For
+ * example:
+ * @code
+ * char names[] = "Alan Bob Chris X Dave";
+ * if( memchr(names,'X',strlen(names)) == NULL )
+ *   printf( "Didn't find an X\n" );
+ * else
+ *   printf( "Found an X\n" );
+ * @endcode
  */
-int memcmp(const void *s1, const void *s2, size_t n);
+void *memchr(const void *buffer, int ch, size_t count);
+
 /**
- * The memcpy() function copies n bytes from memory area src to memory area dst.
- * If dst and src overlap, behavior
- * is undefined.  Applications in which dst and src might overlap should use
- * memmove(3) instead.
+ * The function memcmp() compares the first count characters of buffer1 and
+ * buffer2. The return values are as follows:
  *
- * @param dst target to copy src
- * @param src copied to dst
- * @param n number of bytes to copy
- * @return the original value of dst
+ * Value            Explanation
+ * less than 0      buffer1 is less than buffer2
+ * equal to 0       buffer1 is equal to buffer2
+ * greater than 0   buffer1 is greater than buffer2
  */
-void *memcpy(void *__restrict dst, const void *__restrict src, size_t n);
+int memcmp(const void *buffer1, const void *buffer2, size_t count);
+
 /**
- * The memmove() function copies len bytes from string src to string dst.  The
- * two strings may overlap; the copy
- * is always done in a non-destructive manner.
- *
- * @param dst target to copy src
- * @param src copied to dst
- * @param len number of bytes to copy
- * @return the original value of dst
+ * The function memcpy() copies count characters from the array from to the
+ * array to. The return value of memcpy() is to. The behavior of memcpy() is
+ * undefined if to and from overlap.
  */
-void *memmove(void *dst, const void *src, size_t len);
+void *memcpy(void *to, const void *from, size_t count);
+
 /**
- * he memset() function writes len bytes of value c (converted to an unsigned
- * char) to the string b.
- *
- * @param b string to be written
- * @param c character used to write in b
- * @param len number of bytes to write
- * @return its first argument
+ * The memmove() function is identical to memcpy(), except that it works even if
+ * to and from overlap.
  */
-void *memset(void *b, int c, size_t len);
+void *memmove(void *to, const void *from, size_t count);
+
 /**
- * The strlen() function computes the length of the string s.
+ * The function memset() copies ch into the first count characters of buffer,
+and returns buffer. memset() is useful for intializing a section of memory to
+some value. For example, this command:
+ * @code
+ * memset( the_array, '\0', sizeof(the_array) );
+ * @endcode
+.*.is a very efficient way to set all values of the_array to zero.
  *
- * @param string to get length from
- * @return The strlen() function returns the number of characters that precede
- * the terminating NUL character.
+ * The table below compares two different methods for initializing an array of
+characters: a for-loop versus memset(). As the size of the data being
+initialized increases, memset() clearly gets the job done much more quickly:
+ *
+ * Input size   Initialized with a for-loop     Initialized with memset()
+ * 1000         0.016                           0.017
+ * 10000        0.055                           0.013
+ * 100000 	    0.443                           0.029
+ * 1000000 	    4.337                           0.291
  */
-size_t strlen(const char *string);
+void *memset(void *buffer, int ch, size_t count);
+
 /**
- * The stpcpy() and functions copy the string src to dst (including the
- * terminating `\0' character).
- *
- * @param dst target to copy the string
- * @param src thecooied string
- * @return a pointer to the terminating `\0' character of dst.  If stpncpy()
- * does not terminate dst with a NUL
- *         character, it instead returns a pointer to dst[n] (which does not
- * necessarily refer to a valid memory
- *         location.)
+ * The strcat() function concatenates str2 onto the end of str1, and returns
+ * str1. For example:
+ * @code
+ * printf( "Enter your name: " );
+ * scanf( "%s", name );
+ * title = strcat( name, " the Great" );
+ * printf( "Hello, %s\n", title );
+ * @endcode
+ * Note that strcat() does not perform bounds checking, and thus risks
+ * overrunning str1 or str2. For a similar (and safer) function that includes
+ * bounds checking, see strncat().
  */
-char *strcpy(char *dst, const char *src);
+char *strcat(char *str1, const char *str2);
+
 /**
- * The strchr() function locates the first occurrence of needle (converted to a
- * char) in the string pointed to by
- * haystack. The terminating null character is considered to be part of the
- * string; therefore if needle is `\0',
- * the functions locate the terminating `\0'.
- *
- * @param haystack string to search in
- * @param needle character to look for
- * @return a pointer to the located character, or NULL if the character does not
- * appear in the string
+ * The function strchr() returns a pointer to the first occurence of ch in str,
+ * or NULL if ch is not found.
  */
-char *strchr(const char *haystack, int needle);
+char *strchr(const char *str, int ch);
+
 /**
- * The strcat() and strncat() functions append a copy of the null-terminated
- * string src to the end of the
- * null-terminated string dst, then add a terminating `\0'. The string dst must
- * have sufficient space to hold
- * the result.
+ * The function strcmp() compares str1 and str2, then returns:
  *
- * The source and destination strings should not overlap, as the behavior is
- * undefined.
+ * Return value     Explanation
+ * less than 0      ''str1'' is less than ''str2''
+ * equal to 0       ''str1'' is equal to ''str2''
+ * greater than 0   ''str1'' is greater than ''str2''
  *
- * @param dst target to append src
- * @param src appended string
- * @return the pointer to dst
+ * For example:
+ * @code
+ * printf( "Enter your name: " );
+ * scanf( "%s", name );
+ * if( strcmp( name, "Mary" ) == 0 ) {
+ *   printf( "Hello, Dr. Mary!\n" );
+ * }
+ * @endcode
+ * Note that if str1 or str2 are missing a null-termination character, then
+ * strcmp() may not produce valid results. For a similar (and safer) function
+ * that includes explicit bounds checking, see strncmp().
  */
-char *strcat(char *dst, const char *src);
+int strcmp(const char *str1, const char *str2);
+
+/**
+ * The strcoll() function compares str1 and str2, much like strcmp(). However,
+ * strcoll() performs the comparison using the locale specified by the (Standard
+ * C Date & Time) setlocale() function.
+ */
+int strcoll(const char *str1, const char *str2);
+
+/**
+ * The strcpy() function copies characters in the string from to the string to,
+ * including the null termination. The return value is to.
+ *
+ * Note that strcpy() does not perform bounds checking, and thus risks
+ * overrunning from or to. For a similar (and safer) function that includes
+ * bounds checking, see strncpy().
+ */
+char *strcpy(char *to, const char *from);
+
+/**
+ * The function strcspn() returns the index of the first character in str1 that
+ * matches any of the characters in str2.
+ */
+size_t strcspn(const char *str1, const char *str2);
+
+/**
+ * The function strerror() returns an implementation defined string
+ * corresponding to num.
+ */
+char *strerror(int num);
+
+/**
+ * The strlen() function returns the length of str (determined by the number of
+ * characters before null termination).
+ */
+size_t strlen(const char *str);
+
+/**
+ * The function strncat() concatenates at most count characters of str2 onto
+ * str1, adding a null termination. The resulting string is returned.
+ */
+char *strncat(char *str1, const char *str2, size_t count);
+
+/**
+ * The strncmp() function compares at most count characters of str1 and str2.
+ * The return value is as follows:
+ *
+ * Return value     Explanation
+ * less than 0      ''str1'' is less than ''str2''
+ * equal to 0       ''str1'' is equal to ''str2''
+ * greater than 0   ''str1'' is greater than str2''
+ *
+ * If there are less than count characters in either string, then the comparison
+ * will stop after the first null termination is encountered.
+ */
+int strncmp(const char *str1, const char *str2, size_t count);
+
+/**
+ * The strncpy() function copies at most count characters of from to the string
+ * to. If from has less than count characters, the remainder is padded with '\0'
+ * characters. The return value is the resulting string.
+ */
+char *strncpy(char *to, const char *from, size_t count);
+
+/**
+ * The function strpbrk() returns a pointer to the first ocurrence in str1 of
+ * any character in str2, or NULL if no such characters are present.
+ */
+char *strpbrk(const char *str1, const char *str2);
+
+/**
+ * The function strrchr() returns a pointer to the last occurrence of ch in str,
+ * or NULL if no match is found.
+ */
+char *strrchr(const char *str, int ch);
+
+/**
+ * The strspn() function returns the index of the first character in str1 that
+ * doesn't match any character in str2.
+ */
+size_t strspn(const char *str1, const char *str2);
+
+/**
+ * The function strstr() returns a pointer to the first occurrence of str2 in
+ * str1, or NULL if no match is found. If the length of str2 is zero, then
+ * strstr() will simply return str1.
+ *
+ * For example, the following code checks for the existence of one string within
+ * another string:
+ * @code
+ * char* str1 = "this is a string of characters";
+ * char* str2 = "a string";
+ * char* result = strstr( str1, str2 );
+ * if( result == NULL ) printf( "Could not find '%s' in '%s'\n", str2, str1 );
+ * else printf( "Found a substring: '%s'\n", result );
+ * @endcode
+ *
+ * When run, the above code displays this output:
+ * @code
+ * Found a substring: 'a string of characters'
+ * @endcode
+ */
+char *strstr(const char *str1, const char *str2);
+
+/**
+ * The strtok() function returns a pointer to the next "token" in str1, where
+ * str2 contains the delimiters that determine the token. strtok() returns NULL
+ * if no token is found. In order to convert a string to tokens, the first call
+ * to strtok() should have str1 point to the string to be tokenized. All calls
+ * after this should have str1 be NULL.
+ *
+ * For example:
+ * @code
+ * char str[] = "now # is the time for all # good men to come to the # aid of
+ * their country";
+ * char delims[] = "#";
+ * char *result = NULL;
+ * result = strtok( str, delims );
+ * while( result != NULL ) {
+ *     printf( "result is \"%s\"\n", result );
+ *     result = strtok( NULL, delims );
+ * }
+ * @endcode
+ *
+ * The above code will display the following output:
+ * @code
+ * result is "now "
+ * result is " is the time for all "
+ * result is " good men to come to the "
+ * result is " aid of their country"
+ * @endcode
+ */
+char *strtok(char *str1, const char *str2);
+
+/**
+ * The strxfrm() function manipulates the first num characters of str2 and
+ * stores them in str1. The result is such that if a strcoll() is performed on
+ * str1 and the old str2, you will get the same result as with a strcmp().
+ */
+size_t strxfrm(char *str1, const char *str2, size_t num);
 
 __END_DECLS

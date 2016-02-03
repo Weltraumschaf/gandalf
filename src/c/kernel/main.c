@@ -21,5 +21,5 @@ void main() {
     tty_setAutoScrolling(true);
     welcome();
     show_flags();
-    //run();
+    // run();
 }

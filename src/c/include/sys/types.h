@@ -6,6 +6,8 @@
 __BEGIN_DECLS
 
 typedef int ssize_t;
+typedef int fpos_t;
+
 /* Used for some file attributes. */
 typedef uint32_t mode_t;
 typedef uint32_t pid_t;
