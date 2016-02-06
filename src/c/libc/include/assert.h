@@ -8,11 +8,10 @@ __BEGIN_DECLS
 
 /**
  * The assert() macro is used to test for errors. If expression evaluates to
- * zero,
- * assert() writes information to stderr and exits the program. If the macro
+ * zero, assert() writes information to stderr and exits the program. If the macro
  * NDEBUG is defined, the assert() macros will be ignored.
  *
- * @param exp any expression
+ * @param expression any expression
  */
 
 #ifdef NDEBUG

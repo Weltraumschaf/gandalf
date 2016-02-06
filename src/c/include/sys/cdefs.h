@@ -4,8 +4,6 @@
 
 #pragma once
 
-#define __gandalf_libc 1
-
 #if defined(__cplusplus)
 
 #define __BEGIN_DECLS extern "C" {
