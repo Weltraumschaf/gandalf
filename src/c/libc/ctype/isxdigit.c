@@ -1,4 +1,4 @@
 
 int isxdigit(int ch) {
-    return 0;
+    return isdigit(ch) || ((unsigned)ch | 32) - 'a' < 6;
 }

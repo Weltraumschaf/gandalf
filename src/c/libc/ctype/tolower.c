@@ -1,4 +1,8 @@
 
 int tolower(int ch) {
-    return 0;
+    if (isupper(ch)) {
+        return ch | 32;
+    }
+
+    return ch;
 }

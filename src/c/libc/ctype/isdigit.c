@@ -1,4 +1,4 @@
 
 int isdigit(int ch) {
-    return 0;
+    return (unsigned)ch - '0' < 10;
 }

@@ -1,4 +1,4 @@
 
 int islower(int ch) {
-    return 0;
+    return (unsigned)ch - 'a' < 26;
 }

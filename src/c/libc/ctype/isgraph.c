@@ -1,4 +1,4 @@
 
 int isgraph(int ch) {
-    return 0;
+    return (unsigned)ch - 0x21 < 0x5e;
 }

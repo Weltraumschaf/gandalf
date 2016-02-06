@@ -1,4 +1,4 @@
 
 int isupper(int ch) {
-    return 0;
+    return (unsigned)ch - 'A' < 26;
 }

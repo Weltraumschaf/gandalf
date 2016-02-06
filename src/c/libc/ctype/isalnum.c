@@ -1,4 +1,4 @@
 
 int isalnum(int ch) {
-    return 0;
+    isalpha(ch) || isdigit(ch);
 }

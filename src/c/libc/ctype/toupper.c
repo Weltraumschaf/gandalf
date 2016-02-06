@@ -1,4 +1,8 @@
 
 int toupper(int ch) {
-    return 0;
+    if (islower(ch)) {
+        return ch & 0x5f;
+    }
+
+    return ch;
 }

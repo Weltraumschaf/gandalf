@@ -1,4 +1,4 @@
 
 int isprint(int ch) {
-    return 0;
+    return (unsigned)ch - 0x20 < 0x5f;
 }

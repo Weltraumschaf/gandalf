@@ -1,4 +1,4 @@
 
 int ispunct(int ch) {
-    return 0;
+    return isgraph(ch) && !isalnum(ch);
 }

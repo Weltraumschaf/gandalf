@@ -1,4 +1,4 @@
 
 int isspace(int ch) {
-    return 0;
+    return ch == ' ' || (unsigned)ch - '\t' < 5;
 }

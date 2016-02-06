@@ -1,4 +1,4 @@
 
 int isalpha(int ch) {
-    return 0;
+    return ((unsigned)ch | 32) - 'a' < 26;
 }
