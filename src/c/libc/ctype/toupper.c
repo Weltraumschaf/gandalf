@@ -1,3 +1,4 @@
+#include <ctype.h>
 
 int toupper(int ch) {
     if (islower(ch)) {

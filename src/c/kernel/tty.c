@@ -91,12 +91,9 @@ void tty_putEntryAt(char c, uint8_t color, size_t row, size_t column) {
 }
 
 void tty_handleScrolling() {
-    int row;
-
-    for (row = 1; row < VGA_HEIGHT; ++row) {
+    for (size_t row = 1; row < VGA_HEIGHT; ++row) {
         size_t dstOffset = tty_computeOffset(row - 1, INIT_COLUMN);
         size_t srcOffset = tty_computeOffset(row, INIT_COLUMN);
-
         memcpy(dstOffset + VGA_MEMORY, srcOffset + VGA_MEMORY, VGA_WIDTH * 2);
     }
 

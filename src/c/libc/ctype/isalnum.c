@@ -1,4 +1,5 @@
+#include <ctype.h>
 
 int isalnum(int ch) {
-    isalpha(ch) || isdigit(ch);
+    return isalpha(ch) || isdigit(ch);
 }

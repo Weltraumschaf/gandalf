@@ -1,6 +1,8 @@
 #include "main.h"
 #include "kernel.h"
-
+#include "gandalf.h"
+#include "tty.h"
+#include "../util/util.h"
 /*
  * The kernels entry point.
  */
