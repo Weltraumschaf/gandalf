@@ -7,7 +7,6 @@
 #include <stddef.h> /* for size_t */
 
 #define hex2ascii(hex) (hex2ascii_data[hex])
-#define toupper(c) ((c)-0x20 * (((c) >= 'a') && ((c) <= 'z')))
 
 __BEGIN_DECLS
 
