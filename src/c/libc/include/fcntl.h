@@ -8,35 +8,82 @@
  */
 
 #include <sys/cdefs.h>
+#include <sys/types.h>
 
 __BEGIN_DECLS
 
-/* open/fcntl - O_SYNC is only implemented on blocks devices and on files
-   located on an ext2 file system */
-/*
- * From dietlibc include/fnctl.h
- */
-//#define O_ACCMODE	   0003
-//#define O_RDONLY	     00
-//#define O_WRONLY	     01
-#define O_RDWR 02
-//#define O_CREAT		   0100	/* not fcntl */
-//#define O_EXCL		   0200	/* not fcntl */
-//#define O_NOCTTY	   0400	/* not fcntl */
-//#define O_TRUNC		  01000	/* not fcntl */
-//#define O_APPEND	  02000
-//#define O_NONBLOCK	  04000
-//#define O_NDELAY	O_NONBLOCK
-//#define O_SYNC		 010000
-//#define FASYNC		 020000	/* fcntl, for BSD compatibility */
-//#define O_DIRECT	 040000	/* direct disk access hint - currently
-// ignored */
-//#define O_LARGEFILE	0100000
-//#define O_DIRECTORY	0200000	/* must be a directory */
-//#define O_NOFOLLOW	0400000 /* don't follow links */
-//#define O_NOATIME	01000000
+// Available Values for oflag:
 
-int open(const char *path, int oflags, ...);
-// int open(const char * path, int oflags, mode_t mode);
+/**
+ * Open the file so that it is read only.
+ */
+#define O_RDONLY 0
+/**
+ * Open the file so that it is write only.
+ */
+#define O_WRONLY 0
+/**
+ * Open the file so that it can be read from and written to.
+ */
+#define O_RDWR 0
+/**
+ * Append new information to the end of the file.
+ */
+#define O_APPEND 0
+/**
+ * Initially clear all data from the file.
+ */
+#define O_TRUNC 0
+/**
+ * If the file does not exist, create it. If the O_CREAT option is used, then
+ * you must include the third parameter.
+ */
+#define O_CREAT 0
+/**
+ * Combined with the O_CREAT option, it ensures that the caller must create the
+ * file. If the file already exists, the call will fail.
+ */
+#define O_EXCL 0
+
+// Available Values for mode:
+
+/**
+ * Set read rights for the owner to true.
+ */
+#define S_IRUSR 0
+/**
+ * Set write rights for the owner to true.
+ */
+#define S_IWUSR 0
+/**
+ * Set execution rights for the owner to true.
+ */
+#define S_IXUSR 0
+/**
+ * Set read rights for the group to true.
+ */
+#define S_IRGRP 0
+/**
+ * Set write rights for the group to true.
+ */
+#define S_IWGRP 0
+/**
+ * Set execution rights for the group to true.
+ */
+#define S_IXGRP 0
+/**
+ * Set read rights for other users to true.
+ */
+#define S_IROTH 0
+/**
+ * Set write rights for other users to true.
+ */
+#define S_IWOTH 0
+/**
+ * Set execution rights for other users to true.
+ */
+#define S_IXOTH 0
+
+int open(const char *path, int oflags, mode_t mode);
 
 __END_DECLS

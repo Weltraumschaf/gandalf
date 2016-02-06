@@ -3,10 +3,6 @@
  * http://codewiki.wikidot.com/c:system-calls:open
  */
 
-int open(const char *path, int oflags, ...) {
+int open(const char *path, int oflags, mode_t mode) {
     return -1;
 }
-
-// int open(const char *path, int oflags, mode_t mode) {
-//    return -1;
-//}
