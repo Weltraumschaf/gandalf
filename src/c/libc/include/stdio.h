@@ -38,10 +38,70 @@ __BEGIN_DECLS
  */
 #define _IOFBF 2
 
-struct __stdio_file;
+#define BUFSIZE 2048
+
+#define BUFINPUT 4
+#define BUFLINEWISE 8
+#define NOBUF 16
+#define STATICBUF 32
+#define CANREAD 128
+#define CANWRITE 256
+#define CHECKLINEWISE 512
+
+struct __stdio_file {
+    int fd;
+    int flags;
+    uint32_t bs;     // read: bytes in buffer
+    uint32_t bm;     // position in buffer
+    uint32_t buflen; // length of buf
+    char *buf;
+    struct __stdio_file *next; // for fflush
+    pid_t popen_kludge;
+    unsigned char ungetbuf;
+    char ungotten;
+};
+
 typedef struct __stdio_file FILE;
 
-extern FILE *stdin, *stdout, *stderr;
+static char __stdin_buf[BUFSIZE];
+static FILE __stdin = {.fd = 0,
+                       .flags = BUFINPUT | BUFLINEWISE | STATICBUF | CANREAD,
+                       .bs = 0,
+                       .bm = 0,
+                       .buflen = BUFSIZE,
+                       .buf = __stdin_buf,
+                       .next = 0,
+                       .popen_kludge = 0,
+                       .ungetbuf = 0,
+                       .ungotten = 0};
+
+static char __stdout_buf[BUFSIZE];
+static FILE __stdout = {.fd = 1,
+                        .flags =
+                            BUFLINEWISE | STATICBUF | CANWRITE | CHECKLINEWISE,
+                        .bs = 0,
+                        .bm = 0,
+                        .buflen = BUFSIZE,
+                        .buf = __stdout_buf,
+                        .next = 0,
+                        .popen_kludge = 0,
+                        .ungetbuf = 0,
+                        .ungotten = 0};
+
+static FILE __stderr = {.fd = 2,
+                        .flags = NOBUF | CANWRITE,
+                        .bs = 0,
+                        .bm = 0,
+                        .buflen = 0,
+                        .buf = 0,
+                        .next = 0,
+                        .popen_kludge = 0,
+                        .ungetbuf = 0,
+                        .ungotten = 0};
+
+static FILE *const stdin = &__stdin;
+static FILE *const stdout = &__stdout;
+static FILE *const stderr = &__stderr;
 
 /**
  * The clearerr function resets the error flags and EOF indicator for the given
