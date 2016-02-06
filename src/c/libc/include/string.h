@@ -6,8 +6,6 @@
 #include <sys/cdefs.h>
 #include <stddef.h> /* for size_t */
 
-#define hex2ascii(hex) (hex2ascii_data[hex])
-
 __BEGIN_DECLS
 
 /**
