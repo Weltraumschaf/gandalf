@@ -17,4 +17,6 @@ typedef uint16_t mode_t;
 typedef uint16_t nlink_t;
 typedef uint16_t uid_t;
 
+typedef unsigned long int clock_t;
+
 __END_DECLS
