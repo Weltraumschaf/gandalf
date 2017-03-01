@@ -29,8 +29,8 @@ choice (but I never tested it on Windows).
 
 ## Cross Compiler
 
-To build the kernel  you need a cross compiler. A how-to  which explains qhy you
-needa  cross compiler  is  provided [here][cross].  You have  to  edit the  file
+To build the kernel  you need a cross compiler. A how-to  which explains why you
+need  a cross  compiler is  provided [here][cross].  You have  to edit  the file
 `build-tools/environment` with the correct paths  to your GGC you have installed
 on your  host (development)  machine as  a prerequisite.  After that  invoke the
 built  script:  `build-tools/build.sh`. This  will  take  a  while and  build  a
