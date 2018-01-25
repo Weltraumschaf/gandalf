@@ -1,0 +1,10 @@
+[package]
+name = "gandalf_os"
+version = "1.0.0"
+authors = ["Sven Strittmatter <ich@weltraumschaf.de>"]
+
+[lib]
+crate-type = ["staticlib"]
+
+[dependencies]
+rlibc = "1.0"
