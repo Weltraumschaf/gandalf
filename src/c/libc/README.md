@@ -1,1 +1,0 @@
-From https://cs50.harvard.edu/resources/cppreference.com/all_c_functions.html
