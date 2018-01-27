@@ -5,6 +5,7 @@
 #![feature(unique)]
 #![feature(allocator_api)]
 #![feature(global_allocator)]
+#![feature(abi_x86_interrupt)]
 #![no_std]
 
 
@@ -19,12 +20,16 @@ extern crate multiboot2;
 extern crate bitflags;
 extern crate x86_64;
 #[macro_use]
+extern crate lazy_static;
+// The following crates are from the author of the tutorial.
+#[macro_use]
 extern crate once;
 extern crate linked_list_allocator;
 
 #[macro_use]
 mod vga_buffer;
 mod memory;
+mod interrupts;
 
 #[no_mangle]
 pub extern "C" fn rust_main(multiboot_information_address: usize) {
@@ -45,9 +50,15 @@ pub extern "C" fn rust_main(multiboot_information_address: usize) {
         HEAP_ALLOCATOR.lock().init(HEAP_START, HEAP_START + HEAP_SIZE);
     }
 
+    // initialize our IDT
+    interrupts::init();
+
     for i in 0..10000 {
         format!("Some String");
     }
+
+    // invoke a breakpoint exception
+    x86_64::instructions::interrupts::int3();
 
     println!("It did not crash!");
 
