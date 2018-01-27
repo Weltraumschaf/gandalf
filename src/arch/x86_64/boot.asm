@@ -145,9 +145,9 @@ enable_paging:
 error:
     ; Color code 4f for all characters, which means white text on red background.
     ; 0x52 is an ASCII R, 0x45 is an E, 0x3a is a :, and 0x20 is a space. The second space is overwritten by the given ASCII byte.
-    mov dword [0xb8000], 0x4f524f45
-    mov dword [0xb8004], 0x4f3a4f52
-    mov dword [0xb8008], 0x4f204f20
+    mov dword [0xb8000], 0x4f524f45 ; 'R' 'E'
+    mov dword [0xb8004], 0x4f3a4f52 ; ':' 'R'
+    mov dword [0xb8008], 0x4f204f20 ; ' ' ' '
     mov byte  [0xb800a], al
     hlt
 
