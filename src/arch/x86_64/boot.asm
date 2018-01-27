@@ -5,19 +5,13 @@ section .text
 bits 32
 start:
     mov esp, stack_top
-    mov edi, ebx       ; Move Multiboot info pointer to edi
+    mov edi, ebx       ; move Multiboot info pointer to edi
 
     call check_multiboot
     call check_cpuid
     call check_long_mode
 
     call set_up_page_tables
-
-    ; Recursive Mapping
-    mov eax, p4_table
-    or eax, 0b11 ; present + writable
-    mov [p4_table + 511 * 8], eax
-
     call enable_paging
 
     ; load the 64-bit GDT
@@ -91,6 +85,11 @@ check_long_mode:
     jmp error
 
 set_up_page_tables:
+    ; map P4 table recursively
+    mov eax, p4_table
+    or eax, 0b11 ; present + writable
+    mov [p4_table + 511 * 8], eax
+
     ; map first P4 entry to P3 table
     mov eax, p3_table
     or eax, 0b11 ; present + writable

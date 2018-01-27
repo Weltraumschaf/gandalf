@@ -1,4 +1,5 @@
 global long_mode_start
+extern rust_main
 
 section .text
 bits 64
