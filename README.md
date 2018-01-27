@@ -5,6 +5,37 @@
 - [A bunch of links](https://github.com/ctjhoa/rust-learning)
 - [Setting up a Rust Development Environment](http://asquera.de/blog/2017-03-03/setting-up-a-rust-devenv/)
 
+## Preparation
+
+Before you can begin you need some cross compiled tools
+
+```
+./build-tools.sh
+```
+
+and the generated `opt/bin` to your path
+
+```
+export PROJECT_HOME=`pwd`
+export PATH="${PROJECT_HOME}/opt/bin:${PATH}"
+```
+
+Or if you have `direnv` installed just run
+
+```
+direnv allow .
+```
+
+After that you need to set up Rust as described in [the tutorial](https://os.phil-opp.com/set-up-rust/) this OS is based on.
+
+## Debugging
+
+Start GDB with:
+
+```
+rust-gdb "build/kernel-x86_64.bin" -ex "target remote :1234"
+```
+
 ## Memory Layout
 
 ```

@@ -99,6 +99,18 @@ pushd build-grub
 make
 make install
 popd
+popd
+
+# https://os.phil-opp.com/set-up-gdb/
+echo ">>> Install gdb..."
+mkdir -p build-gdb
+pushd build-gdb
+curl -sf https://raw.githubusercontent.com/phil-opp/binutils-gdb/rust-os/build-rust-os-gdb.sh | sh
+cp -rv rust-os-gdb/bin/rust-gdb $PREFIX/bin/rust-gdb
+cp -rv rust-os-gdb/bin/x86_64-pc-linux-gnu-gdb $PREFIX/bin/gdb
+cp -rv rust-os-gdb/include/* $PREFIX/include
+cp -rv rust-os-gdb/share/* $PREFIX/share
+popd
 
 popd
 echo "Done :-)"
