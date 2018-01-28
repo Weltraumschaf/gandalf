@@ -30,7 +30,17 @@ Or if you have `direnv` installed just run
 direnv allow .
 ```
 
-After that you need to set up Rust as described in [the tutorial](https://os.phil-opp.com/set-up-rust/) this OS is based on.
+After that you need to set up Rust as described in [the tutorial](https://os.phil-opp.com/set-up-rust/) this OS is based on:
+
+```
+rustup override add nightly
+```
+
+Then you can build the kernel:
+
+```
+make
+```
 
 ## Debugging
 

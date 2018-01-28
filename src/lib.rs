@@ -6,6 +6,7 @@
 #![feature(allocator_api)]
 #![feature(global_allocator)]
 #![feature(abi_x86_interrupt)]
+#![feature(ptr_internals)]
 #![no_std]
 
 
