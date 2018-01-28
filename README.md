@@ -1,9 +1,13 @@
 # Gandalf OS
 
 - [Writing an OS in Rust ](https://os.phil-opp.com)
-    - [Set Up Rust](https://os.phil-opp.com/set-up-rust/)
-- [A bunch of links](https://github.com/ctjhoa/rust-learning)
-- [Setting up a Rust Development Environment](http://asquera.de/blog/2017-03-03/setting-up-a-rust-devenv/)
+- [Bare Metal Rust: Building kernels in Rust](http://www.randomhacks.net/bare-metal-rust/)
+- [x86 Disassembly](https://en.wikibooks.org/wiki/X86_Disassembly)
+- [Redox](https://github.com/redox-os/redox)
+- [Rust Documentation](https://www.rust-lang.org/en-US/documentation.html)
+- Rust
+    - [A bunch of links](https://github.com/ctjhoa/rust-learning)
+    - [Setting up a Rust Development Environment](http://asquera.de/blog/2017-03-03/setting-up-a-rust-devenv/)
 
 ## Preparation
 
