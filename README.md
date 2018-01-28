@@ -1,17 +1,17 @@
 # Gandalf OS
 
-- [Writing an OS in Rust ](https://os.phil-opp.com)
+- [Writing an OS in Rust][os-tutorial]
 - [Bare Metal Rust: Building kernels in Rust](http://www.randomhacks.net/bare-metal-rust/)
 - [x86 Disassembly](https://en.wikibooks.org/wiki/X86_Disassembly)
 - [Redox](https://github.com/redox-os/redox)
-- [Rust Documentation](https://www.rust-lang.org/en-US/documentation.html)
 - Rust
+    - [Rust Documentation](https://www.rust-lang.org/en-US/documentation.html)
     - [A bunch of links](https://github.com/ctjhoa/rust-learning)
     - [Setting up a Rust Development Environment](http://asquera.de/blog/2017-03-03/setting-up-a-rust-devenv/)
 
 ## Preparation
 
-Before you can begin you need some cross compiled tools
+Before you can begin you need some cross compiled tools (this will take a while)
 
 ```
 ./build-tools.sh
@@ -24,22 +24,28 @@ export PROJECT_HOME=`pwd`
 export PATH="${PROJECT_HOME}/opt/bin:${PATH}"
 ```
 
-Or if you have `direnv` installed just run
+Or if you have [direnv](https://direnv.net/) installed just run
 
 ```
 direnv allow .
 ```
 
-After that you need to set up Rust as described in [the tutorial](https://os.phil-opp.com/set-up-rust/) this OS is based on:
+After that you need to set up [Rust](https://www.rust-lang.org) as described in [the tutorial](https://os.phil-opp.com/set-up-rust/) this OS is based on
 
 ```
 rustup override add nightly
 ```
 
-Then you can build the kernel:
+Then you can build the kernel
 
 ```
 make
+```
+
+and run it (you need [QEMU](https://www.qemu.org/) installed)
+
+```
+make run
 ```
 
 ## Debugging
@@ -55,18 +61,19 @@ rust-gdb "build/kernel-x86_64.bin" -ex "target remote :1234"
 ```
                         +-----------------------------+
                         | +---------bottom----------+ |
-                        | |      kernel stack       | | 4096 * 4
+                        | |      kernel stack       | | 4096 * 4 (16 KiB)
                         | |            |            | |
                         | |            v            | |
                         | +----------top------------+ |
+                        |            ...              |
                         | +-------------------------+ |
-reused to grow stack------>        p2 table         | | 4096
-                        | +-------------------------+ |
-                        | +-------------------------+ |
-reused to grow stack------>        p3 table         | | 4096
+reused to grow stack------>        p2 table         | | 4096 (4 KiB)
                         | +-------------------------+ |
                         | +-------------------------+ |
-become gurad page--------->        p4 table         | | 4096
+reused to grow stack------>        p3 table         | | 4096 (4 KiB)
+                        | +-------------------------+ |
+                        | +-------------------------+ |
+become gurad page--------->        p4 table         | | 4096 (4 KiB)
                         | +-------------------------+ |
                         |            ...              |
                         | +-------------------------+ | 0x0016_3160
@@ -83,3 +90,9 @@ become gurad page--------->        p4 table         | | 4096
                         |            ...              |
                         +-----------------------------+ 0x0000_0000
 ```
+
+## Licenses and Copying
+
+Almost all code is from the tutorial [Writing an OS in Rust][os-tutorial] from _Philipp Oppermann_ hosted on [GitHub](https://github.com/phil-opp/blog_os). So I copied the licenses from that repo too.
+
+[os-tutorial]:  https://os.phil-opp.com
