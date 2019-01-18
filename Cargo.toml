@@ -4,4 +4,8 @@ version = "1.0.0"
 authors = ["Sven Strittmatter <ich@weltraumschaf.de>"]
 edition = "2018"
 
+[package.metadata.bootimage]
+default-target = "x86_64-gandalf.json"
+
 [dependencies]
+bootloader = "0.3.12"
