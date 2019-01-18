@@ -9,6 +9,15 @@
     - [A bunch of links](https://github.com/ctjhoa/rust-learning)
     - [Setting up a Rust Development Environment](http://asquera.de/blog/2017-03-03/setting-up-a-rust-devenv/)
 
+## Build & Run
+
+```bash
+$> bootimage build
+```
+
+```bash
+$> bootimage run
+```
 
 ## Memory Layout
 
@@ -16,7 +25,7 @@ By default the QEMU VM has 128 mb memory size:
 
 - this is equal to 134.217.728 bytes
 - in 64 bit: 134.217.728 / 8 bytes = 16.777.216, so
-    - start address is `0x0000_0000` 
+    - start address is `0x0000_0000`
     - end address is `0x0100_0000`
 
 ```text
@@ -24,7 +33,7 @@ By default the QEMU VM has 128 mb memory size:
                         | +---------bottom----------+ |
                         | |      kernel stack       | | (4096 * 4 = 16 KiB)
                         | +----------top------------+ |
-                        |             |               | 
+                        |             |               |
                         |             v               |
                         |            ...              |
                         | +-------------------------+ |
