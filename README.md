@@ -9,52 +9,6 @@
     - [A bunch of links](https://github.com/ctjhoa/rust-learning)
     - [Setting up a Rust Development Environment](http://asquera.de/blog/2017-03-03/setting-up-a-rust-devenv/)
 
-## Preparation
-
-Before you can begin you need some cross compiled tools (this will take a while)
-
-```
-./build-tools.sh
-```
-
-and the generated `opt/bin` to your path
-
-```
-export PROJECT_HOME=`pwd`
-export PATH="${PROJECT_HOME}/opt/bin:${PATH}"
-```
-
-Or if you have [direnv](https://direnv.net/) installed just run
-
-```
-direnv allow .
-```
-
-After that you need to set up [Rust](https://www.rust-lang.org) as described in [the tutorial](https://os.phil-opp.com/set-up-rust/) this OS is based on
-
-```
-rustup override add nightly
-```
-
-Then you can build the kernel
-
-```
-make
-```
-
-and run it (you need [QEMU](https://www.qemu.org/) installed)
-
-```
-make run
-```
-
-## Debugging
-
-Start GDB with:
-
-```
-rust-gdb "build/kernel-x86_64.bin" -ex "target remote :1234"
-```
 
 ## Memory Layout
 
@@ -65,7 +19,7 @@ By default the QEMU VM has 128 mb memory size:
     - start address is `0x0000_0000` 
     - end address is `0x0100_0000`
 
-```
+```text
                         +-----------------------------+<-- 0x0100_0000
                         | +---------bottom----------+ |
                         | |      kernel stack       | | (4096 * 4 = 16 KiB)
@@ -80,7 +34,7 @@ reused to grow stack----->|        p2 table         | | (4096 = 4 KiB)
 reused to grow stack----->|        p3 table         | | (4096 = 4 KiB)
                         | +-------------------------+ |
                         | +-------------------------+ |
-become gurad page-------->|        p4 table         | | (4096 = 4 KiB)
+become guard page-------->|        p4 table         | | (4096 = 4 KiB)
                         | +-------------------------+ |
                         |            ...              |
                         | +-------------------------+<+--- 0x0016_3160
