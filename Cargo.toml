@@ -1,0 +1,7 @@
+[package]
+name = "gandalf"
+version = "1.0.0"
+authors = ["Sven Strittmatter <ich@weltraumschaf.de>"]
+edition = "2018"
+
+[dependencies]
