@@ -12,11 +12,23 @@
 ## Build & Run
 
 ```bash
-$> bootimage build
+bootimage build
 ```
 
 ```bash
-$> bootimage run
+bootimage run
+```
+
+Run tests :
+
+```bash
+cargo test
+```
+
+Run integration tests:
+
+```bash
+bootimage test
 ```
 
 ## Memory Layout
